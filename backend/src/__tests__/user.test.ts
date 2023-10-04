@@ -13,6 +13,7 @@ const userPayload = {
   _id: userId,
   email: "jane.doe@example.com",
   name: "Jane Doe",
+  role: "siteManager",
 };
 
 const userInput = {
@@ -20,6 +21,7 @@ const userInput = {
   name: "Jane Doe",
   password: "Password123",
   passwordConfirmation: "Password123",
+  role: "siteManager",
 };
 
 const sessionPayload = {

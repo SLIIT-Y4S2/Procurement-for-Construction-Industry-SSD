@@ -3,7 +3,8 @@ export default {
   dbUri:
     "mongodb+srv://admin:admin@codecamptut.pyvd9.mongodb.net/Procurement?retryWrites=true&w=majority",
   saltWorkFactor: 10,
-  accessTokenTtl: "15m",
+  accessTokenTtl: "1y",
+  // accessTokenTtl: "15m",
   refreshTokenTtl: "1y",
   jwtSecret: "secret",
   //   publicKey: `-----BEGIN PUBLIC KEY-----

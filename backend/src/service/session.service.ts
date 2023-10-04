@@ -12,7 +12,7 @@ export async function createSession(userId: string, userAgent: string) {
 }
 
 export async function findSessions(query: FilterQuery<SessionDocument>) {
-  return SessionModel.find(query).lean();
+  return SessionModel.find(query).populate("user").lean();
 }
 
 export async function updateSession(

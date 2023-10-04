@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 
-const requireUser = (req: Request, res: Response, next: NextFunction) => {
+export const requireUser = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const user = res.locals.user;
 
   if (!user) {
@@ -10,4 +14,56 @@ const requireUser = (req: Request, res: Response, next: NextFunction) => {
   return next();
 };
 
-export default requireUser;
+export const requireProcurementStaff = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = res.locals.user;
+
+  if (!user) {
+    return res.sendStatus(403);
+  }
+
+  if (user.role !== "procurementStaff") {
+    return res.sendStatus(403);
+  }
+
+  return next();
+};
+
+export const requireSiteManger = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = res.locals.user;
+
+  if (!user) {
+    return res.sendStatus(403);
+  }
+
+  if (user.role !== "siteManager") {
+    return res.sendStatus(403);
+  }
+
+  return next();
+};
+
+export const requireCompanyManager = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = res.locals.user;
+
+  if (!user) {
+    return res.sendStatus(403);
+  }
+
+  if (user.role !== "companyManager") {
+    return res.sendStatus(403);
+  }
+
+  return next();
+};

@@ -10,6 +10,8 @@ import {
   findProduct,
 } from "../service/product.service";
 
+//todo not sure why this does not have any try catch blocks
+
 export async function createProductHandler(
   req: Request<{}, {}, CreateProductInput["body"]>,
   res: Response

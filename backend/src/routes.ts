@@ -1,41 +1,68 @@
 import { Express, Request, Response } from "express";
-import {
-  createProductHandler,
-  getProductHandler,
-  updateProductHandler,
-} from "./controller/product.controller";
+import validateResource from "./middleware/validateResource";
+
+// user imports
 import {
   createUserSessionHandler,
   getUserSessionsHandler,
   deleteSessionHandler,
 } from "./controller/session.controller";
 import { createUserHandler } from "./controller/user.controller";
-import requireUser from "./middleware/requireUser";
-import validateResource from "./middleware/validateResource";
+import { createSessionSchema } from "./schema/session.schema";
+import { createUserSchema } from "./schema/user.schema";
+import {
+  requireUser,
+  requireCompanyManager,
+  requireProcurementStaff,
+  requireSiteManger,
+} from "./middleware/requireUser";
+
+//todo remove this
 import {
   createProductSchema,
   deleteProductSchema,
   getProductSchema,
   updateProductSchema,
 } from "./schema/product.schema";
-import { createSessionSchema } from "./schema/session.schema";
-import { createUserSchema } from "./schema/user.schema";
+import {
+  createProductHandler,
+  getProductHandler,
+  updateProductHandler,
+} from "./controller/product.controller";
+// site imports
+import {
+  createSiteSchema,
+  listSiteSchema,
+  getSiteSchema,
+  deleteSiteSchema,
+  updateSiteSchema,
+} from "./schema/site.schema";
+import {
+  createSiteHandler,
+  getSiteListHandler,
+  getSiteHandler,
+  updateSiteHandler,
+  deleteSiteHandler,
+} from "./controller/site.controller";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
   app.post("/api/users", validateResource(createUserSchema), createUserHandler);
 
+  // login router
   app.post(
-    "/api/sessions",
+    "/api/login",
     validateResource(createSessionSchema),
     createUserSessionHandler
   );
 
+  // get the user's sessions
   app.get("/api/sessions", requireUser, getUserSessionsHandler);
 
   app.delete("/api/sessions", requireUser, deleteSessionHandler);
 
+  // todo remove product routes
   app.post(
     "/api/products",
     [requireUser, validateResource(createProductSchema)],
@@ -58,6 +85,33 @@ function routes(app: Express) {
     "/api/products/:productId",
     [requireUser, validateResource(deleteProductSchema)],
     getProductHandler
+  );
+
+  //TODO: add site routes here
+  app.post(
+    "/api/sites",
+    [requireProcurementStaff, validateResource(createSiteSchema)],
+    createSiteHandler
+  );
+  app.get(
+    "/api/sites",
+    [requireUser, validateResource(listSiteSchema)],
+    getSiteListHandler
+  );
+  app.get(
+    "/api/sites/:siteId",
+    [requireUser, validateResource(getSiteSchema)],
+    getSiteHandler
+  );
+  app.put(
+    "/api/sites/:siteId",
+    [requireProcurementStaff, validateResource(updateSiteSchema)],
+    updateSiteHandler
+  );
+  app.delete(
+    "/api/sites/:siteId",
+    [requireProcurementStaff, validateResource(deleteSiteSchema)],
+    deleteSiteHandler
   );
 }
 
