@@ -10,7 +10,9 @@ function createServer() {
   app.use(express.json());
 
   app.use(cors());
+  
   app.use(morgan("common"));
+
   app.use(deserializeUser);
 
   routes(app);

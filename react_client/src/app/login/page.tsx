@@ -1,24 +1,29 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   getAuthenticatedUser,
   storeTokenInLocalStorage,
-} from "@/lib/authentication.services";
+} from "@/lib/auth/authentication.services";
 import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
 import axios from "axios";
+import { AuthContext } from "@/lib/auth/AuthContext";
+import { IAuthContext } from "@/types/auth.interface";
 
 type FieldType = {
   email?: string;
   password?: string;
 };
 
+const { Item } = Form;
+const { Password } = Input;
+
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { Item } = Form;
-  const { Password } = Input;
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const { login } = useContext(AuthContext) as IAuthContext;
 
   const redirectIfAuthenticated = async () => {
     const isUserAuthenticated = await getAuthenticatedUser();
@@ -33,25 +38,21 @@ const Login = () => {
 
   const onFinish = async (values: any) => {
     try {
-      // await signIn("credentials", {
-      //   userRegNo: values.userRegNo,
-      //   password: values.password,
-      //   callbackUrl: searchParams?.get("callbackUrl") || "/",
-      // });
       setIsLoading(true);
-      const response = await axios.post(API_ROUTES.LOGIN, {
-        email: values.email,
-        password: values.password,
-      });
-      if (!response?.data?.accessToken) {
-        console.log("Something went wrong during signing in: ", response);
-        setIsLoading(false);
-        return;
-      }
-      storeTokenInLocalStorage(response.data.accessToken);
+      setError(null);
+      await login(values.email, values.password);
+      setIsLoading(false);
       router.push(APP_ROUTES.HOME);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if (error?.response?.status === 401) {
+        setError("Invalid Credentials");
+      } else if (error?.message === "Network Error") {
+        setError("Network Error");
+      } else {
+        setError("Something went wrong during signing in");
+      }
+
       setIsLoading(false);
     }
   };
@@ -85,6 +86,11 @@ const Login = () => {
         >
           <Password />
         </Item>
+        {error && (
+          <Item>
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          </Item>
+        )}
         <Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button
             type="primary"

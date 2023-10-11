@@ -14,7 +14,12 @@ export const createUserSchema = object({
     email: string({
       required_error: "Email is required",
     }).email("Not a valid email"),
-    role: _enum(["siteManager", "companyManager", "procurementStaff"]),
+    role: _enum([
+      "siteManager",
+      "companyManager",
+      "procurementStaff",
+      "supplier",
+    ]),
   }).refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords do not match",
     path: ["passwordConfirmation"],

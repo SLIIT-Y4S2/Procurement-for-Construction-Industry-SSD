@@ -11,4 +11,10 @@ export const API_ROUTES = {
 export const APP_ROUTES = {
   HOME: "/",
   LOGIN: "/login",
+  SITES: "/sites",
+};
+
+export const breadcrumbNameMap: Record<string, string> = {
+  "/apps": "Application List",
+  "/sites": "Construction Site",
 };

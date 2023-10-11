@@ -1,13 +1,5 @@
 import { object, number, string, TypeOf } from "zod";
 
-export interface SiteInput {
-  name: string;
-  address: string;
-  city: string;
-  mapLocation: string;
-  contactNumber: string;
-}
-
 const payload = {
   body: object({
     name: string({

@@ -12,6 +12,24 @@ export function removeTokenFromLocalStorage() {
   localStorage.removeItem("token");
 }
 
+export async function fetchAndSetAuthenticatedUserToken(
+  email: string,
+  password: string
+) {
+  const response = await axios.post(API_ROUTES.LOGIN, {
+    email,
+    password,
+  });
+  // console.log("login, response", response.status);
+
+  if (response.status !== 200) {
+    throw new Error("Something Went Wrong");
+  }
+  const token = response.data.accessToken;
+  storeTokenInLocalStorage(token);
+  return token;
+}
+
 export async function getAuthenticatedUser() {
   const defaultReturnObject = { authenticated: false, user: null };
   try {
@@ -26,6 +44,8 @@ export async function getAuthenticatedUser() {
         Authorization: `Bearer ${token}`,
       },
     });
+    // console.log("getAuthenticatedUser, response", response.status);
+
     if (response.status !== 200) {
       return defaultReturnObject;
     }

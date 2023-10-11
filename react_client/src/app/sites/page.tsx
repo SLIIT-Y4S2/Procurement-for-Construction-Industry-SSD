@@ -1,9 +1,10 @@
 "use client";
-import { useUser } from "@/lib/UserHook";
-import React from "react";
+import { AuthContext } from "@/lib/auth/AuthContext";
+import { IAuthContext } from "@/types/auth.interface";
+import React, { useContext } from "react";
 
 const Sites = () => {
-  const { user, authenticated } = useUser();
+  const { user, authenticated } = useContext(AuthContext) as IAuthContext;
 
   return (
     <div>
