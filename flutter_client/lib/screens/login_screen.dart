@@ -18,20 +18,21 @@ class _LoginScreenState extends State<LoginScreen> {
   late AuthBloc _authenticationBloc;
 
   void _submitHandeler() {
-    if (_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate()) {
+      print('triggered');
+
       _formKey.currentState!.save();
       _authenticationBloc.add(
         LoginEvent(
-          username: _usernameController.text,
-          password: _passwordController.text,
-        ),
+            username: _usernameController.text,
+            password: _passwordController.text),
       );
     }
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      ),
-    );
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (context) => const HomeScreen(),
+    //   ),
+    // );
   }
 
   String _validateUsername(String? value) {
@@ -46,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
         r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{6,12}$');
     if (value == null || value.trim().isEmpty) {
       return 'Password is required';
-    } else if (!passwordRegex.hasMatch(value)) {
+    } else if (value.length < 6) {
+      //* !passwordRegex.hasMatch(value)
       return 'Password must be 6-12 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character';
     }
 

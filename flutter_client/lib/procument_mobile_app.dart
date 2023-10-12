@@ -14,26 +14,54 @@ class ProcumentMobileApp extends StatefulWidget {
 }
 
 class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
-  final _authbloc = AuthBloc();
+  late AuthBloc _authbloc;
   // MaterialApp
-  final MaterialApp _app = MaterialApp(
-    title: 'Procument Mobile App',
-    theme: ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: kSeedColor,
-        primary: kPrimaryColor,
-      ),
-      textTheme: GoogleFonts.interTextTheme(),
-      useMaterial3: true,
-    ),
-    home: const LoginScreen(),
-  );
+  @override
+  void initState() {
+    super.initState();
+    _authbloc = AuthBloc();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(providers: [
-      RepositoryProvider(
-        create: (BuildContext context) => _authbloc,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => _authbloc,
+        ),
+      ],
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthInitial) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const LoginScreen(),
+              ),
+            );
+          }
+
+          if (state is SignedIn) {
+            print('sdsd');
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+            );
+          }
+        },
+        child: MaterialApp(
+          title: 'Procument Mobile App',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: kSeedColor,
+              primary: kPrimaryColor,
+            ),
+            textTheme: GoogleFonts.interTextTheme(),
+            useMaterial3: true,
+          ),
+          home: const LoginScreen(),
+        ),
       ),
-    ], child: _app);
+    );
   }
 }
