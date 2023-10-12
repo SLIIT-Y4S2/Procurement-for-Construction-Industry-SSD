@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import React, { useContext } from "react";
-import { AuthContext } from "@/lib/auth/AuthContext";
+import { AuthContext } from "@/Context/auth/AuthContext";
 import { Avatar, Dropdown, Layout, Typography } from "antd";
 import { LogoutOutlined, ProfileFilled } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -9,10 +9,9 @@ import Link from "next/link";
 import { IAuthContext } from "@/types/auth.interface";
 
 const { Header: AntHeader } = Layout;
-const {} = Typography;
-
 const Header = () => {
   const { logout } = useContext(AuthContext) as IAuthContext;
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -24,7 +23,9 @@ const Header = () => {
       key: "4",
       danger: true,
       label: "Log Out",
-      onClick: logout,
+      onClick: () => {
+        logout();
+      },
       icon: <LogoutOutlined />,
     },
   ];
@@ -38,7 +39,7 @@ const Header = () => {
       }}
     >
       {/* <div className="demo-logo" /> */}
-      <div style={{ color: "white" }}>Procurement Web Client</div>
+      <div className="text-white">Procurement Web Client</div>
       <Dropdown menu={{ items }}>
         <Avatar
           size="large"

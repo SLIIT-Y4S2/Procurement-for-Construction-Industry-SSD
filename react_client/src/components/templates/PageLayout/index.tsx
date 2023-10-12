@@ -5,7 +5,7 @@ import Header from "@/components/oraganisms/Header";
 import { usePathname } from "next/navigation";
 import Sider from "@/components/oraganisms/Sider";
 import Breadcrumb from "@/components/molecules/Breadcrumbs";
-import { AuthContext } from "@/lib/auth/AuthContext";
+import { AuthContext } from "@/Context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 import Loading from "@/components/atoms/Loading";
 

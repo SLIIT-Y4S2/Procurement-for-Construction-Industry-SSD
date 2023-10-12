@@ -1,4 +1,4 @@
-import { API_ROUTES } from "@/utils/constants";
+import { API_ROUTES, BASE_API_URL } from "@/utils/constants";
 import axios from "axios";
 export function storeTokenInLocalStorage(token: string) {
   localStorage.setItem("token", token);
@@ -12,16 +12,22 @@ export function removeTokenFromLocalStorage() {
   localStorage.removeItem("token");
 }
 
+const getAxiosInstance = () => {
+  const instance = axios.create({
+    baseURL: BASE_API_URL,
+    timeout: 1000,
+  });
+  return instance;
+};
+
 export async function fetchAndSetAuthenticatedUserToken(
   email: string,
   password: string
 ) {
-  const response = await axios.post(API_ROUTES.LOGIN, {
+  const response = await getAxiosInstance().post(API_ROUTES.LOGIN, {
     email,
     password,
   });
-  // console.log("login, response", response.status);
-
   if (response.status !== 200) {
     throw new Error("Something Went Wrong");
   }
@@ -37,9 +43,8 @@ export async function getAuthenticatedUser() {
     if (!token) {
       return defaultReturnObject;
     }
-    const response = await axios({
-      method: "GET",
-      url: API_ROUTES.GET_USER,
+
+    const response = await getAxiosInstance().get(API_ROUTES.GET_USER, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -72,14 +77,11 @@ export const removeAuthenticatedUser = async () => {
     if (!token) {
       return;
     }
-    await axios({
-      method: "DELETE",
-      url: API_ROUTES.DELETE_SESSION,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
     removeTokenFromLocalStorage();
+
+    await getAxiosInstance().post(API_ROUTES.DELETE_SESSION, {
+      token,
+    });
   } catch (err) {
     console.log("removeAuthenticatedUser, Something Went Wrong", err);
   }

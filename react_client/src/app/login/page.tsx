@@ -1,14 +1,10 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
-import {
-  getAuthenticatedUser,
-  storeTokenInLocalStorage,
-} from "@/lib/auth/authentication.services";
+import { useRouter } from "next/navigation";
+import { getAuthenticatedUser } from "@/Context/auth/authentication.services";
 import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
-import axios from "axios";
-import { AuthContext } from "@/lib/auth/AuthContext";
+import { AuthContext } from "@/Context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 
 type FieldType = {

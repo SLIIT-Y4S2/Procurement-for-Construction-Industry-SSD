@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { customAlphabet } from "nanoid";
 
-const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
+const nanoid = customAlphabet("0123456789", 10);
 
 export interface SiteInput {
   name: string;
