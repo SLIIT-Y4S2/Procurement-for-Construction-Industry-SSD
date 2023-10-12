@@ -6,9 +6,11 @@ class LoginFormField extends StatefulWidget {
     super.key,
     required this.isPasswordField,
     required this.controller,
+    required this.onSaved,
   });
   final bool isPasswordField;
   final TextEditingController controller;
+  final String? Function(String?) onSaved;
 
   @override
   State<LoginFormField> createState() => _LoginFormFieldState();
@@ -35,6 +37,7 @@ class _LoginFormFieldState extends State<LoginFormField> {
           ),
           child: TextFormField(
             controller: widget.controller,
+            validator: widget.onSaved,
             obscureText: widget.isPasswordField,
             decoration: const InputDecoration(
               border: InputBorder.none,
