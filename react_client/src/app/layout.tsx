@@ -1,11 +1,11 @@
-import StyledComponentsRegistry from "@/lib/AntdRegistry";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import StyledComponentsRegistry from "@/lib/AntdRegistry";
 import { App, ConfigProvider } from "antd";
 import theme from "@/theme/themeConfig";
 import PageLayout from "@/components/templates/PageLayout";
-import AuthContextProvider from "@/lib/auth/AuthContext";
+import AuthContextProvider from "@/Context/auth/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +26,9 @@ export default function RootLayout({
           <ConfigProvider theme={theme}>
             <App>
               <AuthContextProvider>
-                <PageLayout>{children}</PageLayout>
+                <PageLayout>
+                  <main>{children}</main>
+                </PageLayout>
               </AuthContextProvider>
             </App>
           </ConfigProvider>

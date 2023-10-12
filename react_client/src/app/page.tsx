@@ -1,5 +1,5 @@
 "use client";
-import { AuthContext } from "@/lib/auth/AuthContext";
+import { AuthContext } from "@/Context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 import { Button } from "antd";
 import Link from "next/link";
