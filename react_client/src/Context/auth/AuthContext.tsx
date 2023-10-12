@@ -4,7 +4,7 @@ import {
   fetchAndSetAuthenticatedUserToken,
   getAuthenticatedUser,
   removeAuthenticatedUser,
-} from "./authentication.services";
+} from "./authentication.service";
 import { APP_ROUTES } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { IAuthContext, IUser } from "@/types/auth.interface";

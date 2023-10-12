@@ -1,6 +1,6 @@
 import { API_ROUTES, BASE_API_URL } from "@/utils/constants";
 import axios from "axios";
-import { getTokenFromLocalStorage } from "../auth/authentication.services";
+import { getTokenFromLocalStorage } from "../auth/authentication.service";
 
 const getAxiosInstance = () => {
   const token = getTokenFromLocalStorage();
@@ -17,8 +17,8 @@ const getAxiosInstance = () => {
   return instance;
 };
 
-async function fetchAllSites() {
-  const response = await getAxiosInstance().get(API_ROUTES.SITES);
+async function fetchAllUsers() {
+  const response = await getAxiosInstance().get(API_ROUTES.USER_MANAGEMENT);
 
   if (response.status !== 200) {
     throw new Error("Something Went Wrong");
@@ -27,8 +27,11 @@ async function fetchAllSites() {
   return response.data;
 }
 
-async function createSite(site: Site) {
-  const response = await getAxiosInstance().post(API_ROUTES.SITES, site);
+async function createUser(user: IManagementUser) {
+  const response = await getAxiosInstance().post(
+    API_ROUTES.USER_MANAGEMENT,
+    user
+  );
 
   if (response.status !== 201) {
     throw new Error("Something Went Wrong");
@@ -37,9 +40,9 @@ async function createSite(site: Site) {
   return response.data;
 }
 
-async function deleteSite(siteId: string) {
+async function deleteUser(userId: string) {
   const response = await getAxiosInstance().delete(
-    `${API_ROUTES.SITES}/${siteId}`
+    `${API_ROUTES.USER_MANAGEMENT}/${userId}`
   );
 
   if (response.status !== 204) {
@@ -47,10 +50,10 @@ async function deleteSite(siteId: string) {
   }
 }
 
-async function updateSite(siteId: string, site: Site) {
+async function updateUser(userId: string, user: IManagementUser) {
   const response = await getAxiosInstance().put(
-    `${API_ROUTES.SITES}/${siteId}`,
-    site
+    `${API_ROUTES.USER_MANAGEMENT}/${userId}`,
+    user
   );
 
   if (response.status !== 200) {
@@ -60,11 +63,11 @@ async function updateSite(siteId: string, site: Site) {
   return response.data;
 }
 
-export const siteServices = {
-  fetchAllSites,
-  createSite,
-  deleteSite,
-  updateSite,
+export const userServices = {
+  fetchAllUsers,
+  createUser,
+  deleteUser,
+  updateUser,
 };
 
-export default siteServices;
+export default userServices;

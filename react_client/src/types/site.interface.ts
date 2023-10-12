@@ -1,4 +1,4 @@
-interface Site {
+interface ISite {
   _id: string;
   name: string;
   address: string;
@@ -11,8 +11,8 @@ interface Site {
 }
 
 interface ISiteContext {
-  sites: Site[];
-  createSite: (site: Site) => Promise<void>;
+  sites: ISite[];
+  createSite: (site: ISite) => Promise<void>;
   deleteSite: (id: string) => Promise<void>;
-  updateSite: (id: string, updatedSite: Site) => Promise<void>;
+  updateSite: (id: string, updatedSite: ISite) => Promise<void>;
 }

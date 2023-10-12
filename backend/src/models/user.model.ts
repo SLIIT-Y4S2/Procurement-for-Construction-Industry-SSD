@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import config from "config";
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("0123456789", 10);
 
+// TODO add contact Number
 export interface UserInput {
   email: string;
   name: string;
@@ -10,6 +13,7 @@ export interface UserInput {
 }
 
 export interface UserDocument extends UserInput, mongoose.Document {
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<Boolean>;
@@ -17,6 +21,12 @@ export interface UserDocument extends UserInput, mongoose.Document {
 
 const userSchema = new mongoose.Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+      unique: true,
+      default: () => `USER_${nanoid()}`,
+    },
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     password: { type: String, required: true },

@@ -3,7 +3,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import createServer from "../utils/server";
 import mongoose from "mongoose";
 import { signJwt } from "../utils/jwt.utils";
-// import { createProduct } from "../service/product.service";
+
 import { SiteInput } from "../models/site.model";
 import { createSite } from "../service/site.service";
 
@@ -29,7 +29,6 @@ export const userPayload = {
 describe("site", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
-
     await mongoose.connect(mongoServer.getUri());
   });
 
@@ -55,7 +54,7 @@ describe("site", () => {
           .set("Authorization", `Bearer ${jwt}`)
           .send(sitePayload);
 
-        expect(statusCode).toBe(200);
+        expect(statusCode).toBe(201);
 
         expect(body.name).toBe(sitePayload.name);
       });
