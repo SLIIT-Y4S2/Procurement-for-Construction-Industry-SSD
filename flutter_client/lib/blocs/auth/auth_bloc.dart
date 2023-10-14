@@ -13,6 +13,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 }
 
 void _loginEventHandeler(LoginEvent event, Emitter<AuthState> emit) async {
+
+  print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwewewewewewewewe");
   emit(SigningIn());
   AuthRepository authRepository = AuthRepository();
   final isLoggedIn = await authRepository.login(event.username, event.password);

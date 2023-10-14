@@ -84,7 +84,8 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
           textTheme: GoogleFonts.interTextTheme(),
           useMaterial3: true,
         ),
-        home: _isTokenAvailable ? const HomeScreen() : const LoginScreen(),
+        // home: _isTokenAvailable ? const HomeScreen() : const LoginScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
