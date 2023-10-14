@@ -23,7 +23,7 @@ export async function createSiteHandler(
   const body = req.body;
   try {
     const site = await createSite({ ...body });
-    return res.send(site);
+    return res.status(201).send(site);
   } catch (error: any) {
     logger.error(error);
     return res.status(409).send(error.message);
@@ -68,7 +68,6 @@ export async function updateSiteHandler(
   try {
     const siteId = req.params.siteId;
     const update = req.body;
-
     const site = await findSite({ siteId });
 
     if (!site) {

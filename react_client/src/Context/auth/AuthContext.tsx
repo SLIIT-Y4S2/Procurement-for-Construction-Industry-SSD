@@ -1,39 +1,45 @@
 "use client";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useCallback } from "react";
 import {
   fetchAndSetAuthenticatedUserToken,
   getAuthenticatedUser,
   removeAuthenticatedUser,
-} from "./authentication.services";
+} from "./authentication.service";
 import { APP_ROUTES } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { IAuthContext, IUser } from "@/types/auth.interface";
+import { App } from "antd";
 
 export const AuthContext = createContext<IAuthContext | null>(null);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IUser | undefined>(undefined);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const router = useRouter();
+  const { message } = App.useApp();
 
-  async function getUserDetails() {
-    const { authenticated, user } = await getAuthenticatedUser();
-    if (!authenticated) {
-      router.push(APP_ROUTES.LOGIN);
-      return;
+  const getUserDetails = useCallback(async () => {
+    try {
+      const { authenticated, user } = await getAuthenticatedUser();
+      if (!authenticated) {
+        router.push(APP_ROUTES.LOGIN);
+        return;
+      }
+      setUser(user);
+      setAuthenticated(authenticated);
+    } catch (error: any) {
+      message.error(JSON.stringify(error));
     }
-    setUser(user);
-    setAuthenticated(authenticated);
-  }
+  }, [message, router]);
 
   useEffect(() => {
     getUserDetails();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [getUserDetails]);
 
   const logout = () => {
     removeAuthenticatedUser();
     router.push(APP_ROUTES.LOGIN);
-    setUser(null);
+    setUser(undefined);
     setAuthenticated(false);
   };
 

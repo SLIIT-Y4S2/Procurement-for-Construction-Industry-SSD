@@ -1,22 +1,20 @@
 import { Express, Request, Response } from "express";
 import validateResource from "./middleware/validateResource";
-
 // user imports
 import {
   createUserSessionHandler,
   getUserSessionsHandler,
   deleteSessionHandler,
 } from "./controller/session.controller";
-import { createUserHandler } from "./controller/user.controller";
+// import { createUserHandler } from "./controller/user.controller";
 import { createSessionSchema } from "./schema/session.schema";
-import { createUserSchema } from "./schema/user.schema";
+// import { createUserSchema } from "./schema/user.schema";
 import {
   requireUser,
   requireCompanyManager,
   requireProcurementStaff,
   requireSiteManger,
 } from "./middleware/requireUser";
-
 //todo remove this
 import {
   createProductSchema,
@@ -44,11 +42,22 @@ import {
   updateSiteHandler,
   deleteSiteHandler,
 } from "./controller/site.controller";
+// user management imports
+import {
+  getUserListHandler,
+  createUserHandler,
+  updateUserHandler,
+} from "./controller/user-management.controller";
+import {
+  listUserSchema,
+  createUserSchema,
+  updateUserSchema,
+} from "./schema/user-management.schema";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
-  app.post("/api/users", validateResource(createUserSchema), createUserHandler);
+  // app.post("/api/users", validateResource(createUserSchema), createUserHandler);
 
   // login router
   app.post(
@@ -62,32 +71,53 @@ function routes(app: Express) {
 
   app.delete("/api/sessions", requireUser, deleteSessionHandler);
 
-  // todo remove product routes
-  app.post(
-    "/api/products",
-    [requireUser, validateResource(createProductSchema)],
-    createProductHandler
-  );
+  //
 
-  app.put(
-    "/api/products/:productId",
-    [requireUser, validateResource(updateProductSchema)],
-    updateProductHandler
-  );
+  //
 
+  //
+
+  //
+
+  // TODO: user-management routes here
+  //get all users
   app.get(
-    "/api/products/:productId",
-    validateResource(getProductSchema),
-    getProductHandler
+    "/api/user-management",
+    [requireCompanyManager, validateResource(listUserSchema)],
+    getUserListHandler
   );
 
-  app.delete(
-    "/api/products/:productId",
-    [requireUser, validateResource(deleteProductSchema)],
-    getProductHandler
+  //create a user
+  app.post(
+    "/api/user-management",
+    [requireCompanyManager, validateResource(createUserSchema)],
+    createUserHandler
   );
+
+  //update a user
+  app.put(
+    "/api/user-management/:userId",
+    [requireCompanyManager, validateResource(updateUserSchema)],
+    updateUserHandler
+  );
+
+  //
+
+  //
+
+  //
+
+  //
 
   //TODO: add site routes here
+
+  //
+
+  //
+
+  //
+
+  //
   app.post(
     "/api/sites",
     [requireProcurementStaff, validateResource(createSiteSchema)],
@@ -112,6 +142,48 @@ function routes(app: Express) {
     "/api/sites/:siteId",
     [requireProcurementStaff, validateResource(deleteSiteSchema)],
     deleteSiteHandler
+  );
+
+  //
+
+  //
+
+  //
+
+  //
+
+  // todo remove product routes
+
+  //
+
+  //
+
+  //
+
+  //
+
+  app.post(
+    "/api/products",
+    [requireUser, validateResource(createProductSchema)],
+    createProductHandler
+  );
+
+  app.put(
+    "/api/products/:productId",
+    [requireUser, validateResource(updateProductSchema)],
+    updateProductHandler
+  );
+
+  app.get(
+    "/api/products/:productId",
+    validateResource(getProductSchema),
+    getProductHandler
+  );
+
+  app.delete(
+    "/api/products/:productId",
+    [requireUser, validateResource(deleteProductSchema)],
+    getProductHandler
   );
 }
 

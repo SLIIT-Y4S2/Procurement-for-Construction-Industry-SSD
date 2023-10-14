@@ -1,22 +1,23 @@
 "use client";
 import { Button } from "antd";
 import React, { useContext } from "react";
-import { AuthContext } from "@/lib/auth/AuthContext";
+import { AuthContext } from "@/Context/auth/AuthContext";
 import { Avatar, Dropdown, Layout, Typography } from "antd";
 import { LogoutOutlined, ProfileFilled } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import Link from "next/link";
 import { IAuthContext } from "@/types/auth.interface";
+import Image from "next/image";
 
 const { Header: AntHeader } = Layout;
-const {} = Typography;
-
 const Header = () => {
   const { logout } = useContext(AuthContext) as IAuthContext;
+  const { user, authenticated } = useContext(AuthContext) as IAuthContext;
+
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Link href="/profile">Profile</Link>,
+      label: <Link href="/profile">Profile </Link>,
       icon: <ProfileFilled />,
     },
 
@@ -24,7 +25,9 @@ const Header = () => {
       key: "4",
       danger: true,
       label: "Log Out",
-      onClick: logout,
+      onClick: () => {
+        logout();
+      },
       icon: <LogoutOutlined />,
     },
   ];
@@ -38,17 +41,29 @@ const Header = () => {
       }}
     >
       {/* <div className="demo-logo" /> */}
-      <div style={{ color: "white" }}>Procurement Web Client</div>
-      <Dropdown menu={{ items }}>
-        <Avatar
-          size="large"
-          style={{
-            backgroundColor: "#87d068",
-          }}
-        >
-          U
-        </Avatar>
-      </Dropdown>
+      <Image
+        src="/procuresync-main-logo.svg"
+        alt="logo"
+        width={250}
+        height={50}
+      />
+      <div className="flex gap-2 items-center">
+        {user && (
+          <Typography.Text style={{ color: "white" }}>
+            {user.name} ({user.role})
+          </Typography.Text>
+        )}
+        <Dropdown menu={{ items }}>
+          <Avatar
+            size="large"
+            style={{
+              backgroundColor: "#87d068",
+            }}
+          >
+            U
+          </Avatar>
+        </Dropdown>
+      </div>
     </AntHeader>
   );
 };
