@@ -2,9 +2,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
-import { getAuthenticatedUser } from "@/Context/auth/authentication.service";
+import { getAuthenticatedUser } from "@/context/auth/authentication.service";
 import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
-import { AuthContext } from "@/Context/auth/AuthContext";
+import { AuthContext } from "@/context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 
 type FieldType = {

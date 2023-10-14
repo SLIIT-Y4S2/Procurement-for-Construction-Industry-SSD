@@ -4,7 +4,7 @@ import {
   LaptopOutlined,
   NotificationOutlined,
   UserOutlined,
-  SmileOutlined,
+  ExperimentOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -37,6 +37,17 @@ const Sider = () => {
 
 export default Sider;
 const items1: MenuProps["items"] = [
+  {
+    key: "Product management",
+    icon: <ExperimentOutlined />,
+    label: "Item Management",
+    children: [
+      {
+        key: APP_ROUTES.ITEM_MANAGEMENT,
+        label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
+      },
+    ],
+  },
   {
     key: "employees",
     icon: <UserOutlined />,

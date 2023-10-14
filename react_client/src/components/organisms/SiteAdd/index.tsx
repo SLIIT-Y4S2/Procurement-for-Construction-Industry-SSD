@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import SiteForm from "@/components/molecules/SiteForm";
 import { Button, Drawer } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { SiteContext } from "@/Context/Site/SiteContext";
+import { SiteContext } from "@/context/Site/SiteContext";
 
 const AddSite = () => {
   const [isOpen, setIsOpen] = useState(false);

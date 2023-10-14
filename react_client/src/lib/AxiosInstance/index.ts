@@ -1,6 +1,6 @@
 import { BASE_API_URL } from "@/utils/constants";
 import axios from "axios";
-import { getTokenFromLocalStorage } from "@/Context/auth/authentication.service";
+import { getTokenFromLocalStorage } from "@/context/auth/authentication.service";
 
 export const getAxiosInstanceWithAuth = () => {
   const token = getTokenFromLocalStorage();

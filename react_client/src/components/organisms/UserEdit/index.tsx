@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Drawer } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import { UserManagementContext } from "@/Context/UserManagement/UserManagementContext";
+import { UserManagementContext } from "@/context/UserManagement/UserManagementContext";
 import UserForm from "@/components/molecules/UserForm";
 
 const UserEdit = ({ currentUser }: { currentUser: IManagementUser }) => {

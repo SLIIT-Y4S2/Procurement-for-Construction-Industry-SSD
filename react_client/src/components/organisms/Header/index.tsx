@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import React, { useContext } from "react";
-import { AuthContext } from "@/Context/auth/AuthContext";
+import { AuthContext } from "@/context/auth/AuthContext";
 import { Avatar, Dropdown, Layout, Typography } from "antd";
 import { LogoutOutlined, ProfileFilled } from "@ant-design/icons";
 import type { MenuProps } from "antd";

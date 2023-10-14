@@ -1,46 +1,49 @@
 "use client";
-import { AuthContext } from "@/Context/auth/AuthContext";
+import { AuthContext } from "@/context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 import { ReactNode, useContext, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import {
+  COMPANY_MANAGER_ROUTES,
+  PROCUREMENT_STAFF_ROUTES,
+  SUPPLIER_ROUTES,
+} from "@/utils/constants";
 
 const AuthenticationWrapper = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { user, authenticated } = useContext(AuthContext) as IAuthContext;
   const pathname = usePathname();
 
-  // useEffect(() => {
-  //   if (!user) return;
-  //   const { role } = user;
-  //   if (pathname === "/login" && role === "procurementStaff") {
-  //     router.push("/procurement-staff");
-  //   }
-  //   if (pathname === "/login" && role === "companyManager") {
-  //     router.push("/company-manager");
-  //   }
-  // }, [router, pathname, user, authenticated]);
-
-  // if (!user && !authenticated) {
-  //   router.push("/login");
-  // }
+  useEffect(() => {
+    if (!user && !authenticated) {
+      router.push("/login");
+    }
+  }, [user, authenticated]);
 
   if (pathname === "/login") {
     return <>{children}</>;
   }
+
   if (!user) {
     return <>loading..</>;
   }
+
   const { role } = user;
 
-  const companyManagerOnly = ["/user-management", "/sites"];
-
-  if (companyManagerOnly.includes(pathname) && role !== "companyManager") {
+  if (role === "companyManager" && !COMPANY_MANAGER_ROUTES.includes(pathname)) {
     return <AccessDenied />;
   }
 
-  // if (pathname.startsWith("/user-management") && role !== "companyManager") {
-  //   return <AccessDenied />;
-  // }
+  if (
+    role === "procurementStaff" &&
+    !PROCUREMENT_STAFF_ROUTES.includes(pathname)
+  ) {
+    return <AccessDenied />;
+  }
+
+  if (role === "supplier" && !SUPPLIER_ROUTES.includes(pathname)) {
+    return <AccessDenied />;
+  }
 
   return <>{children}</>;
 };

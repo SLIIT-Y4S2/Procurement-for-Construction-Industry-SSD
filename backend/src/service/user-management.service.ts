@@ -12,8 +12,8 @@ export async function createUser(input: UserInput) {
   }
 }
 
-export async function listUsers() {
-  return await UserModel.find({}).select("-password").lean();
+export async function listUsers(query: FilterQuery<UserDocument> = {}) {
+  return await UserModel.find(query).select("-password").lean();
 }
 
 export async function findUser(query: FilterQuery<UserDocument>) {
