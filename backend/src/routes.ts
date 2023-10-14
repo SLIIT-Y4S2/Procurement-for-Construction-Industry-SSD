@@ -53,6 +53,21 @@ import {
   createUserSchema,
   updateUserSchema,
 } from "./schema/user-management.schema";
+// item imports
+import {
+  createItemSchema,
+  getItemListSchema,
+  deleteItemSchema,
+  updateItemSchema,
+  getItemSchema,
+} from "./schema/item.schema";
+import {
+  createItemHandler,
+  getItemListHandler,
+  updateItemHandler,
+} from "./controller/item.controller";
+// order imports
+import { getSupplierListHandler } from "./controller/order.controller";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -101,6 +116,8 @@ function routes(app: Express) {
     updateUserHandler
   );
 
+  app.get("/api/suppliers", [requireUser], getSupplierListHandler);
+
   //
 
   //
@@ -111,13 +128,6 @@ function routes(app: Express) {
 
   //TODO: add site routes here
 
-  //
-
-  //
-
-  //
-
-  //
   app.post(
     "/api/sites",
     [requireProcurementStaff, validateResource(createSiteSchema)],
@@ -151,6 +161,25 @@ function routes(app: Express) {
   //
 
   //
+  // todo  item routes
+
+  app.post(
+    "/api/items",
+    [requireProcurementStaff, validateResource(createItemSchema)],
+    createItemHandler
+  );
+
+  app.get(
+    "/api/items",
+    [requireUser, validateResource(getItemListSchema)],
+    getItemListHandler
+  );
+
+  app.put(
+    "/api/items/:itemId",
+    [requireProcurementStaff, validateResource(updateItemSchema)],
+    updateItemHandler
+  );
 
   // todo remove product routes
 

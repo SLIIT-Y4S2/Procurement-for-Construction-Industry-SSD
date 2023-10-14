@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, createContext, useEffect, useState } from "react";
-import UserService from "@/Context/UserManagement/userManagement.service";
+import UserService from "@/context/UserManagement/userManagement.service";
 import { App } from "antd";
 
 export const UserManagementContext = createContext<IUserManagementContext>({

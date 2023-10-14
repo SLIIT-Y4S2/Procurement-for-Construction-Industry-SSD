@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, createContext, useEffect, useState } from "react";
-import SiteService from "@/Context/Site/site.service";
+import SiteService from "@/context/Site/site.service";
 import { App } from "antd";
 
 export const SiteContext = createContext<ISiteContext>({

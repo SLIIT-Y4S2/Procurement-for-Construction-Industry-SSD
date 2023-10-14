@@ -1,18 +1,23 @@
 import React, { useContext, useState } from "react";
-import SiteForm from "@/components/molecules/SiteForm";
 import { Button, Drawer } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { SiteContext } from "@/context/Site/SiteContext";
+import { ItemManagementContext } from "@/context/ItemManagement/ItemManagementContext";
+import { IItemManagementContext } from "@/types/itemManagement.interface";
+import ItemForm from "@/components/molecules/ItemForm";
 
-const AddSite = () => {
+const AddItem = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { createSite } = useContext(SiteContext) as ISiteContext;
+  const { items, suppliers, createItem } = useContext(
+    ItemManagementContext
+  ) as IItemManagementContext;
   const closeDrawer = () => setIsOpen(false);
-  const callCreateSite = async (values: ISite) => {
+  const callCreateItem = async (item: any) => {
     try {
-      await createSite(values);
+      await createItem(item);
       closeDrawer();
-    } catch (e) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -30,10 +35,10 @@ const AddSite = () => {
         open={isOpen}
         width={600}
       >
-        <SiteForm formSubmission={callCreateSite} />
+        <ItemForm formSubmission={callCreateItem} suppliers={suppliers} />
       </Drawer>
     </>
   );
 };
 
-export default AddSite;
+export default AddItem;

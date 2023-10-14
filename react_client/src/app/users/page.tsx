@@ -1,5 +1,5 @@
 "use client";
-import { UserManagementContext } from "@/Context/UserManagement/UserManagementContext";
+import { UserManagementContext } from "@/context/UserManagement/UserManagementContext";
 import React, { useContext } from "react";
 import { Table } from "antd";
 import { format } from "date-fns";
