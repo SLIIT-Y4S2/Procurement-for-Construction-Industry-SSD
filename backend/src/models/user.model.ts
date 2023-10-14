@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import config from "config";
 import { customAlphabet } from "nanoid";
 const nanoid = customAlphabet("0123456789", 10);
 
@@ -50,7 +49,7 @@ userSchema.pre("save", async function (next) {
     return next();
   }
 
-  const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+  const salt = await bcrypt.genSalt(10);
 
   const hash = await bcrypt.hashSync(user.password, salt);
 
