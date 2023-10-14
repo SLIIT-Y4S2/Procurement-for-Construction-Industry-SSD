@@ -16,9 +16,10 @@ export async function findItem(
 
 export async function getItemList(
   query: FilterQuery<ItemDocument> = {},
-  options: QueryOptions = { lean: true }
+  options: QueryOptions = { lean: true },
+  populate: string = ""
 ) {
-  return ItemModel.find(query);
+  return ItemModel.find(query).populate(populate);
 }
 
 export async function findAndUpdateItem(

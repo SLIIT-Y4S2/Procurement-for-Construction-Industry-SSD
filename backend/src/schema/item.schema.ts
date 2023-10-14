@@ -11,7 +11,7 @@ const payload = {
     price: number({
       required_error: "Price is required",
     }),
-    supplierId: string({
+    supplier: string({
       required_error: "Supplier is required",
     }),
   }),
