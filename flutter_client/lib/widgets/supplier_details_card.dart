@@ -18,17 +18,14 @@ class SupplierDetailsCard extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-      ),
+    return Card(
+      surfaceTintColor: Colors.white,
+      elevation: 5,
       child: ListTile(
         selected: true,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: BorderSide(
-              color: Theme.of(context).colorScheme.primary,
-            )),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
         title: Text(
           '${product.userId}',
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
