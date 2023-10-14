@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import config from "config";
 import {
   createSession,
   findSessions,
@@ -23,13 +22,13 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
   const accessToken = signJwt(
     { ...user, session: session._id },
-    { expiresIn: config.get("accessTokenTtl") }
+    { expiresIn: "1y" }
   );
 
   // create a refresh token
   const refreshToken = signJwt(
     { ...user, session: session._id },
-    { expiresIn: config.get("refreshTokenTtl") }
+    { expiresIn: "1y" }
   );
 
   // return access & refresh tokens
