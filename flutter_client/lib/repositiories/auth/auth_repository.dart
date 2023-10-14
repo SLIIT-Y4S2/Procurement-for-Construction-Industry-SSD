@@ -3,15 +3,40 @@ import 'dart:convert';
 
 import 'package:flutter_client/exceptions/auth_exceptions.dart';
 import 'package:flutter_client/repositiories/auth/base_auth_repository.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository extends BaseAuthRepository {
+  Future<bool?> isTokenAvailable() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    final token = sharedPreferences.getString('jwt');
+    if (token == null) {
+      throw AuthException('Not logged in');
+    } else {
+      try {
+        // Verify a token (SecretKey for HMAC & PublicKey for all the others)
+        final jwt = JWT.verify(token, SecretKey('secret'));
+
+        if (jwt.payload['role'] == 'procurementStaff') {
+          return true;
+        } else {
+          throw UnauthorizedException('Failed to login');
+        }
+      } on JWTExpiredException catch (e) {
+        throw TokenExpiredException(e.message);
+      } on JWTException catch (ex) {
+        throw AuthException(ex.message); // ex: invalid signature
+      }
+    }
+  }
+
   @override
   Future<bool> login(String email, String password) async {
     final Uri authApiUri = Uri.http(
-      '192.168.1.2:5000',
+      '192.168.1.5:5000',
       'api/login',
     );
 
@@ -45,15 +70,9 @@ class AuthRepository extends BaseAuthRepository {
         final jwt = JWT.verify(acessToken, SecretKey('secret'));
 
         if (jwt.payload['role'] == 'procurementStaff') {
-          const secureStorage = FlutterSecureStorage();
-          AndroidOptions _getAndroidOptions() => const AndroidOptions(
-                encryptedSharedPreferences: true,
-              );
-          await secureStorage.write(
-            key: 'jwt',
-            value: acessToken,
-            aOptions: _getAndroidOptions(),
-          );
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          await sharedPreferences.setString('jwt', acessToken);
           return true;
         } else {
           throw UnauthorizedException('Failed to login');
@@ -69,9 +88,15 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
-  Future<void> logout() async {
-    const secureStorage = FlutterSecureStorage();
-    var token = await secureStorage.read(key: 'jwt');
-    await secureStorage.delete(key: 'jwt');
+  Future<bool> logout() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    await sharedPreferences.remove('jwt');
+
+    if (sharedPreferences.getString('jwt') == null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

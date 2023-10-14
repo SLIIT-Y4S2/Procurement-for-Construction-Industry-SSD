@@ -11,7 +11,7 @@ class CreateRequisitionOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios),
+        // leading: const Icon(Icons.arrow_back_ios),
         title: Text(
           'Create Requisition Order',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(

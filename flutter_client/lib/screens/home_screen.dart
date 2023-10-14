@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/screens/create_requisition_order_page.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,15 +13,28 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Home Screen'),
       ),
       body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CreateRequisitionOrder(),
-                ),
-              );
-            },
-            child: const Text('Create Requisition Order')),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CreateRequisitionOrder(),
+                  ),
+                );
+              },
+              child: const Text('Create Requisition Order'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<AuthBloc>(context).add(SignOut());
+              },
+              child: const Text('Signout'),
+            ),
+          ],
+        ),
       ),
     );
   }
