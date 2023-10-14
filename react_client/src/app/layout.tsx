@@ -5,7 +5,7 @@ import StyledComponentsRegistry from "@/lib/AntdRegistry";
 import { App, ConfigProvider } from "antd";
 import theme from "@/theme/themeConfig";
 import PageLayout from "@/components/templates/PageLayout";
-import AuthContextProvider from "@/Context/auth/AuthContext";
+import AuthContextProvider from "@/context/auth/AuthContext";
 import AuthenticationWrapper from "@/lib/AuthenticationWrapper";
 
 const inter = Inter({ subsets: ["latin"] });

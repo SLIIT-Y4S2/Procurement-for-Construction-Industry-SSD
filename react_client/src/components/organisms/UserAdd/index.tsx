@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import UserForm from "@/components/molecules/UserForm";
 import { Button, Drawer } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { UserManagementContext } from "@/Context/UserManagement/UserManagementContext";
+import { UserManagementContext } from "@/context/UserManagement/UserManagementContext";
 
 const AddUser = () => {
   const [isOpen, setIsOpen] = useState(false);

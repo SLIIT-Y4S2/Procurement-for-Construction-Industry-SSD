@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import SiteForm from "@/components/molecules/SiteForm";
 import { Button, Drawer } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import { SiteContext } from "@/Context/Site/SiteContext";
+import { SiteContext } from "@/context/Site/SiteContext";
 
 const SiteEdit = ({ currentSite }: { currentSite: ISite }) => {
   const [isOpen, setIsOpen] = useState(false);

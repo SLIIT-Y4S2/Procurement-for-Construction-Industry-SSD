@@ -64,7 +64,6 @@ export async function updateSiteHandler(
   req: Request<UpdateSiteInput["params"], {}, UpdateSiteInput["body"]>,
   res: Response
 ) {
-  const body = req.body;
   try {
     const siteId = req.params.siteId;
     const update = req.body;

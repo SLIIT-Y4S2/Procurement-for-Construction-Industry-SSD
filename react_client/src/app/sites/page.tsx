@@ -1,6 +1,6 @@
 "use client";
-import { SiteContext } from "@/Context/Site/SiteContext";
-import { AuthContext } from "@/Context/auth/AuthContext";
+import { SiteContext } from "@/context/Site/SiteContext";
+import { AuthContext } from "@/context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 import React, { useContext } from "react";
 import { Table } from "antd";
