@@ -9,7 +9,7 @@ export const getAxiosInstanceWithAuth = () => {
   }
   const instance = axios.create({
     baseURL: BASE_API_URL,
-    timeout: 2000,
+    timeout: 5000,
     headers: {
       Authorization: `Bearer ${token}`,
     },
