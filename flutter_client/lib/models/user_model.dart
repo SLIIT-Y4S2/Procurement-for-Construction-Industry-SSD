@@ -1,3 +1,5 @@
+import 'package:flutter_client/models/product_model.dart';
+
 enum Role {
   siteManager,
   companyManager,
@@ -8,24 +10,31 @@ enum Role {
 class User {
   final String id;
   final String name;
+  final String userId;
   final String email;
-  final String password;
   final Role role;
+  final String contactNumber;
+  final List<Product> products;
 
   User({
     required this.id,
     required this.name,
+    required this.userId,
     required this.email,
-    required this.password,
     required this.role,
-  });
+    required this.contactNumber,
+  }) : products = [];
+
+  set products(List<Product> productList) {
+    products = productList;
+  }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['_id'],
       name: json['name'],
+      userId: json['userId'],
       email: json['email'],
-      password: json['password'],
       role: json['role'] == 'siteManager'
           ? Role.siteManager
           : json['role'] == 'companyManager'
@@ -33,20 +42,7 @@ class User {
               : json['role'] == 'procurementStaff'
                   ? Role.procurementStaff
                   : Role.supplier,
+      contactNumber: json['contactNumber'],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        '_id': id,
-        'name': name,
-        'email': email,
-        'password': password,
-        'role': role == Role.siteManager
-            ? 'siteManager'
-            : role == Role.companyManager
-                ? 'companyManager'
-                : role == Role.procurementStaff
-                    ? 'procurementStaff'
-                    : 'supplier',
-      };
 }

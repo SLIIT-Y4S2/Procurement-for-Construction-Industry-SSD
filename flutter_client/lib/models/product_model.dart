@@ -1,37 +1,41 @@
 class Product {
-  final String userId;
+  final String id;
+  final String supplierId;
+  final String itemId;
   final String title;
   final String description;
-  final String image;
   final double price;
   final bool isAvailable;
 
   Product({
-    required this.userId,
+    required this.id,
+    required this.supplierId,
+    required this.itemId,
     required this.title,
     required this.description,
-    required this.image,
     required this.price,
     required this.isAvailable,
   });
 
   Map<String, dynamic> toJson() => {
-        'user': userId,
+        '_id': id,
+        'supplier': supplierId,
+        'itemId': itemId,
         'name': title,
         'description': description,
-        'image': image,
         'price': price,
-        'isAvailable': isAvailable,
+        'active': isAvailable,
       };
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      userId: json['user'],
+      id: json['_id'],
+      supplierId: json['supplier'],
+      itemId: json['itemId'],
       title: json['name'],
       description: json['description'],
-      image: json['image'],
-      price: json['price'],
-      isAvailable: json['isAvailable'],
+      price: double.parse(json['price'].toString()),
+      isAvailable: json['active'],
     );
   }
 }
