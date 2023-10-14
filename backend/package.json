@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "test": "jest",
+    "test": "jest --watchAll --verbose",
     "build": "tsc",
     "start": "node build/app.js"
   },

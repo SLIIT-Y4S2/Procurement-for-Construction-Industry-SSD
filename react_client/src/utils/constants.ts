@@ -19,6 +19,7 @@ export const API_ROUTES = {
   USER_MANAGEMENT: `/user-management`,
   ITEM_MANAGEMENT: `/items`,
   SUPPLIER_MANAGEMENT: `/suppliers`,
+  ORDER_MANAGEMENT: `/orders`,
 };
 
 export const APP_ROUTES = {
@@ -27,11 +28,19 @@ export const APP_ROUTES = {
   SITES: "/sites",
   USERS_MANAGEMENT: "/users",
   ITEM_MANAGEMENT: "/items",
+  ORDER_MANAGEMENT: {
+    ALL_ORDER: `/orders`,
+    PENDING_ORDER: `/orders/pending`,
+    APPROVED_ORDER: `/orders/approved`,
+  },
 };
 
 export const breadcrumbNameMap: Record<string, string> = {
   "/apps": "Application List",
-  "/sites": "Construction Site",
+  [APP_ROUTES.SITES]: "Construction Site",
+  [APP_ROUTES.USERS_MANAGEMENT]: "User Management",
+  [APP_ROUTES.ITEM_MANAGEMENT]: "Item Management",
+  [APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER]: "Order Management",
 };
 
 export const COMPANY_MANAGER_ROUTES = [
@@ -39,6 +48,7 @@ export const COMPANY_MANAGER_ROUTES = [
   APP_ROUTES.USERS_MANAGEMENT,
   APP_ROUTES.SITES,
   APP_ROUTES.ITEM_MANAGEMENT,
+  ...Object.values(APP_ROUTES.ORDER_MANAGEMENT),
 ];
 export const PROCUREMENT_STAFF_ROUTES = [APP_ROUTES.HOME, APP_ROUTES.SITES];
 export const SUPPLIER_ROUTES = [APP_ROUTES.HOME];

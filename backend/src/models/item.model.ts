@@ -9,7 +9,7 @@ export interface ItemInput {
   supplier: UserDocument["_id"];
 }
 
-export interface ItemDocument extends ItemInput, Document {
+export interface ItemDocument extends ItemInput, mongoose.Document {
   itemId: string;
   active: boolean;
   createdAt: Date;
@@ -37,11 +37,15 @@ const itemSchema = new mongoose.Schema(
   }
 );
 
-itemSchema.pre("save", async function (next) {
-  this.populate("supplier");
+itemSchema.post("save", function (doc, next) {
+  doc.populate("supplier").then(function () {
+    next();
+  });
 });
-itemSchema.pre("findOneAndUpdate", async function (next) {
-  this.populate("supplier");
+itemSchema.post("findOneAndUpdate", function (doc, next) {
+  doc.populate("supplier").then(function () {
+    next();
+  });
 });
 
 const ItemModel = mongoose.model<ItemDocument>("Item", itemSchema);

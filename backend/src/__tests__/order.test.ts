@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { signJwt } from "../utils/jwt.utils";
 import { createUser } from "../service/user.service";
 import { createItem } from "../service/item.service";
+import { createSite } from "../service/site.service";
 
 //TODO: import { createOrder } from "../service/order.service";
 
@@ -21,7 +22,7 @@ export const userPayload = {
   _id: userId,
   email: "jane.doe@example.com",
   name: "Jane Doe",
-  role: "procurementStaff",
+  role: "siteManager",
   contactNumber: "0712345678",
 };
 
@@ -70,7 +71,7 @@ describe("order", () => {
         });
 
         const item = await createItem({
-          name: "item2",
+          name: "item1",
           description: "item description",
           price: 100,
           supplier: supplier._id,
@@ -106,6 +107,90 @@ describe("order", () => {
 
         expect(statusCode).toBe(200);
         expect(body[0].name).toEqual(item.name);
+      });
+    });
+  });
+
+  describe("create order", () => {
+    describe("given the user is not logged in", () => {
+      it("should return a 403", async () => {
+        const { statusCode } = await supertest(app).post("/api/orders");
+
+        expect(statusCode).toBe(403);
+      });
+    });
+    describe("given the user is logged in", () => {
+      it("should return a 200 and create order", async () => {
+        const jwt = signJwt(userPayload);
+
+        const supplier = await createUser({
+          role: "supplier",
+          email: "supplier3@example.com",
+          password: "Password456!",
+          contactNumber: "0712345678",
+          name: "supplier3",
+        });
+        const item1 = await createItem({
+          name: "item3",
+          description: "item description",
+          price: 100,
+          supplier: supplier._id,
+        });
+        const item2 = await createItem({
+          name: "item4",
+          description: "item description",
+          price: 100,
+          supplier: supplier._id,
+        });
+        const site = await createSite({
+          name: "site1",
+          address: "address",
+          contactNumber: "0712345678",
+          city: "city",
+          mapLocation: "mapLocation",
+        });
+        const { statusCode, body } = await supertest(app)
+          .post("/api/orders")
+
+          .send({
+            supplier: supplier._id,
+            items: [
+              { item: item1._id, quantity: 2 },
+              { item: item2._id, quantity: 5 },
+            ],
+            siteManager: userId,
+            site: site._id,
+            comments: "comments",
+            dateToBeDelivered: new Date("2021-10-10 10:00:00") as Date,
+          })
+          .set("Authorization", `Bearer ${jwt}`);
+
+        expect(statusCode).toBe(201);
+
+        expect(body.status).toEqual("pending-approval");
+      });
+    });
+  });
+
+  describe("get order list", () => {
+    describe("given the user is not logged in", () => {
+      it("should return a 403", async () => {
+        const { statusCode } = await supertest(app).get("/api/orders");
+
+        expect(statusCode).toBe(403);
+      });
+    });
+    describe("given the user is logged in", () => {
+      it("should return a 200 and get all orders", async () => {
+        const jwt = signJwt(userPayload);
+
+        const { statusCode, body } = await supertest(app)
+          .get("/api/orders")
+
+          .set("Authorization", `Bearer ${jwt}`);
+
+        expect(statusCode).toBe(200);
+        expect(body[0].status).toEqual("pending-approval");
       });
     });
   });
