@@ -4,6 +4,7 @@ class Product {
   final String description;
   final String image;
   final double price;
+  final bool isAvailable;
 
   Product({
     required this.userId,
@@ -11,6 +12,7 @@ class Product {
     required this.description,
     required this.image,
     required this.price,
+    required this.isAvailable,
   });
 
   Map<String, dynamic> toJson() => {
@@ -19,6 +21,7 @@ class Product {
         'description': description,
         'image': image,
         'price': price,
+        'isAvailable': isAvailable,
       };
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -28,6 +31,7 @@ class Product {
       description: json['description'],
       image: json['image'],
       price: json['price'],
+      isAvailable: json['isAvailable'],
     );
   }
 }
