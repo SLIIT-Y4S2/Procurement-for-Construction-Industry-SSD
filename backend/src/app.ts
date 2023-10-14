@@ -4,7 +4,7 @@ import connect from "./utils/connect";
 import logger from "./utils/logger";
 import createServer from "./utils/server";
 
-const port = config.get<number>("port");
+const port = process.env.PORT || config.get<number>("port");
 
 const app = createServer();
 
