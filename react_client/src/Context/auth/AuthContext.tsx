@@ -28,7 +28,8 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(user);
       setAuthenticated(authenticated);
     } catch (error: any) {
-      message.error(JSON.stringify(error));
+      router.push(APP_ROUTES.LOGIN);
+      console.log(error);
     }
   }, [message, router]);
 

@@ -5,7 +5,7 @@ import Header from "@/components/organisms/Header";
 import { usePathname } from "next/navigation";
 import Sider from "@/components/organisms/Sider";
 import Breadcrumb from "@/components/molecules/Breadcrumbs";
-import { AuthContext } from "@/Context/auth/AuthContext";
+import { AuthContext } from "@/context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
 import Loading from "@/components/atoms/Loading";
 
@@ -44,6 +44,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
               margin: 0,
               minHeight: 280,
               background: colorBgContainer,
+              overflowX: "auto",
             }}
           >
             {children}

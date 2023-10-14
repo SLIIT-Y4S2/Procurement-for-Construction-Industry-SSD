@@ -1,5 +1,5 @@
 export interface IUser {
-  id: number;
+  _id: number;
   name: string;
   email: string;
   role: "siteManager" | "companyManager" | "procurementStaff" | "supplier";

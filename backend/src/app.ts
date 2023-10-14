@@ -1,9 +1,10 @@
-import express from "express";
 import connect from "./utils/connect";
 import logger from "./utils/logger";
 import createServer from "./utils/server";
+import dotenv from "dotenv";
 
-const port = process.env.PORT || 2000;
+dotenv.config();
+const port = process.env.PORT || 5000;
 
 const app = createServer();
 

@@ -1,4 +1,4 @@
-import UserManagementContextProvider from "@/Context/UserManagement/UserManagementContext";
+import UserManagementContextProvider from "@/context/UserManagement/UserManagementContext";
 
 export default function RootLayout({
   children,

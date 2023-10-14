@@ -1,4 +1,4 @@
-import SiteContextProvider from "@/Context/Site/SiteContext";
+import SiteContextProvider from "@/context/Site/SiteContext";
 
 export default function RootLayout({
   children,
