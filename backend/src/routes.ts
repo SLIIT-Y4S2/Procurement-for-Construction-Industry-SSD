@@ -67,7 +67,11 @@ import {
   updateItemHandler,
 } from "./controller/item.controller";
 // order imports
-import { getSupplierListHandler } from "./controller/order.controller";
+import {
+  getSupplierItemListHandler,
+  getSupplierListHandler,
+} from "./controller/order.controller";
+import { get } from "lodash";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -115,8 +119,6 @@ function routes(app: Express) {
     [requireCompanyManager, validateResource(updateUserSchema)],
     updateUserHandler
   );
-
-  app.get("/api/suppliers", [requireUser], getSupplierListHandler);
 
   //
 
@@ -179,6 +181,25 @@ function routes(app: Express) {
     "/api/items/:itemId",
     [requireProcurementStaff, validateResource(updateItemSchema)],
     updateItemHandler
+  );
+
+  //
+
+  //
+
+  //
+
+  //
+  // todo  order related routes
+
+  //get all suppliers
+  app.get("/api/suppliers", [requireUser], getSupplierListHandler);
+
+  //get all items of a supplier
+  app.get(
+    "/api/suppliers/:supplierId/items",
+    [requireUser],
+    getSupplierItemListHandler
   );
 
   // todo remove product routes
