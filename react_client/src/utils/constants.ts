@@ -1,4 +1,8 @@
-export const BASE_API_URL = "http://localhost:5000/api";
+const HEROKU_BACKEND_URL =
+  "https://procument-backend-61616eb5472a.herokuapp.com/api";
+const LOCALHOST_BACKEND_URL = "http://localhost:5000/api";
+
+export const BASE_API_URL = HEROKU_BACKEND_URL;
 
 export const API_ROUTES = {
   GET_USER: `/sessions`,

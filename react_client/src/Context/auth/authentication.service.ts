@@ -15,7 +15,7 @@ export function removeTokenFromLocalStorage() {
 const getAxiosInstance = () => {
   const instance = axios.create({
     baseURL: BASE_API_URL,
-    timeout: 1000,
+    timeout: 5000,
   });
   return instance;
 };
