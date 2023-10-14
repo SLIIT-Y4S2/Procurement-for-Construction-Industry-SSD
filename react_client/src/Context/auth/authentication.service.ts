@@ -38,38 +38,33 @@ export async function fetchAndSetAuthenticatedUserToken(
 
 export async function getAuthenticatedUser() {
   const defaultReturnObject = { authenticated: false, user: null };
-  try {
-    const token = getTokenFromLocalStorage();
-    if (!token) {
-      return defaultReturnObject;
-    }
+  const token = getTokenFromLocalStorage();
+  if (!token) {
+    throw new Error("No Token Found");
+  }
 
-    const response = await getAxiosInstance().get(API_ROUTES.GET_USER, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // console.log("getAuthenticatedUser, response", response.status);
+  const response = await getAxiosInstance().get(API_ROUTES.GET_USER, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // console.log("getAuthenticatedUser, response", response.status);
 
-    if (response.status !== 200) {
-      return defaultReturnObject;
-    }
+  if (response.status !== 200) {
+    throw new Error("No Token Found");
+  }
 
-    const sessions = response.data;
+  const sessions = response.data;
 
-    if (sessions.length === 0) {
-      removeTokenFromLocalStorage();
-      return defaultReturnObject;
-    }
-    const lastSession = {
-      authenticated: true,
-      user: sessions[sessions.length - 1].user,
-    };
-    return sessions[sessions.length - 1] ? lastSession : defaultReturnObject;
-  } catch (err) {
-    console.log("getAuthenticatedUser, Something Went Wrong", err);
+  if (sessions.length === 0) {
+    removeTokenFromLocalStorage();
     return defaultReturnObject;
   }
+  const lastSession = {
+    authenticated: true,
+    user: sessions[sessions.length - 1].user,
+  };
+  return sessions[sessions.length - 1] ? lastSession : defaultReturnObject;
 }
 export const removeAuthenticatedUser = async () => {
   try {

@@ -68,8 +68,6 @@ export async function updateSiteHandler(
   try {
     const siteId = req.params.siteId;
     const update = req.body;
-    console.log(update);
-    console.log(siteId);
     const site = await findSite({ siteId });
 
     if (!site) {

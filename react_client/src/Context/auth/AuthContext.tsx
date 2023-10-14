@@ -1,10 +1,10 @@
 "use client";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useCallback } from "react";
 import {
   fetchAndSetAuthenticatedUserToken,
   getAuthenticatedUser,
   removeAuthenticatedUser,
-} from "./authentication.services";
+} from "./authentication.service";
 import { APP_ROUTES } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { IAuthContext, IUser } from "@/types/auth.interface";
@@ -18,7 +18,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { message } = App.useApp();
 
-  async function getUserDetails() {
+  const getUserDetails = useCallback(async () => {
     try {
       const { authenticated, user } = await getAuthenticatedUser();
       if (!authenticated) {
@@ -28,13 +28,13 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(user);
       setAuthenticated(authenticated);
     } catch (error: any) {
-      message.error(error.message);
+      message.error(JSON.stringify(error));
     }
-  }
+  }, [message, router]);
 
   useEffect(() => {
     getUserDetails();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [getUserDetails]);
 
   const logout = () => {
     removeAuthenticatedUser();

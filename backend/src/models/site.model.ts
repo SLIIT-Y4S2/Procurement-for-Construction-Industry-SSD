@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { customAlphabet } from "nanoid";
-
 const nanoid = customAlphabet("0123456789", 10);
 
 export interface SiteInput {
@@ -22,7 +21,7 @@ const siteSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      default: () => `site_${nanoid()}`,
+      default: () => `SITE_${nanoid()}`,
     },
     name: { type: String, required: true },
     address: { type: String, required: true },

@@ -1,9 +1,9 @@
 "use client";
 import React, { useContext } from "react";
 import { Layout, theme } from "antd";
-import Header from "@/components/oraganisms/Header";
+import Header from "@/components/organisms/Header";
 import { usePathname } from "next/navigation";
-import Sider from "@/components/oraganisms/Sider";
+import Sider from "@/components/organisms/Sider";
 import Breadcrumb from "@/components/molecules/Breadcrumbs";
 import { AuthContext } from "@/Context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";

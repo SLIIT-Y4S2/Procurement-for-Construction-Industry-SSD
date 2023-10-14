@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react";
-import SiteForm from "@/components/molecules/SiteForm";
+import UserForm from "@/components/molecules/UserForm";
 import { Button, Drawer } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { SiteContext } from "@/Context/Site/SiteContext";
+import { UserManagementContext } from "@/Context/UserManagement/UserManagementContext";
 
-const AddSite = () => {
+const AddUser = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { createSite } = useContext(SiteContext) as ISiteContext;
+  const { createUser } = useContext(
+    UserManagementContext
+  ) as IUserManagementContext;
   const closeDrawer = () => setIsOpen(false);
-  const callCreateSite = async (values: Site) => {
+  const callCreateUser = async (values: IManagementUser) => {
     try {
-      await createSite(values);
+      await createUser(values);
       closeDrawer();
     } catch (e) {}
   };
@@ -21,19 +23,19 @@ const AddSite = () => {
         onClick={() => setIsOpen(true)}
         icon={<PlusOutlined />}
       >
-        Add New Site
+        Add New User
       </Button>
       <Drawer
-        title="Edit Site"
+        title="Add User"
         placement="right"
         onClose={closeDrawer}
         open={isOpen}
         width={600}
       >
-        <SiteForm formSubmission={callCreateSite} />
+        <UserForm formSubmission={callCreateUser} />
       </Drawer>
     </>
   );
 };
 
-export default AddSite;
+export default AddUser;

@@ -5,8 +5,8 @@ import { IAuthContext } from "@/types/auth.interface";
 import React, { useContext } from "react";
 import { Table } from "antd";
 import { format } from "date-fns";
-import SiteEdit from "@/components/oraganisms/SiteEdit";
-import AddSite from "@/components/oraganisms/SiteAdd";
+import SiteEdit from "@/components/organisms/SiteEdit";
+import AddSite from "@/components/organisms/SiteAdd";
 
 const Sites = () => {
   const { user, authenticated } = useContext(AuthContext) as IAuthContext;
@@ -101,6 +101,6 @@ const columns = [
   {
     title: "Action",
     key: "action",
-    render: (text: string, record: Site) => <SiteEdit currentSite={record} />,
+    render: (text: string, record: ISite) => <SiteEdit currentSite={record} />,
   },
 ];

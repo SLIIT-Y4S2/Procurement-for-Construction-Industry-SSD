@@ -24,8 +24,8 @@ const Sider = () => {
     <AntdSider width={300} style={{ background: colorBgContainer }} collapsible>
       <Menu
         mode="inline"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        // defaultSelectedKeys={["1"]}
+        // defaultOpenKeys={["sub1"]}
         style={{ height: "100%", borderRight: 0 }}
         items={items1}
         theme="dark"
@@ -40,15 +40,11 @@ const items1: MenuProps["items"] = [
   {
     key: "employees",
     icon: <UserOutlined />,
-    label: "Employees",
+    label: "User Management",
     children: [
       {
-        key: "viewEmployees",
-        label: <Link href="/employees">View Employees</Link>,
-      },
-      {
-        key: "addEmployee",
-        label: <Link href="/employees/add">Add Employee</Link>,
+        key: APP_ROUTES.USERS_MANAGEMENT,
+        label: <Link href={APP_ROUTES.USERS_MANAGEMENT}>View Users</Link>,
       },
     ],
   },

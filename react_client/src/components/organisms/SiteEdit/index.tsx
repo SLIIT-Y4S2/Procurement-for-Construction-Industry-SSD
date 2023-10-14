@@ -4,11 +4,11 @@ import { Button, Drawer } from "antd";
 import { EditFilled } from "@ant-design/icons";
 import { SiteContext } from "@/Context/Site/SiteContext";
 
-const SiteEdit = ({ currentSite }: { currentSite: Site }) => {
+const SiteEdit = ({ currentSite }: { currentSite: ISite }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { updateSite } = useContext(SiteContext) as ISiteContext;
   const closeDrawer = () => setIsOpen(false);
-  const callUpdateSite = async (values: Site) => {
+  const callUpdateSite = async (values: ISite) => {
     try {
       await updateSite(currentSite.siteId, values);
       closeDrawer();

@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactNode, createContext, useEffect, useState } from "react";
-import SiteService from "@/Context/Site/site.services";
-import { message } from "antd";
+import SiteService from "@/Context/Site/site.service";
+import { App } from "antd";
 
 export const SiteContext = createContext<ISiteContext>({
   sites: [],
@@ -11,8 +11,9 @@ export const SiteContext = createContext<ISiteContext>({
 });
 
 const SiteContextProvider = ({ children }: { children: ReactNode }) => {
-  const [sites, setSites] = useState<Site[]>([]);
+  const [sites, setSites] = useState<ISite[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { message } = App.useApp();
 
   useEffect(() => {
     const getAllSites = async () => {
@@ -24,7 +25,7 @@ const SiteContextProvider = ({ children }: { children: ReactNode }) => {
     getAllSites();
   }, []);
 
-  const createSite = async (site: Site) => {
+  const createSite = async (site: ISite) => {
     try {
       const createdSite = await SiteService.createSite(site);
       // Add new site to the sites array
@@ -42,7 +43,7 @@ const SiteContextProvider = ({ children }: { children: ReactNode }) => {
     setSites((prevSites) => prevSites.filter((site) => site._id !== id));
   };
 
-  const updateSite = async (siteId: string, updatedSite: Site) => {
+  const updateSite = async (siteId: string, updatedSite: ISite) => {
     try {
       const updated = await SiteService.updateSite(siteId, updatedSite);
       // Find the site with the given siteId and update its properties

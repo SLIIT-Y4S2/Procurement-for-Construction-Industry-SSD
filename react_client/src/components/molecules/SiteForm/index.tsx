@@ -4,8 +4,8 @@ import { Button, Form, Input } from "antd";
 const { Item } = Form;
 
 interface SiteFromProps {
-  currentSite?: Site;
-  formSubmission: (values: Site) => void;
+  currentSite?: ISite;
+  formSubmission: (values: ISite) => void;
 }
 
 const SiteForm = ({ currentSite, formSubmission }: SiteFromProps) => {

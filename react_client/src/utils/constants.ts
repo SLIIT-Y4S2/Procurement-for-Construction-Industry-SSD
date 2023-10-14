@@ -7,12 +7,14 @@ export const API_ROUTES = {
   LOGOUT: `/logout`,
   DELETE_SESSION: `/sessions`,
   SITES: `/sites`,
+  USER_MANAGEMENT: `/user-management`,
 };
 
 export const APP_ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   SITES: "/sites",
+  USERS_MANAGEMENT: "/user-management",
 };
 
 export const breadcrumbNameMap: Record<string, string> = {
