@@ -30,6 +30,7 @@ void _logoutEventHandeler(SignOut event, Emitter<AuthState> emit) async {
   if (isLoggedOut) {
     // authRepository.isTokenAvailable();
     emit(SignedOut());
+    emit(AuthInitial());
   } else {
     emit(SignOutFailed());
   }

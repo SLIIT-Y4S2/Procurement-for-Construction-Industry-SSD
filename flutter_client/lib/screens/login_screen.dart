@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/constants.dart';
-import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/widgets/loginFormField.dart';
 
 class LoginScreen extends StatefulWidget {

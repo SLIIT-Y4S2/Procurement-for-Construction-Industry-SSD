@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color kSeedColor = Color.fromARGB(255, 0, 48, 73);
-const Color kPrimaryColor = Color.fromARGB(255, 0, 48, 73);
+const Color kSeedColor = Color(0xFF2F1160);
+const Color kPrimaryColor = Color(0xFF2F1160);
 const String kLoginScreenTitle = 'Sign In';
 const String kLoginScreenImagePath = 'assets/images/site_eng.jpg';
 
