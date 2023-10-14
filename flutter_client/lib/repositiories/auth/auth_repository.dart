@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter_client/exceptions/auth_exceptions.dart';
 import 'package:flutter_client/repositiories/auth/base_auth_repository.dart';
+import 'package:flutter_client/repositiories/paths.dart';
 import 'package:http/http.dart' as http;
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,8 +37,8 @@ class AuthRepository extends BaseAuthRepository {
   @override
   Future<bool> login(String email, String password) async {
     final Uri authApiUri = Uri.https(
-      'procument-backend-61616eb5472a.herokuapp.com',
-      'api/login',
+      hostName,
+      authPath,
     );
 
     // Request headers

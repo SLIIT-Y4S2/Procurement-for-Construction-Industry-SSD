@@ -1,5 +1,5 @@
-import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/user_model.dart';
 
 abstract class BaseProductrepository {
-  Future<List<Product>> getProducts();
+  Future<List<User>> getProducts();
 }
