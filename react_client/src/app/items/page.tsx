@@ -11,7 +11,9 @@ import { format } from "date-fns";
 import React, { useContext } from "react";
 
 const Items = () => {
-  const { items } = useContext(ItemManagementContext) as IItemManagementContext;
+  const { items, loading } = useContext(
+    ItemManagementContext
+  ) as IItemManagementContext;
   const tableData = items.map((item) => {
     return {
       key: item.itemId,
@@ -26,6 +28,7 @@ const Items = () => {
       <Table
         dataSource={tableData}
         columns={columns}
+        loading={loading}
         expandable={{
           expandedRowRender: (record) => (
             <p>

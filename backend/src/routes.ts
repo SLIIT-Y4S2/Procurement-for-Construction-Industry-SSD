@@ -13,7 +13,8 @@ import {
   requireUser,
   requireCompanyManager,
   requireProcurementStaff,
-  requireSiteManger,
+  requireSiteManager,
+  requireSiteManagerOrProcurementStaffOrCompanyManager,
 } from "./middleware/requireUser";
 //todo remove this
 import {
@@ -70,7 +71,13 @@ import {
 import {
   getSupplierItemListHandler,
   getSupplierListHandler,
+  createOrderHandler,
+  getOrderListHandler,
 } from "./controller/order.controller";
+import {
+  getSupplierItemListSchema,
+  createOrderSchema,
+} from "./schema/order.schema";
 import { get } from "lodash";
 
 function routes(app: Express) {
@@ -198,9 +205,26 @@ function routes(app: Express) {
   //get all items of a supplier
   app.get(
     "/api/suppliers/:supplierId/items",
-    [requireUser],
+    [requireUser, validateResource(getSupplierItemListSchema)],
     getSupplierItemListHandler
   );
+
+  app.post(
+    "/api/orders",
+    [
+      requireSiteManagerOrProcurementStaffOrCompanyManager,
+      validateResource(createOrderSchema),
+    ],
+    createOrderHandler
+  );
+
+  app.get(
+    "/api/orders",
+    [requireSiteManagerOrProcurementStaffOrCompanyManager],
+    getOrderListHandler
+  );
+
+  //create for supplier where they can see all orders for their items
 
   // todo remove product routes
 
