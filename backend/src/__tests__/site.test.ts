@@ -24,6 +24,7 @@ export const userPayload = {
   email: "jane.doe@example.com",
   name: "Jane Doe",
   role: "procurementStaff",
+  contactNumber: "0712345678",
 };
 
 describe("site", () => {

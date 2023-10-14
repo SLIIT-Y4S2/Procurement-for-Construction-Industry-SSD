@@ -22,9 +22,13 @@ const Login = () => {
   const { login } = useContext(AuthContext) as IAuthContext;
 
   const redirectIfAuthenticated = async () => {
-    const isUserAuthenticated = await getAuthenticatedUser();
-    if (isUserAuthenticated?.authenticated) {
-      router.push("/");
+    try {
+      const isUserAuthenticated = await getAuthenticatedUser();
+      if (isUserAuthenticated?.authenticated) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

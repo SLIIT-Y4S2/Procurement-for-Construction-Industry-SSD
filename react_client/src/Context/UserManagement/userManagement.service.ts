@@ -1,24 +1,10 @@
-import { API_ROUTES, BASE_API_URL } from "@/utils/constants";
-import axios from "axios";
-import { getTokenFromLocalStorage } from "../auth/authentication.service";
-
-const getAxiosInstance = () => {
-  const token = getTokenFromLocalStorage();
-  if (!token) {
-    throw new Error("Unauthorized");
-  }
-  const instance = axios.create({
-    baseURL: BASE_API_URL,
-    timeout: 1000,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return instance;
-};
+import { API_ROUTES } from "@/utils/constants";
+import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
 
 async function fetchAllUsers() {
-  const response = await getAxiosInstance().get(API_ROUTES.USER_MANAGEMENT);
+  const response = await getAxiosInstanceWithAuth().get(
+    API_ROUTES.USER_MANAGEMENT
+  );
 
   if (response.status !== 200) {
     throw new Error("Something Went Wrong");
@@ -28,7 +14,7 @@ async function fetchAllUsers() {
 }
 
 async function createUser(user: IManagementUser) {
-  const response = await getAxiosInstance().post(
+  const response = await getAxiosInstanceWithAuth().post(
     API_ROUTES.USER_MANAGEMENT,
     user
   );
@@ -41,7 +27,7 @@ async function createUser(user: IManagementUser) {
 }
 
 async function deleteUser(userId: string) {
-  const response = await getAxiosInstance().delete(
+  const response = await getAxiosInstanceWithAuth().delete(
     `${API_ROUTES.USER_MANAGEMENT}/${userId}`
   );
 
@@ -51,7 +37,7 @@ async function deleteUser(userId: string) {
 }
 
 async function updateUser(userId: string, user: IManagementUser) {
-  const response = await getAxiosInstance().put(
+  const response = await getAxiosInstanceWithAuth().put(
     `${API_ROUTES.USER_MANAGEMENT}/${userId}`,
     user
   );

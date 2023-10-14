@@ -57,6 +57,9 @@ const UserManagement = () => {
         expandable={{
           expandedRowRender: (record) => (
             <p>
+              {" "}
+              <strong>Contact Number:</strong> {record.contactNumber}
+              <br />
               <strong>Created At:</strong>{" "}
               {format(new Date(record.createdAt), "dd/MM/yyyy")}
               <br />

@@ -1,24 +1,8 @@
-import { API_ROUTES, BASE_API_URL } from "@/utils/constants";
-import axios from "axios";
-import { getTokenFromLocalStorage } from "../auth/authentication.service";
-
-const getAxiosInstance = () => {
-  const token = getTokenFromLocalStorage();
-  if (!token) {
-    throw new Error("Unauthorized");
-  }
-  const instance = axios.create({
-    baseURL: BASE_API_URL,
-    timeout: 1000,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return instance;
-};
+import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
+import { API_ROUTES } from "@/utils/constants";
 
 async function fetchAllSites() {
-  const response = await getAxiosInstance().get(API_ROUTES.SITES);
+  const response = await getAxiosInstanceWithAuth().get(API_ROUTES.SITES);
 
   if (response.status !== 200) {
     throw new Error("Something Went Wrong");
@@ -28,7 +12,10 @@ async function fetchAllSites() {
 }
 
 async function createSite(site: ISite) {
-  const response = await getAxiosInstance().post(API_ROUTES.SITES, site);
+  const response = await getAxiosInstanceWithAuth().post(
+    API_ROUTES.SITES,
+    site
+  );
 
   if (response.status !== 201) {
     throw new Error("Something Went Wrong");
@@ -38,7 +25,7 @@ async function createSite(site: ISite) {
 }
 
 async function deleteSite(siteId: string) {
-  const response = await getAxiosInstance().delete(
+  const response = await getAxiosInstanceWithAuth().delete(
     `${API_ROUTES.SITES}/${siteId}`
   );
 
@@ -48,7 +35,7 @@ async function deleteSite(siteId: string) {
 }
 
 async function updateSite(siteId: string, site: ISite) {
-  const response = await getAxiosInstance().put(
+  const response = await getAxiosInstanceWithAuth().put(
     `${API_ROUTES.SITES}/${siteId}`,
     site
   );

@@ -20,6 +20,9 @@ const createPayload = {
       "procurementStaff",
       "supplier",
     ]),
+    contactNumber: string({
+      required_error: "Contact Number is required",
+    }),
   }).refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords do not match",
     path: ["passwordConfirmation"],

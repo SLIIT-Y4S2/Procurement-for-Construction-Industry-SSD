@@ -11,6 +11,7 @@ interface IManagementUser {
   name: string;
   email: string;
   role: string;
+  contactNumber: string;
   createdAt: string;
   updatedAt: string;
 }

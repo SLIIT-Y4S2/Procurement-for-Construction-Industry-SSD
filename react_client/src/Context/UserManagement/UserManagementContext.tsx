@@ -40,12 +40,6 @@ const UserManagementContextProvider = ({
     }
   };
 
-  // const deleteUser = async (id: string) => {
-  //   await UserService.deleteUser(id);
-  //   // Filter out the user with the given id
-  //   setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
-  // };
-
   const updateUser = async (userId: string, updatedUser: IManagementUser) => {
     try {
       const updated = await UserService.updateUser(userId, updatedUser);

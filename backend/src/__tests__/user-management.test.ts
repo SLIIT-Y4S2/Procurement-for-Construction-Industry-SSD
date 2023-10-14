@@ -16,6 +16,7 @@ const userPayload = {
   email: "jane.doe@example.com",
   name: "Jane Doe",
   role: "companyManager",
+  contactNumber: "0712345678",
 };
 
 const userInput: CreateUserInput["body"] = {
@@ -24,6 +25,7 @@ const userInput: CreateUserInput["body"] = {
   password: "Password123",
   passwordConfirmation: "Password123",
   role: "siteManager",
+  contactNumber: "0712345678",
 };
 
 describe("user-management", () => {
