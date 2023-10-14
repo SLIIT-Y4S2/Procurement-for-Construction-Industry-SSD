@@ -14,6 +14,7 @@ export interface IItem {
 
 export interface IItemManagementContext {
   items: IItem[];
+  loading: boolean;
   suppliers: ISupplier[];
   createItem: (item: IItem) => Promise<void>;
   updateItem: (id: string, item: IItem) => Promise<void>;

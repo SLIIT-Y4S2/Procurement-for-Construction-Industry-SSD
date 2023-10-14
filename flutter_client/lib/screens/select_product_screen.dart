@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/user_model.dart';
 import 'package:flutter_client/widgets/supplier_products_card.dart';
 
 class SelectProductScreen extends StatelessWidget {
-  const SelectProductScreen({required this.product, super.key});
-  final Product product;
+  const SelectProductScreen({required this.supplier, super.key});
+  final User supplier;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Select Product',
         ),
       ),
@@ -20,17 +20,17 @@ class SelectProductScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              if (product.isAvailable == true)
+              if (supplier.products.isNotEmpty)
                 ListView.separated(
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(8.0),
                   separatorBuilder: (context, index) => const SizedBox(
                     height: 8.0,
                   ),
-                  itemCount: 5,
+                  itemCount: supplier.products.length,
                   itemBuilder: (BuildContext context, int index) =>
                       SupplierProductsCard(
-                    product: product,
+                    product: supplier.products[index],
                   ),
                 ),
             ],

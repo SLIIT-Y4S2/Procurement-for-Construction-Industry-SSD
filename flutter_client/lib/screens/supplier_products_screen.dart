@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/products/products_bloc.dart';
-import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/user_model.dart';
 import 'package:flutter_client/screens/select_product_screen.dart';
 
 class SupplierProductsScreen extends StatelessWidget {
-  const SupplierProductsScreen({required this.product, super.key});
+  const SupplierProductsScreen({required this.supplier, super.key});
 
-  final Product product;
+  final User supplier;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SupplierProductsScreen extends StatelessWidget {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => SelectProductScreen(
-            product: product,
+            supplier: supplier,
           ),
         ),
       );
@@ -29,7 +29,7 @@ class SupplierProductsScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              '${product.title}',
+              'Products',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w900,
                   ),
@@ -41,16 +41,17 @@ class SupplierProductsScreen extends StatelessWidget {
                 horizontal: 24.0,
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${product.userId} Suppier name goes here ',
+                    supplier.name,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.w900,
                         ),
                   ),
                   Text(
-                    'Product ${product.description}',
+                    supplier.email,
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontWeight: FontWeight.w400,
                         ),

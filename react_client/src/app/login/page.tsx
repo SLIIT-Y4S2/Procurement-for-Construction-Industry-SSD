@@ -6,6 +6,7 @@ import { getAuthenticatedUser } from "@/context/auth/authentication.service";
 import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
 import { AuthContext } from "@/context/auth/AuthContext";
 import { IAuthContext } from "@/types/auth.interface";
+import Image from "next/image";
 
 type FieldType = {
   email?: string;
@@ -57,51 +58,67 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center  h-screen">
-      <h1 className="text-fuchsia-500 text-lg mb-5">Temp Login</h1>
-      <Form
-        name="basic"
-        layout="vertical"
-        style={{ maxWidth: 600 }}
-        onFinish={onFinish}
-        autoComplete="off"
-        requiredMark={false}
-      >
-        <Item<FieldType>
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your registration number !",
-            },
-          ]}
-        >
-          <Input />
-        </Item>
-        <Item<FieldType>
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Password />
-        </Item>
-        {error && (
-          <Item>
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          </Item>
-        )}
-        <Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-color-[#FFAE00]"
-            loading={isLoading}
+    <div className="flex flex-col justify-center items-center h-screen p-10">
+      <div className="flex bg-gray-200 min-w-[200px] w-full max-w-[1200px] min-h-[500px]">
+        <img
+          src="/images/login-background.png"
+          alt="login"
+          className="w-1/2 hidden md:block object-cover"
+        />
+        <div className="flex flex-col justify-evenly p-10 md:w-1/2 h-full w-full">
+          <div className="">
+            <h1 className=" text-4xl mb-5 font-bold">Welcome</h1>
+            <p className="text-gray-500 mb-5">
+              login to your account with credentials
+            </p>
+          </div>
+          <Form
+            name="basic"
+            layout="vertical"
+            style={{ maxWidth: 600 }}
+            onFinish={onFinish}
+            autoComplete="off"
+            requiredMark={false}
           >
-            Submit
-          </Button>
-        </Item>
-      </Form>
+            <Item<FieldType>
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your registration number !",
+                },
+              ]}
+            >
+              <Input />
+            </Item>
+            <Item<FieldType>
+              label="Password"
+              name="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            >
+              <Password />
+            </Item>
+            {error && (
+              <Item>
+                <p className="text-red-500 text-sm text-center">{error}</p>
+              </Item>
+            )}
+            <Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="bg-color-[#FFAE00]"
+                loading={isLoading}
+              >
+                Submit
+              </Button>
+            </Item>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 };

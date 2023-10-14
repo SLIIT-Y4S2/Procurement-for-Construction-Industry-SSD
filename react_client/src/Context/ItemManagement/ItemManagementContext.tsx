@@ -11,6 +11,7 @@ import { ISupplier } from "@/types/supplierManagement.interface";
 
 export const ItemManagementContext = createContext<IItemManagementContext>({
   items: [],
+  loading: true,
   suppliers: [],
   createItem: async () => {},
   updateItem: async () => {},
@@ -37,7 +38,7 @@ const ItemManagementContextProvider = ({
       // Fetch all suppliers from the server and update the suppliers array
       const allSuppliers = await supplierManagementService.fetchAllSuppliers();
       setSuppliers(allSuppliers);
-      setLoading(false);
+      // setLoading(false);
     };
     getAllSuppliers();
     getAllItems();
@@ -61,7 +62,7 @@ const ItemManagementContextProvider = ({
       // Find the item with the given id and update its properties
       setItems((prevItems) =>
         prevItems.map((item) =>
-          item._id === id ? { ...item, ...updated } : item
+          item.itemId === id ? { ...item, ...updated } : item
         )
       );
       message.success("Item updated successfully");
@@ -73,7 +74,7 @@ const ItemManagementContextProvider = ({
 
   return (
     <ItemManagementContext.Provider
-      value={{ items, suppliers, createItem, updateItem }}
+      value={{ items, suppliers, createItem, updateItem, loading }}
     >
       {children}
     </ItemManagementContext.Provider>

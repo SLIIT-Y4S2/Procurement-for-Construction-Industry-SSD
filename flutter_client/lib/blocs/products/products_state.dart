@@ -9,11 +9,19 @@ final class ProductsInitial extends ProductsState {}
 
 final class ProductsLoading extends ProductsState {}
 
+final class ProductsError extends ProductsState {
+  final String message;
+
+  const ProductsError({
+    required this.message,
+  });
+}
+
 final class ProductsLoaded extends ProductsState {
-  final List<Product> products;
+  final List<User> userProducts;
 
   const ProductsLoaded({
-    required this.products,
+    required this.userProducts,
   });
 }
 
