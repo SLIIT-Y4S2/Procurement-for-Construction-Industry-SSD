@@ -34,9 +34,8 @@ class _CreateRequisitionOrderState extends State<CreateRequisitionOrder> {
                   ),
             ),
           ),
-          body: SingleChildScrollView(
-              child: Padding(
-            padding: const EdgeInsets.all(24.0),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               children: [
                 Card(
@@ -80,19 +79,25 @@ class _CreateRequisitionOrderState extends State<CreateRequisitionOrder> {
                 if (state is ProductsLoading) const CircularProgressIndicator(),
                 if (state is ProductsLoaded)
                   state.products.isNotEmpty
-                      ? ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => SupplierDetailsCard(
-                              product: state.products[index]),
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 8.0,
+                      ? Expanded(
+                          child: ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) =>
+                                SupplierDetailsCard(
+                              product: state.products[index],
+                            ),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 8.0,
+                            ),
+                            itemCount: state.products.length,
                           ),
-                          itemCount: 5,
                         )
                       : const Text('No Products Found'),
               ],
             ),
-          )),
+          ),
         );
       },
     );
