@@ -61,7 +61,7 @@ const ItemManagementContextProvider = ({
       // Find the item with the given id and update its properties
       setItems((prevItems) =>
         prevItems.map((item) =>
-          item.id === id ? { ...item, ...updated } : item
+          item._id === id ? { ...item, ...updated } : item
         )
       );
       message.success("Item updated successfully");

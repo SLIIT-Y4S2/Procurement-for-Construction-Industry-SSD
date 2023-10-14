@@ -30,7 +30,7 @@ export async function getItemListHandler(
   res: Response
 ) {
   try {
-    const items = await getItemList();
+    const items = await getItemList({}, {});
     return res.send(items);
   } catch (error: any) {
     logger.error(error);

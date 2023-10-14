@@ -18,7 +18,7 @@ const ItemForm = ({
 }: ItemFormProps) => {
   return (
     <Form
-      initialValues={currentItem}
+      initialValues={{ ...currentItem, supplier: currentItem?.supplier._id }}
       layout="vertical"
       requiredMark={false}
       onFinish={formSubmission}
@@ -63,7 +63,7 @@ const ItemForm = ({
       </Item>
       <Item
         label="Supplier"
-        name="supplierId"
+        name="supplier"
         rules={[
           {
             required: true,

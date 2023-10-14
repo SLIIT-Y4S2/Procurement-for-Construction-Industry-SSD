@@ -23,8 +23,8 @@ export async function getSupplierItemListHandler(
   res: Response
 ) {
   try {
-    const supplierId = req.params.supplierId;
-    const users = await getItemList({ supplierId });
+    const supplier = req.params.supplierId;
+    const users = await getItemList({ supplier });
     return res.send(users);
   } catch (error: any) {
     logger.error(error);
