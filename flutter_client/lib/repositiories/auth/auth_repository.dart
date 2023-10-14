@@ -35,8 +35,8 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<bool> login(String email, String password) async {
-    final Uri authApiUri = Uri.http(
-      '192.168.1.5:5000',
+    final Uri authApiUri = Uri.https(
+      'procument-backend-61616eb5472a.herokuapp.com',
       'api/login',
     );
 

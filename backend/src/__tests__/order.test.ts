@@ -73,7 +73,7 @@ describe("order", () => {
           name: "item2",
           description: "item description",
           price: 100,
-          supplierId: supplier._id,
+          supplier: supplier._id,
         });
         const { statusCode } = await supertest(app).get(
           `/api/suppliers/${supplier._id}/items`
@@ -96,7 +96,7 @@ describe("order", () => {
           name: "item2",
           description: "item description",
           price: 100,
-          supplierId: supplier._id,
+          supplier: supplier._id,
         });
         const jwt = signJwt(userPayload);
 
