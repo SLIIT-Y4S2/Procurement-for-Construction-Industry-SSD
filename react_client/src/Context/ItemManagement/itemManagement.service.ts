@@ -1,6 +1,5 @@
 import { API_ROUTES } from "@/utils/constants";
 import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
-import { IItem } from "@/types/itemManagement.interface";
 
 async function fetchAllItems() {
   const response = await getAxiosInstanceWithAuth().get(

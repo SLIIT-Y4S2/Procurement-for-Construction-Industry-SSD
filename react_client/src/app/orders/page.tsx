@@ -2,11 +2,7 @@
 // import AddOrder from "@/components/organisms/OrderAdd";
 // import OrderEdit from "@/components/organisms/OrderEdit";
 import { OrderManagementContext } from "@/context/OrderManagement/OrderManagementContext";
-import { IUser } from "@/types/auth.interface";
-import {
-  IOrder,
-  IOrderManagementContext,
-} from "@/types/orderManagement.interface";
+
 import { Table } from "antd";
 import { format } from "date-fns";
 import React, { useContext } from "react";
@@ -30,7 +26,7 @@ const Orders = () => {
         loading={loading}
         expandable={{
           expandedRowRender: (record) => (
-            <p>
+            <div>
               {record.items.map((item) => {
                 return (
                   <div key={item.item._id}>
@@ -64,7 +60,7 @@ const Orders = () => {
               <br />
               <strong>Updated At:</strong>{" "}
               {format(new Date(record.updatedAt), "dd/MM/yyyy HH:mm:ss")}
-            </p>
+            </div>
           ),
         }}
       />
@@ -100,7 +96,7 @@ const columns = [
     render: (site: ISite) => <>{site.name}</>,
   },
   {
-    title: "Total",
+    title: "Total Price (Rs.)",
     dataIndex: "total",
     key: "total",
     render: (total: IOrder["total"]) => <>{total}</>,
@@ -179,7 +175,7 @@ const columns = [
 //   updatedAt: string;
 // }
 
-// interface IManagementUser {
+// interface IUser {
 //   _id: number;
 //   userId: string;
 //   name: string;

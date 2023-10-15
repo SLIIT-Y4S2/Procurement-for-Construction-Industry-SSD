@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Button, Drawer } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ItemManagementContext } from "@/context/ItemManagement/ItemManagementContext";
-import { IItemManagementContext } from "@/types/itemManagement.interface";
 import ItemForm from "@/components/molecules/ItemForm";
 
 const AddItem = () => {

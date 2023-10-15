@@ -1,13 +1,10 @@
-import { IUser } from "./auth.interface";
-import { IItem } from "./itemManagement.interface";
-
-export interface IOrderItem {
+interface IOrderItem {
   item: IItem;
   quantity: number;
   priceAtOrderTime: number;
 }
 
-export interface IOrder {
+interface IOrder {
   _id: string;
   orderId: string;
   supplier: IUser;
@@ -18,22 +15,20 @@ export interface IOrder {
   dateToBeDelivered: string;
   status:
     | "draft"
-    | "pending-approval"
-    | "approved-company"
+    | "pending"
+    | "approved"
     | "placed"
-    | "to-be-delivered"
-    | "partially-delivered"
-    | "delivered"
+    | "declined"
+    | "partially-shipped"
+    | "shipped"
+    | "pending-payment"
     | "invoiced"
-    | "closed"
-    | "revoke-site-manager"
-    | "declined-company"
-    | "declined-supplier";
+    | "closed";
   total: number;
   createdAt: Date;
   updatedAt: Date;
 }
-export interface IOrderManagementContext {
+interface IOrderManagementContext {
   orders: IOrder[];
   loading: boolean;
   createOrder: (order: IOrder) => Promise<void>;

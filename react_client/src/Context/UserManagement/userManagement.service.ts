@@ -13,7 +13,7 @@ async function fetchAllUsers() {
   return response.data;
 }
 
-async function createUser(user: IManagementUser) {
+async function createUser(user: IUser) {
   const response = await getAxiosInstanceWithAuth().post(
     API_ROUTES.USER_MANAGEMENT,
     user
@@ -36,7 +36,7 @@ async function deleteUser(userId: string) {
   }
 }
 
-async function updateUser(userId: string, user: IManagementUser) {
+async function updateUser(userId: string, user: IUser) {
   const response = await getAxiosInstanceWithAuth().put(
     `${API_ROUTES.USER_MANAGEMENT}/${userId}`,
     user

@@ -10,7 +10,7 @@ const AddUser = () => {
     UserManagementContext
   ) as IUserManagementContext;
   const closeDrawer = () => setIsOpen(false);
-  const callCreateUser = async (values: IManagementUser) => {
+  const callCreateUser = async (values: IUser) => {
     try {
       await createUser(values);
       closeDrawer();

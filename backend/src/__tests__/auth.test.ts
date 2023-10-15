@@ -36,7 +36,7 @@ const sessionPayload = {
   __v: 0,
 };
 
-describe("user", () => {
+describe("auth", () => {
   //user login
   describe("create user session", () => {
     describe("given the username and password are valid", () => {

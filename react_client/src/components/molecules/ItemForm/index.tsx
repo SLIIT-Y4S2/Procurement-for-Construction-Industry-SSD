@@ -1,7 +1,5 @@
 import React from "react";
 import { Button, Form, Input, InputNumber, Select } from "antd";
-import { IItem } from "@/types/itemManagement.interface";
-import { ISupplier } from "@/types/supplierManagement.interface";
 
 const { Item } = Form;
 

@@ -1,6 +1,6 @@
 "use client";
 import { AuthContext } from "@/context/auth/AuthContext";
-import { IAuthContext } from "@/types/auth.interface";
+
 import { ReactNode, useContext, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -18,7 +18,7 @@ const AuthenticationWrapper = ({ children }: { children: ReactNode }) => {
     if (!user && !authenticated) {
       router.push("/login");
     }
-  }, [user, authenticated]);
+  }, [user, authenticated, router]);
 
   if (pathname === "/login") {
     return <>{children}</>;
