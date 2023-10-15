@@ -5,6 +5,9 @@ import {
   NotificationOutlined,
   UserOutlined,
   ExperimentOutlined,
+  FileTextOutlined,
+  FileProtectOutlined,
+  FileSyncOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -37,6 +40,38 @@ const Sider = () => {
 
 export default Sider;
 const items1: MenuProps["items"] = [
+  {
+    key: "Order management",
+    icon: <FileTextOutlined />,
+    label: "Order Management",
+    children: [
+      {
+        key: APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER,
+        icon: <FileTextOutlined />,
+        label: (
+          <Link href={APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER}>All Orders</Link>
+        ),
+      },
+      {
+        key: APP_ROUTES.ORDER_MANAGEMENT.PENDING_ORDER,
+        icon: <FileSyncOutlined />,
+        label: (
+          <Link href={APP_ROUTES.ORDER_MANAGEMENT.PENDING_ORDER}>
+            Pending Orders TODO
+          </Link>
+        ),
+      },
+      {
+        key: APP_ROUTES.ORDER_MANAGEMENT.APPROVED_ORDER,
+        icon: <FileProtectOutlined />,
+        label: (
+          <Link href={APP_ROUTES.ORDER_MANAGEMENT.APPROVED_ORDER}>
+            Approved Orders TODO
+          </Link>
+        ),
+      },
+    ],
+  },
   {
     key: "Product management",
     icon: <ExperimentOutlined />,

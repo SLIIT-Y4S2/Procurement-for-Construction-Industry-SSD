@@ -26,10 +26,10 @@ const AddItem = () => {
         onClick={() => setIsOpen(true)}
         icon={<PlusOutlined />}
       >
-        Add New Site
+        Add New Item
       </Button>
       <Drawer
-        title="Edit Site"
+        title="Add Item"
         placement="right"
         onClose={closeDrawer}
         open={isOpen}

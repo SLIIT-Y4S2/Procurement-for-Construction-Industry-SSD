@@ -13,7 +13,7 @@ export const requireUser = (
 
   return next();
 };
-export const requireSiteManger = (
+export const requireSiteManager = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -79,6 +79,26 @@ export const requireCompanyManager = (
   }
 
   if (user.role !== "companyManager") {
+    return res.sendStatus(403);
+  }
+
+  return next();
+};
+
+export const requireSiteManagerOrProcurementStaffOrCompanyManager = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = res.locals.user;
+
+  if (!user) {
+    return res.sendStatus(403);
+  }
+
+  if (
+    !["siteManager", "procurementStaff", "companyManager"].includes(user.role)
+  ) {
     return res.sendStatus(403);
   }
 

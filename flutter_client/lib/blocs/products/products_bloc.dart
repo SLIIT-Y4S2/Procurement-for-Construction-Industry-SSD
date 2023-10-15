@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/user_model.dart';
 import 'package:flutter_client/repositiories/product/product_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -18,13 +19,21 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   // Load products
   void _getProductsHandler(
-      GetProductsEvent event, Emitter<ProductsState> emit) {
+      GetProductsEvent event, Emitter<ProductsState> emit) async {
     emit(
       ProductsLoading(),
     );
-    _productsRepository.getProducts().then(
+
+    await _productsRepository.getProducts().then(
       (products) {
-        emit(ProductsLoaded(products: products));
+        emit(ProductsLoaded(userProducts: products));
+      },
+    ).catchError(
+      (error) {
+        emit(
+          const ProductsError(
+              message: "Error loading products. Please try again."),
+        );
       },
     );
   }

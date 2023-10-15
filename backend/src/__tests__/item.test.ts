@@ -17,7 +17,7 @@ const userId = new mongoose.Types.ObjectId().toString();
 const supplierId = new mongoose.Types.ObjectId().toString();
 
 export const itemPayload = {
-  supplierId: supplierId,
+  supplier: supplierId,
   name: "Tokyo Cement 50kg",
   description: "Cement",
   price: 1000,
