@@ -17,6 +17,7 @@ class SelectedProductsScreen extends StatefulWidget {
 
 class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
   List<OrderProduct> _cart = [];
+  double _cartTotal = 0;
   @override
   void initState() {
     super.initState();
@@ -44,6 +45,7 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
           setState(() {
             _cart = state.orderProducts;
           });
+          _cartTotal = state.cartTotal;
         }
 
         if (state is RestoreProductToProductList) {
@@ -99,30 +101,65 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: ontapHandler,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Add Product',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                if (_cart.isNotEmpty)
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
-                    onPressed: ontapHandler,
+                    onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Add Product',
+                          'Total: LKR ${_cartTotal.toStringAsFixed(2)}',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: Colors.white,
                                   ),
                         ),
-                        const SizedBox(width: 16.0),
-                        const Icon(
-                          Icons.add,
-                          color: Colors.white,
+                        const Spacer(),
+                        Text(
+                          'Next',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: Colors.white,
+                                  ),
                         ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                        )
                       ],
-                    )),
+                    ),
+                  ),
               ],
             ),
           ),

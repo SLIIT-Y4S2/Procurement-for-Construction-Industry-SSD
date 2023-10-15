@@ -5,6 +5,7 @@ import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/repositiories/auth/auth_repository.dart';
 import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/screens/login_screen.dart';
+import 'package:flutter_client/screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProcumentMobileApp extends StatefulWidget {
@@ -84,7 +85,7 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
           textTheme: GoogleFonts.interTextTheme(),
           useMaterial3: true,
         ),
-        home: _isTokenAvailable ? const HomeScreen() : const LoginScreen(),
+        home: _isTokenAvailable ? const MainScreen() : const LoginScreen(),
       ),
     );
   }

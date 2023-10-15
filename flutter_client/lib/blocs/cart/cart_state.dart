@@ -9,9 +9,11 @@ final class CartInitial extends CartState {}
 
 class ProductCartUpdated extends CartState {
   final List<OrderProduct> orderProducts;
+  final double cartTotal;
 
   const ProductCartUpdated({
     required this.orderProducts,
+    required this.cartTotal,
   });
 }
 
