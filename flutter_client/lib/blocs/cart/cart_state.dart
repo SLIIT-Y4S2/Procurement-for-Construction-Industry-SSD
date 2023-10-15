@@ -8,17 +8,33 @@ sealed class CartState {
 final class CartInitial extends CartState {}
 
 class ProductCartUpdated extends CartState {
-  final List<Product> products;
+  final List<OrderProduct> orderProducts;
 
   const ProductCartUpdated({
-    required this.products,
+    required this.orderProducts,
   });
 }
 
 final class ProductCartState extends CartState {
-  final List<Product> products;
+  final List<OrderProduct> orderProduct;
 
   const ProductCartState({
-    required this.products,
+    required this.orderProduct,
+  });
+}
+
+final class RemoveProductTemporarilyFromProductList extends CartState {
+  final int productIndex;
+
+  const RemoveProductTemporarilyFromProductList({
+    required this.productIndex,
+  });
+}
+
+final class RestoreProductToProductList extends CartState {
+  final Product product;
+
+  const RestoreProductToProductList({
+    required this.product,
   });
 }

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/cart/cart_bloc.dart';
-import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/order_product.dart';
 import 'package:flutter_client/models/user_model.dart';
 import 'package:flutter_client/screens/select_product_screen.dart';
 import 'package:flutter_client/widgets/selected_product_card.dart';
 
-class SupplierProductsScreen extends StatefulWidget {
-  const SupplierProductsScreen({required this.supplier, super.key});
+class SelectedProductsScreen extends StatefulWidget {
+  const SelectedProductsScreen({required this.supplier, super.key});
 
   final User supplier;
 
   @override
-  State<SupplierProductsScreen> createState() => _SupplierProductsScreenState();
+  State<SelectedProductsScreen> createState() => _SupplierProductsScreenState();
 }
 
-class _SupplierProductsScreenState extends State<SupplierProductsScreen> {
-  List<Product> _cart = [];
+class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
+  List<OrderProduct> _cart = [];
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,15 @@ class _SupplierProductsScreenState extends State<SupplierProductsScreen> {
       listener: (context, state) {
         if (state is ProductCartUpdated) {
           setState(() {
-            _cart = state.products;
+            _cart = state.orderProducts;
+          });
+        }
+
+        if (state is RestoreProductToProductList) {
+          setState(() {
+            if (!widget.supplier.products.contains(state.product)) {
+              widget.supplier.products.add(state.product);
+            }
           });
         }
       },
@@ -86,7 +94,7 @@ class _SupplierProductsScreenState extends State<SupplierProductsScreen> {
                       ),
                     if (_cart.isNotEmpty)
                       for (var product in _cart)
-                        SelectedProductCard(product: product),
+                        SelectedProductCard(orderProduct: product),
                   ],
                 ),
                 const SizedBox(height: 16.0),

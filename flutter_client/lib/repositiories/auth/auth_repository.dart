@@ -21,7 +21,7 @@ class AuthRepository extends BaseAuthRepository {
         // Verify a token (SecretKey for HMAC & PublicKey for all the others)
         final jwt = JWT.verify(token, SecretKey('secret'));
 
-        if (jwt.payload['role'] == 'procurementStaff') {
+        if (jwt.payload['role'] == 'siteManager') {
           return true;
         } else {
           throw UnauthorizedException('Failed to login');
@@ -70,7 +70,7 @@ class AuthRepository extends BaseAuthRepository {
         // Verify a token (SecretKey for HMAC & PublicKey for all the others)
         final jwt = JWT.verify(acessToken, SecretKey('secret'));
 
-        if (jwt.payload['role'] == 'procurementStaff') {
+        if (jwt.payload['role'] == 'siteManager') {
           final SharedPreferences sharedPreferences =
               await SharedPreferences.getInstance();
           await sharedPreferences.setString('jwt', acessToken);

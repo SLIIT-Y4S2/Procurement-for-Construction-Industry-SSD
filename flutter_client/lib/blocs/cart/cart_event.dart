@@ -5,9 +5,13 @@ sealed class CartEvent {
   const CartEvent();
 }
 
-class AddProdctToCartEvent extends CartEvent {
+class AddingProdctToCartEvent extends CartEvent {
+  final int productIndex;
   final Product product;
-  const AddProdctToCartEvent({required this.product});
+  const AddingProdctToCartEvent({
+    required this.product,
+    required this.productIndex,
+  });
 }
 
 class LoadCartEvent extends CartEvent {
@@ -16,4 +20,11 @@ class LoadCartEvent extends CartEvent {
 
 class ClearCartEvent extends CartEvent {
   const ClearCartEvent();
+}
+
+class RemoveProductFromCartEvent extends CartEvent {
+  final OrderProduct orderProduct;
+  const RemoveProductFromCartEvent({
+    required this.orderProduct,
+  });
 }

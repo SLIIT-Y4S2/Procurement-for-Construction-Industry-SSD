@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_client/models/user_model.dart';
-import 'package:flutter_client/screens/supplier_products_screen.dart';
+import 'package:flutter_client/screens/selected_products_screen.dart';
 
 class SupplierDetailsCard extends StatelessWidget {
   const SupplierDetailsCard({required this.supplier, super.key});
@@ -11,7 +11,7 @@ class SupplierDetailsCard extends StatelessWidget {
     void ontapHandler() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => SupplierProductsScreen(
+          builder: (context) => SelectedProductsScreen(
             supplier: supplier,
           ),
         ),
