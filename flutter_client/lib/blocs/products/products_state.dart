@@ -24,11 +24,3 @@ final class ProductsLoaded extends ProductsState {
     required this.userProducts,
   });
 }
-
-class ProductCartUpdated extends ProductsState {
-  final List<Product> products;
-
-  const ProductCartUpdated({
-    required this.products,
-  });
-}

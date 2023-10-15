@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_client/blocs/cart/cart_bloc.dart';
 import 'package:flutter_client/blocs/products/products_bloc.dart';
 import 'package:flutter_client/models/product_model.dart';
 import 'package:flutter_client/widgets/supplier_details_card.dart';
@@ -21,7 +22,9 @@ class _CreateRequisitionOrderState extends State<CreateRequisitionOrder> {
   @override
   void initState() {
     super.initState();
+
     _triggerLoadProductEvent();
+    context.read<CartBloc>().add(const ClearCartEvent());
   }
 
   @override

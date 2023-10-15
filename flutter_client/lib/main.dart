@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/auth/auth_bloc.dart';
+import 'package:flutter_client/blocs/cart/cart_bloc.dart';
 import 'package:flutter_client/blocs/products/products_bloc.dart';
 import 'package:flutter_client/procument_mobile_app.dart';
 import 'package:flutter_client/repositiories/auth/auth_repository.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MultiRepositoryProvider(
     providers: [
       RepositoryProvider(
@@ -17,6 +20,9 @@ void main() {
       RepositoryProvider(
         create: (context) => ProductsBloc(),
       ),
+      RepositoryProvider(
+        create: (context) => CartBloc(),
+      )
     ],
     child: const ProcumentMobileApp(),
   ));

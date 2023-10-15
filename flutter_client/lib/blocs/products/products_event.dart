@@ -8,12 +8,3 @@ abstract class ProductsEvent {
 class GetProductsEvent extends ProductsEvent {
   const GetProductsEvent();
 }
-
-class AddProdctToCartEvent extends ProductsEvent {
-  final Product product;
-  const AddProdctToCartEvent({required this.product});
-}
-
-class LoadCartEvent extends ProductsEvent {
-  const LoadCartEvent();
-}

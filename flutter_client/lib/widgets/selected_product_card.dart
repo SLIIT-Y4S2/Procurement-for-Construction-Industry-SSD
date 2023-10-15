@@ -11,13 +11,23 @@ class SelectedProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        contentPadding: EdgeInsets.all(8),
-        title: Text(product.title),
-        subtitle: Text(product.description),
-        trailing: Column(
-          children: [
-            Text('${product.price}'),
-          ],
+        title: Text(
+          product.title,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
+        ),
+        subtitle: Text(
+          product.description,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
+        ),
+        trailing: Text(
+          'LKR ${product.price.toStringAsFixed(2)}',
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
         ),
       ),
     );
