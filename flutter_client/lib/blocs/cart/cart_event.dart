@@ -28,3 +28,17 @@ class RemoveProductFromCartEvent extends CartEvent {
     required this.orderProduct,
   });
 }
+
+class IncreaseProductQuantityEvent extends CartEvent {
+  final OrderProduct orderProduct;
+  const IncreaseProductQuantityEvent({
+    required this.orderProduct,
+  });
+}
+
+class DecreaseProductQuantityEvent extends CartEvent {
+  final OrderProduct orderProduct;
+  const DecreaseProductQuantityEvent({
+    required this.orderProduct,
+  });
+}

@@ -17,6 +17,48 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<AddingProdctToCartEvent>(_addProductToCartHandler);
     on<ClearCartEvent>(_clearCartHandler);
     on<RemoveProductFromCartEvent>(_removeProductFromCartHandler);
+    on<IncreaseProductQuantityEvent>(_increaseProductQuantityHandler);
+    on<DecreaseProductQuantityEvent>(_decreaseProductQuantityHandler);
+  }
+
+  //Calculate cart total
+  double calculateCartTotal() {
+    double cartTotal = 0;
+    for (var product in _cart) {
+      cartTotal += product.price * product.quantity;
+      print(product.quantity);
+    }
+    print(cartTotal);
+    return cartTotal;
+  }
+
+  //Increase product quantity
+  void _increaseProductQuantityHandler(
+      IncreaseProductQuantityEvent event, Emitter<CartState> emit) {
+    for (var product in _cart) {
+      if (product.productId == event.orderProduct.productId) {
+        product.quantity = event.orderProduct.quantity + 1;
+        print('temp qty => ${product.quantity}');
+      }
+    }
+
+    _cartTotal = calculateCartTotal();
+
+    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: _cartTotal));
+  }
+
+  //Decrease product quantity
+  void _decreaseProductQuantityHandler(
+      DecreaseProductQuantityEvent event, Emitter<CartState> emit) {
+    for (var product in _cart) {
+      if (product.productId == event.orderProduct.productId) {
+        product.quantity--;
+      }
+    }
+
+    _cartTotal = calculateCartTotal();
+
+    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: _cartTotal));
   }
 
   // Add product to cart
@@ -34,9 +76,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     _cart.add(orderProduct);
     _temporaryProducts.add(event.product);
 
-    for (var product in _cart) {
-      _cartTotal += product.price;
-    }
+    _cartTotal = calculateCartTotal();
 
     emit(ProductCartUpdated(orderProducts: _cart, cartTotal: _cartTotal));
   }
@@ -66,13 +106,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
 
-    for (var product in _cart) {
-      _cartTotal += product.price;
-    }
+    _cartTotal = calculateCartTotal();
 
     emit(ProductCartUpdated(
       orderProducts: _cart,
-      cartTotal: _cartTotal - event.orderProduct.price,
+      cartTotal: _cartTotal,
     ));
   }
 }

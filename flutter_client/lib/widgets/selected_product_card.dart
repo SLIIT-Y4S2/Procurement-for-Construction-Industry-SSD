@@ -18,20 +18,28 @@ class SelectedProductCard extends StatefulWidget {
 class _SelectedProductCardState extends State<SelectedProductCard> {
   int _productQuantity = 0;
   void _addQuantity() {
-    widget.orderProduct.quantity--;
     setState(() {
       _productQuantity++;
     });
+    BlocProvider.of<CartBloc>(context).add(
+      IncreaseProductQuantityEvent(
+        orderProduct: widget.orderProduct,
+      ),
+    );
   }
 
   void _deductQuantity() {
-    widget.orderProduct.quantity--;
-
-    setState(() {
-      if (_productQuantity > 0) {
+    if (_productQuantity > 0) {
+      setState(() {
         _productQuantity--;
-      }
-    });
+      });
+
+      BlocProvider.of<CartBloc>(context).add(
+        DecreaseProductQuantityEvent(
+          orderProduct: widget.orderProduct,
+        ),
+      );
+    }
   }
 
   void _onTapDelete() {

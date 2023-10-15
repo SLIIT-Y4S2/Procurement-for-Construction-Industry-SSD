@@ -46,6 +46,7 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
             _cart = state.orderProducts;
           });
           _cartTotal = state.cartTotal;
+          print(_cartTotal);
         }
 
         if (state is RestoreProductToProductList) {
@@ -65,41 +66,80 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
                 ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.supplier.name,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: FontWeight.w900,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.supplier.name,
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+              ),
+              Text(
+                widget.supplier.email,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+              const SizedBox(height: 16.0),
+              Column(
+                children: [
+                  if (_cart.isEmpty)
+                    Text(
+                      'No products added yet.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  if (_cart.isNotEmpty)
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxHeight: 480,
                       ),
-                ),
-                Text(
-                  widget.supplier.email,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w400,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 16.0,
+                        ),
+                        itemCount: _cart.length,
+                        itemBuilder: (context, index) =>
+                            SelectedProductCard(orderProduct: _cart[index]),
                       ),
+                    )
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(height: 16.0),
-                Column(
+                onPressed: ontapHandler,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_cart.isEmpty)
-                      Text(
-                        'No products added yet.',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    if (_cart.isNotEmpty)
-                      for (var product in _cart)
-                        SelectedProductCard(orderProduct: product),
+                    Text(
+                      'Add Product',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    const SizedBox(width: 16.0),
+                    const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                   ],
                 ),
-                const SizedBox(height: 16.0),
+              ),
+              const SizedBox(height: 16.0),
+              const Spacer(),
+              if (_cart.isNotEmpty)
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -107,61 +147,32 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
                     ),
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: ontapHandler,
+                  onPressed: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Add Product',
+                        'Total: LKR ${_cartTotal.toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: Colors.white,
                             ),
                       ),
-                      const SizedBox(width: 16.0),
-                      const Icon(
-                        Icons.add,
-                        color: Colors.white,
+                      const Spacer(),
+                      Text(
+                        'Next',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Colors.white,
+                            ),
                       ),
+                      const Icon(
+                        Icons.chevron_right,
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),
-                const SizedBox(height: 16.0),
-                if (_cart.isNotEmpty)
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                    ),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Total: LKR ${_cartTotal.toStringAsFixed(2)}',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          'Next',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        Icon(
-                          Icons.chevron_right,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+              const SizedBox(height: 56.0),
+            ],
           ),
         ),
       ),
