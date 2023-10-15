@@ -1,6 +1,6 @@
 "use client";
 import { AuthContext } from "@/context/auth/AuthContext";
-import { IAuthContext } from "@/types/auth.interface";
+
 import { Button } from "antd";
 import Link from "next/link";
 import { useContext } from "react";

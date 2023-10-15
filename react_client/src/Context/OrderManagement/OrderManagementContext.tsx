@@ -2,10 +2,6 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { App } from "antd";
 import OrderService from "@/context/OrderManagement/orderManagement.service";
-import {
-  IOrder,
-  IOrderManagementContext,
-} from "@/types/orderManagement.interface";
 
 export const OrderManagementContext = createContext<IOrderManagementContext>({
   orders: [],

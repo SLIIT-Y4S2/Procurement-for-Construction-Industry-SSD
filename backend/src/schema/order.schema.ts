@@ -1,7 +1,7 @@
 import { object, number, string, TypeOf, array, date } from "zod";
 
 /// get all items of a supplier
-const params = {
+const paramsSupplierID = {
   params: object({
     supplierId: string({
       required_error: "Supplier is required",
@@ -10,7 +10,7 @@ const params = {
 };
 
 export const getSupplierItemListSchema = object({
-  ...params,
+  ...paramsSupplierID,
 });
 
 export type GetSupplierItemListInput = TypeOf<typeof getSupplierItemListSchema>;
@@ -31,7 +31,26 @@ const body = {
           required_error: "Quantity is required",
         }),
       })
-    ),
+    )
+      .refine((data) => data.length > 0, {
+        message: "Items are required",
+        path: ["items"],
+      })
+      .refine(
+        (data) => {
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].quantity <= 0) {
+              return false;
+            }
+          }
+          return true;
+        },
+        {
+          message: "Quantity should be greater than 0",
+          path: ["items"],
+        }
+      ),
+
     siteManager: string({
       required_error: "Site manager is required",
     }),
@@ -49,3 +68,19 @@ export const createOrderSchema = object({
 });
 
 export type CreateOrderInput = TypeOf<typeof createOrderSchema>;
+
+const params = {
+  params: object({
+    orderId: string({
+      required_error: "Order Id is required",
+    }),
+  }),
+};
+
+export const approveOrDeclineOrderSchema = object({
+  ...params,
+});
+
+export type ApproveOrDeclineOrderInput = TypeOf<
+  typeof approveOrDeclineOrderSchema
+>;

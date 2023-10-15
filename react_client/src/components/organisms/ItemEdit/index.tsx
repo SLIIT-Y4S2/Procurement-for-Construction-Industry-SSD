@@ -2,10 +2,7 @@ import React, { useContext, useState } from "react";
 import ItemForm from "@/components/molecules/ItemForm";
 import { Button, Drawer } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import {
-  IItem,
-  IItemManagementContext,
-} from "@/types/itemManagement.interface";
+
 import { ItemManagementContext } from "@/context/ItemManagement/ItemManagementContext";
 
 const ItemEdit = ({ currentItem }: { currentItem: IItem }) => {

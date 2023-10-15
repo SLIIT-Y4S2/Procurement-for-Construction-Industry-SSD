@@ -14,7 +14,7 @@ const UserManagementContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [users, setUsers] = useState<IManagementUser[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { message } = App.useApp();
 
@@ -28,7 +28,7 @@ const UserManagementContextProvider = ({
     getAllUsers();
   }, []);
 
-  const createUser = async (user: IManagementUser) => {
+  const createUser = async (user: IUser) => {
     try {
       const createdUser = await UserService.createUser(user);
       // Add new user to the users array
@@ -40,7 +40,7 @@ const UserManagementContextProvider = ({
     }
   };
 
-  const updateUser = async (userId: string, updatedUser: IManagementUser) => {
+  const updateUser = async (userId: string, updatedUser: IUser) => {
     try {
       const updated = await UserService.updateUser(userId, updatedUser);
       // Find the user with the given userId and update its properties

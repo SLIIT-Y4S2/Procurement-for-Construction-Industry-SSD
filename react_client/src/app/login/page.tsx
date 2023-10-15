@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { getAuthenticatedUser } from "@/context/auth/authentication.service";
 import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
 import { AuthContext } from "@/context/auth/AuthContext";
-import { IAuthContext } from "@/types/auth.interface";
+
 import Image from "next/image";
 
 type FieldType = {
