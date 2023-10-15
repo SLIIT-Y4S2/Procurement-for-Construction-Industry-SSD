@@ -8,6 +8,7 @@ import {
   FileTextOutlined,
   FileProtectOutlined,
   FileSyncOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -16,6 +17,7 @@ import { FaLocationDot } from "react-icons/fa6";
 const { Sider: AntdSider } = Layout;
 import { usePathname } from "next/navigation";
 import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
+// import Image from "next/image";
 
 const Sider = () => {
   const {
@@ -24,12 +26,20 @@ const Sider = () => {
   const pathname = usePathname();
 
   return (
-    <AntdSider width={300} style={{ background: colorBgContainer }} collapsible>
+    <AntdSider width={300} style={{ background: "#001529" }} collapsible>
+      <Link href={APP_ROUTES.HOME} className="w-full flex justify-center">
+        <img
+          src="/procuresync-main-logo.svg"
+          alt="logo"
+          height={90}
+          className="cursor-pointer p-5 object-left w-full"
+        />
+      </Link>
       <Menu
         mode="inline"
         // defaultSelectedKeys={["1"]}
         // defaultOpenKeys={["sub1"]}
-        style={{ height: "100%", borderRight: 0 }}
+        style={{ borderRight: 0 }}
         items={items1}
         theme="dark"
         selectedKeys={[pathname]}
@@ -40,6 +50,25 @@ const Sider = () => {
 
 export default Sider;
 const items1: MenuProps["items"] = [
+  // {
+  //   key: "home",
+  //   label: (
+  //     <Link href={APP_ROUTES.HOME}>
+  //       <Image
+  //         src="/procuresync-main-logo.svg"
+  //         alt="logo"
+  //         width={250}
+  //         height={200}
+  //         style={{ cursor: "pointer", padding: "100px 0px" }}
+  //       />
+  //     </Link>
+  //   ),
+  // },
+  {
+    key: APP_ROUTES.PENDING_APPROVALS,
+    icon: <InfoCircleOutlined />,
+    label: <Link href={APP_ROUTES.PENDING_APPROVALS}>Pending Approvals</Link>,
+  },
   {
     key: "Order management",
     icon: <FileTextOutlined />,

@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      default: () => `USER_${nanoid()}`,
+      default: () => `U-${nanoid()}`,
     },
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },

@@ -1,6 +1,4 @@
-import { ISupplier } from "./supplierManagement.interface";
-
-export interface IItem {
+interface IItem {
   _id: string;
   itemId: string;
   name: string;
@@ -12,7 +10,7 @@ export interface IItem {
   updatedAt: string;
 }
 
-export interface IItemManagementContext {
+interface IItemManagementContext {
   items: IItem[];
   loading: boolean;
   suppliers: ISupplier[];

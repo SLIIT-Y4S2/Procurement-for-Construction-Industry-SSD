@@ -1,6 +1,5 @@
 import { API_ROUTES } from "@/utils/constants";
 import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
-import { ISupplier } from "@/types/supplierManagement.interface";
 
 async function fetchAllSuppliers() {
   const response = await getAxiosInstanceWithAuth().get(

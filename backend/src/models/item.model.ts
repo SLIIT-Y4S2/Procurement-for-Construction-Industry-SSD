@@ -24,7 +24,7 @@ const itemSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      default: () => `ITEM_${nanoid()}`,
+      default: () => `I-${nanoid()}`,
     },
     supplier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     name: { type: String, required: true },

@@ -4,13 +4,13 @@ import { EditFilled } from "@ant-design/icons";
 import { UserManagementContext } from "@/context/UserManagement/UserManagementContext";
 import UserForm from "@/components/molecules/UserForm";
 
-const UserEdit = ({ currentUser }: { currentUser: IManagementUser }) => {
+const UserEdit = ({ currentUser }: { currentUser: IUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { updateUser } = useContext(
     UserManagementContext
   ) as IUserManagementContext;
   const closeDrawer = () => setIsOpen(false);
-  const callUpdateUser = async (values: IManagementUser) => {
+  const callUpdateUser = async (values: IUser) => {
     try {
       await updateUser(currentUser.userId, values);
       closeDrawer();

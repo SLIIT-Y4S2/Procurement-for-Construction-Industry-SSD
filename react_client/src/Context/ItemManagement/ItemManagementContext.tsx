@@ -2,12 +2,8 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { App } from "antd";
 import ItemService from "@/context/ItemManagement/itemManagement.service";
-import {
-  IItem,
-  IItemManagementContext,
-} from "@/types/itemManagement.interface";
+
 import supplierManagementService from "../SupplierManagement/supplierManagement.service";
-import { ISupplier } from "@/types/supplierManagement.interface";
 
 export const ItemManagementContext = createContext<IItemManagementContext>({
   items: [],

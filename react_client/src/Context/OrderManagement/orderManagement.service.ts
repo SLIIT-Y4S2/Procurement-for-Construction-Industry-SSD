@@ -1,6 +1,5 @@
 import { API_ROUTES } from "@/utils/constants";
 import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
-import { IOrder } from "@/types/orderManagement.interface";
 
 async function fetchAllOrders() {
   const response = await getAxiosInstanceWithAuth().get(

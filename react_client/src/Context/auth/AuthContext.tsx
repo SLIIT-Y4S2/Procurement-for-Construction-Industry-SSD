@@ -7,7 +7,6 @@ import {
 } from "./authentication.service";
 import { APP_ROUTES } from "@/utils/constants";
 import { useRouter } from "next/navigation";
-import { IAuthContext, IUser } from "@/types/auth.interface";
 import { App } from "antd";
 
 export const AuthContext = createContext<IAuthContext | null>(null);
@@ -31,7 +30,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       router.push(APP_ROUTES.LOGIN);
       console.log(error);
     }
-  }, [message, router]);
+  }, [router]);
 
   useEffect(() => {
     getUserDetails();

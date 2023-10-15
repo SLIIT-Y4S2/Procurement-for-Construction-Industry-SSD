@@ -20,6 +20,7 @@ export const API_ROUTES = {
   ITEM_MANAGEMENT: `/items`,
   SUPPLIER_MANAGEMENT: `/suppliers`,
   ORDER_MANAGEMENT: `/orders`,
+  PENDING_APPROVALS_COMPANY_MANGER: "/orders/pending-approval/company-manager", // get all pending approvals for company manager
 };
 
 export const APP_ROUTES = {
@@ -33,6 +34,7 @@ export const APP_ROUTES = {
     PENDING_ORDER: `/orders/pending`,
     APPROVED_ORDER: `/orders/approved`,
   },
+  PENDING_APPROVALS: "/pending-approvals",
 };
 
 export const breadcrumbNameMap: Record<string, string> = {
@@ -41,6 +43,7 @@ export const breadcrumbNameMap: Record<string, string> = {
   [APP_ROUTES.USERS_MANAGEMENT]: "User Management",
   [APP_ROUTES.ITEM_MANAGEMENT]: "Item Management",
   [APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER]: "Order Management",
+  [APP_ROUTES.PENDING_APPROVALS]: "pending-approvals",
 };
 
 export const COMPANY_MANAGER_ROUTES = [
@@ -48,6 +51,7 @@ export const COMPANY_MANAGER_ROUTES = [
   APP_ROUTES.USERS_MANAGEMENT,
   APP_ROUTES.SITES,
   APP_ROUTES.ITEM_MANAGEMENT,
+  APP_ROUTES.PENDING_APPROVALS,
   ...Object.values(APP_ROUTES.ORDER_MANAGEMENT),
 ];
 export const PROCUREMENT_STAFF_ROUTES = [APP_ROUTES.HOME, APP_ROUTES.SITES];
