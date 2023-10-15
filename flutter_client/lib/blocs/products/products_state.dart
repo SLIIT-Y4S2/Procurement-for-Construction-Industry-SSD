@@ -24,3 +24,11 @@ final class ProductsLoaded extends ProductsState {
     required this.userProducts,
   });
 }
+
+final class RemoveProductFromList extends ProductsState {
+  final int productIndex;
+
+  const RemoveProductFromList({
+    required this.productIndex,
+  });
+}

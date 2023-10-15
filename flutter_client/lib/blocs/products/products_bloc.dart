@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_client/models/product_model.dart';
 import 'package:flutter_client/models/user_model.dart';
 import 'package:flutter_client/repositiories/product/product_repository.dart';
 import 'package:meta/meta.dart';

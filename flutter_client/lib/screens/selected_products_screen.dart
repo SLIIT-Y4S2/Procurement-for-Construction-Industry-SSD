@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/cart/cart_bloc.dart';
-import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/order_product.dart';
 import 'package:flutter_client/models/user_model.dart';
 import 'package:flutter_client/screens/select_product_screen.dart';
 import 'package:flutter_client/widgets/selected_product_card.dart';
 
-class SupplierProductsScreen extends StatefulWidget {
-  const SupplierProductsScreen({required this.supplier, super.key});
+class SelectedProductsScreen extends StatefulWidget {
+  const SelectedProductsScreen({required this.supplier, super.key});
 
   final User supplier;
 
   @override
-  State<SupplierProductsScreen> createState() => _SupplierProductsScreenState();
+  State<SelectedProductsScreen> createState() => _SupplierProductsScreenState();
 }
 
-class _SupplierProductsScreenState extends State<SupplierProductsScreen> {
-  List<Product> _cart = [];
+class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
+  List<OrderProduct> _cart = [];
+  double _cartTotal = 0;
   @override
   void initState() {
     super.initState();
@@ -42,7 +43,16 @@ class _SupplierProductsScreenState extends State<SupplierProductsScreen> {
       listener: (context, state) {
         if (state is ProductCartUpdated) {
           setState(() {
-            _cart = state.products;
+            _cart = state.orderProducts;
+          });
+          _cartTotal = state.cartTotal;
+        }
+
+        if (state is RestoreProductToProductList) {
+          setState(() {
+            if (!widget.supplier.products.contains(state.product)) {
+              widget.supplier.products.add(state.product);
+            }
           });
         }
       },
@@ -86,35 +96,70 @@ class _SupplierProductsScreenState extends State<SupplierProductsScreen> {
                       ),
                     if (_cart.isNotEmpty)
                       for (var product in _cart)
-                        SelectedProductCard(product: product),
+                        SelectedProductCard(orderProduct: product),
                   ],
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: ontapHandler,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Add Product',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                if (_cart.isNotEmpty)
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
-                    onPressed: ontapHandler,
+                    onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Add Product',
+                          'Total: LKR ${_cartTotal.toStringAsFixed(2)}',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: Colors.white,
                                   ),
                         ),
-                        const SizedBox(width: 16.0),
-                        const Icon(
-                          Icons.add,
-                          color: Colors.white,
+                        const Spacer(),
+                        Text(
+                          'Next',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: Colors.white,
+                                  ),
                         ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                        )
                       ],
-                    )),
+                    ),
+                  ),
               ],
             ),
           ),

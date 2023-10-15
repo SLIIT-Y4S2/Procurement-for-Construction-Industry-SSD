@@ -4,13 +4,21 @@ import 'package:flutter_client/blocs/cart/cart_bloc.dart';
 import 'package:flutter_client/models/product_model.dart';
 
 class SupplierProductsCard extends StatelessWidget {
-  const SupplierProductsCard({required this.product, super.key});
+  const SupplierProductsCard({
+    required this.product,
+    required this.index,
+    super.key,
+  });
   final Product product;
+  final int index;
   @override
   Widget build(BuildContext context) {
     void onTapHandler() {
       BlocProvider.of<CartBloc>(context).add(
-        AddProdctToCartEvent(product: product),
+        AddingProdctToCartEvent(
+          product: product,
+          productIndex: index,
+        ),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
