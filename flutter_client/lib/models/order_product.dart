@@ -15,7 +15,12 @@ class OrderProduct {
     required this.productId,
     required this.price,
     required this.title,
-  }) : quantity = 1;
+  }) : quantity = 0;
+
+  set setQuantity(int value) {
+    quantity = value;
+    print(quantity);
+  }
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
     return OrderProduct(

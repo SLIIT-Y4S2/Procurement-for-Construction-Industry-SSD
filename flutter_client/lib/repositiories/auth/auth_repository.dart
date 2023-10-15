@@ -20,7 +20,6 @@ class AuthRepository extends BaseAuthRepository {
       try {
         // Verify a token (SecretKey for HMAC & PublicKey for all the others)
         final jwt = JWT.verify(token, SecretKey('secret'));
-        print(token);
         if (jwt.payload['role'] == 'siteManager') {
           return true;
         } else {
