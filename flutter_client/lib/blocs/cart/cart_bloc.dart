@@ -26,9 +26,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     double cartTotal = 0;
     for (var product in _cart) {
       cartTotal += product.price * product.quantity;
-      print(product.quantity);
     }
-    print(cartTotal);
     return cartTotal;
   }
 
@@ -38,7 +36,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     for (var product in _cart) {
       if (product.productId == event.orderProduct.productId) {
         product.quantity = event.orderProduct.quantity + 1;
-        print('temp qty => ${product.quantity}');
       }
     }
 
