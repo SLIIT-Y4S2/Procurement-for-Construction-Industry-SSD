@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/repositiories/auth/auth_repository.dart';
+import 'package:flutter_client/screens/delivery_details.dart';
+import 'package:flutter_client/screens/done.dart';
 import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/screens/login_screen.dart';
+import 'package:flutter_client/screens/my_order_details.dart';
+import 'package:flutter_client/screens/my_orders.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProcumentMobileApp extends StatefulWidget {
@@ -85,7 +89,7 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
           useMaterial3: true,
         ),
         // home: _isTokenAvailable ? const HomeScreen() : const LoginScreen(),
-        home: const HomeScreen(),
+        home: MyApp(),
       ),
     );
   }
