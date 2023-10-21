@@ -69,7 +69,6 @@ describe("site", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).get("/api/items");
-
         expect(statusCode).toBe(403);
       });
     });

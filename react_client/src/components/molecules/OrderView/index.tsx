@@ -1,5 +1,5 @@
 import React from "react";
-import OrderItemsTables from "../molecules/OrderItemsTables";
+import OrderItemsTables from "../OrderItemsTables";
 import { format } from "date-fns";
 
 interface OrderViewProps {

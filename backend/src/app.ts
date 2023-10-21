@@ -1,4 +1,4 @@
-import connect from "./utils/connect";
+import Connect from "./utils/connect";
 import logger from "./utils/logger";
 import createServer from "./utils/server";
 import dotenv from "dotenv";
@@ -10,6 +10,6 @@ const app = createServer();
 
 app.listen(port, async () => {
   logger.info(`App is running at http://localhost:${port}`);
-
-  await connect();
+  Connect.getInstance();
+  // await connect();
 });

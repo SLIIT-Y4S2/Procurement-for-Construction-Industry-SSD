@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, Popconfirm } from "antd";
 import { format } from "date-fns";
-import OrderView from "@/components/OrderView";
+import OrderView from "@/components/molecules/OrderView";
 
 interface OrderModalProps {
   record: IOrder;
