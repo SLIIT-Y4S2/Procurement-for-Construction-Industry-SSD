@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 16),
                             if (state is SigningIn)
                               const CircularProgressIndicator(),
-                            if (state is AuthInitial)
+                            if (state is AuthInitial || state is SignInFailed)
                               ElevatedButton(
                                 onPressed: _submitHandeler,
                                 style: ElevatedButton.styleFrom(
@@ -139,6 +139,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                             .onPrimary,
                                       ),
                                 ),
+                              ),
+                            if (state is SignInFailed)
+                              Text(
+                                'Invalid credentials',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.error,
+                                    ),
                               ),
                           ],
                         ),

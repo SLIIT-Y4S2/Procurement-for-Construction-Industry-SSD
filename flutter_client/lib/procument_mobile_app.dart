@@ -7,6 +7,7 @@ import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/screens/login_screen.dart';
 import 'package:flutter_client/screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_client/globals.dart';
 
 class ProcumentMobileApp extends StatefulWidget {
   const ProcumentMobileApp({super.key});
@@ -16,8 +17,6 @@ class ProcumentMobileApp extends StatefulWidget {
 }
 
 class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
-  final GlobalKey<NavigatorState> _rootNavigatorKey =
-      GlobalKey<NavigatorState>();
   late AuthRepository _authRepository;
   bool _isTokenAvailable = false;
 
@@ -44,30 +43,22 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is SignedIn) {
-          _rootNavigatorKey.currentState!.pushReplacement(
+          rootNavigatorKey.currentState!.pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const MainScreen(),
             ),
           );
         }
         if (state is AuthInitial) {
-          _rootNavigatorKey.currentState!.pushReplacement(
+          rootNavigatorKey.currentState!.pushReplacement(
             MaterialPageRoute(
               builder: (context) => const LoginScreen(),
             ),
           );
         }
 
-        if (state is SigningIn) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Signing In'),
-            ),
-          );
-        }
-
         if (state is SignedOut) {
-          _rootNavigatorKey.currentState!.pushReplacement(
+          rootNavigatorKey.currentState!.pushReplacement(
             MaterialPageRoute(
               builder: (context) => const LoginScreen(),
             ),
@@ -75,7 +66,7 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
         }
       },
       child: MaterialApp(
-        navigatorKey: _rootNavigatorKey,
+        navigatorKey: rootNavigatorKey,
         title: 'Procument Mobile App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(

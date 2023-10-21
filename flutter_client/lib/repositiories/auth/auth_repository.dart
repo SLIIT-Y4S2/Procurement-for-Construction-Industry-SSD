@@ -81,6 +81,8 @@ class AuthRepository extends BaseAuthRepository {
         throw TokenExpiredException(e.message);
       } on JWTException catch (ex) {
         throw AuthException(ex.message); // ex: invalid signature
+      } catch (e) {
+        throw AuthException(e.toString());
       }
     }
 
