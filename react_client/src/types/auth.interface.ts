@@ -5,8 +5,8 @@ interface IUser {
   email: string;
   role: "siteManager" | "companyManager" | "procurementStaff" | "supplier";
   contactNumber: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface IAuthContext {
