@@ -35,6 +35,16 @@ export const APP_ROUTES = {
     APPROVED_ORDER: `/orders/approved`,
   },
   PENDING_APPROVALS: "/pending-approvals",
+  POLICY_MANAGEMENT: {
+    POLICIES: "/policies",
+    HIERARCHY: "/policies/hierarchy",
+  },
+  PURCHASE_ORDER_PROCUREMENT_STAFF: "/procurement-staff/purchase-orders",
+  PURCHASE_ORDER_SUPPLIER: "/supplier/purchase-orders",
+  DELIVERIES_SUPPLIER: "/supplier/deliveries",
+  ORDER_HISTORY_SUPPLIER: "/supplier/order-history",
+  INVOICES_SUPPLIER: "/supplier/invoices",
+  INVOICES_COMPANY_MANAGER: "/invoices",
 };
 
 export const breadcrumbNameMap: Record<string, string> = {
@@ -44,6 +54,16 @@ export const breadcrumbNameMap: Record<string, string> = {
   [APP_ROUTES.ITEM_MANAGEMENT]: "Item Management",
   [APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER]: "Order Management",
   [APP_ROUTES.PENDING_APPROVALS]: "pending-approvals",
+  [APP_ROUTES.POLICY_MANAGEMENT.POLICIES]: "Policies",
+  [APP_ROUTES.POLICY_MANAGEMENT.HIERARCHY]: "Policies-hierarchy",
+  "/procurement-staff": "Procurement Staff",
+  [APP_ROUTES.PURCHASE_ORDER_PROCUREMENT_STAFF]: "Purchase Order",
+  "/supplier": "Supplier",
+  [APP_ROUTES.PURCHASE_ORDER_SUPPLIER]: "Purchase Order",
+  [APP_ROUTES.DELIVERIES_SUPPLIER]: "Deliveries",
+  [APP_ROUTES.ORDER_HISTORY_SUPPLIER]: "Order History",
+  [APP_ROUTES.INVOICES_SUPPLIER]: "Invoices",
+  [APP_ROUTES.INVOICES_COMPANY_MANAGER]: "Invoices",
 };
 
 export const COMPANY_MANAGER_ROUTES = [
@@ -52,7 +72,19 @@ export const COMPANY_MANAGER_ROUTES = [
   APP_ROUTES.SITES,
   APP_ROUTES.ITEM_MANAGEMENT,
   APP_ROUTES.PENDING_APPROVALS,
+  APP_ROUTES.INVOICES_COMPANY_MANAGER,
+  ...Object.values(APP_ROUTES.ORDER_MANAGEMENT),
+  ...Object.values(APP_ROUTES.POLICY_MANAGEMENT),
+];
+export const PROCUREMENT_STAFF_ROUTES = [
+  APP_ROUTES.HOME,
+  APP_ROUTES.PURCHASE_ORDER_PROCUREMENT_STAFF,
   ...Object.values(APP_ROUTES.ORDER_MANAGEMENT),
 ];
-export const PROCUREMENT_STAFF_ROUTES = [APP_ROUTES.HOME, APP_ROUTES.SITES];
-export const SUPPLIER_ROUTES = [APP_ROUTES.HOME];
+export const SUPPLIER_ROUTES = [
+  APP_ROUTES.HOME,
+  APP_ROUTES.PURCHASE_ORDER_SUPPLIER,
+  APP_ROUTES.DELIVERIES_SUPPLIER,
+  APP_ROUTES.ORDER_HISTORY_SUPPLIER,
+  APP_ROUTES.INVOICES_SUPPLIER,
+];
