@@ -14,6 +14,7 @@ jobs:
           node-version: 16
           cache: "npm"
           cache-dependency-path: react_client/package-lock.json
+      - uses: jongwooo/next-cache@v1
       - run: npm i && npm run build
         working-directory: react_client
       - uses: FirebaseExtended/action-hosting-deploy@v0
