@@ -1,7 +1,7 @@
 import { omit } from "lodash";
 import HierarchyModel, { HierarchyInput } from "../models/hierarchy.model";
 
-// Function to get a particular hierarchy
+/* Function to get a particular hierarchy */
 export async function getHierarchy(hierarchyId: string) {
   try {
     const hierarchy = await HierarchyModel.findOne({
@@ -14,18 +14,20 @@ export async function getHierarchy(hierarchyId: string) {
   }
 }
 
-// Function to get all hierarchies
+/* Function to get all hierarchies */
 export async function getAllHierarchies() {
   try {
     const hierarchies = await HierarchyModel.find();
 
-    return omit(hierarchies, "allHierarchies");
+    //return omit(hierarchies, "allHierarchies");
+
+    return hierarchies;
   } catch (e: any) {
     throw new Error(e);
   }
 }
 
-// Function to create a new hierarchy
+/* Function to create a new hierarchy */
 export async function createHierarchy(input: HierarchyInput) {
   try {
     const hierarchy = await HierarchyModel.create(input);
@@ -36,12 +38,12 @@ export async function createHierarchy(input: HierarchyInput) {
   }
 }
 
-// Fnction to update an existing hierarchy
+/* Fnction to update an existing hierarchy */
 export async function updateHierarchy(
   hierarchyId: string,
   input: HierarchyInput
 ) {
-  const updatedHierarchy = await HierarchyModel.updateOne(
+  const updatedHierarchy = await HierarchyModel.findOneAndUpdate(
     { hierarchyId: hierarchyId },
     {
       $set: {
@@ -60,7 +62,7 @@ export async function updateHierarchy(
   }
 }
 
-// Function to delete a hierarchy
+/* Function to delete a hierarchy */
 export async function deleteHierarchy(hierarchyId: string) {
   try {
     const deletedHierarchy = await HierarchyModel.deleteOne({
