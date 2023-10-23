@@ -15,12 +15,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 void _loginEventHandeler(LoginEvent event, Emitter<AuthState> emit) async {
   emit(SigningIn());
   AuthRepository authRepository = AuthRepository();
-  final isLoggedIn = await authRepository.login(event.username, event.password);
-  if (isLoggedIn) {
-    emit(SignedIn());
-  } else {
+
+  await authRepository.login(event.username, event.password).then((isLoggedIn) {
+    if (isLoggedIn) {
+      emit(SignedIn());
+    } else {
+      emit(SignInFailed());
+    }
+  }).catchError((onError) {
     emit(SignInFailed());
-  }
+  });
 }
 
 void _logoutEventHandeler(SignOut event, Emitter<AuthState> emit) async {
