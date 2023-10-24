@@ -53,6 +53,7 @@ describe("order", () => {
     await mongoose.connection.close();
   });
 
+  // for mobile application to display the list of suppliers
   describe("get all suppliers", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
@@ -75,6 +76,7 @@ describe("order", () => {
     });
   });
 
+  // for mobile application to display the list of items for a supplier
   describe("get supplier item list", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
@@ -121,6 +123,7 @@ describe("order", () => {
     });
   });
 
+  //for mobile application to create an order
   describe("create order", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
@@ -177,7 +180,7 @@ describe("order", () => {
 
         expect(statusCode).toBe(201);
 
-        expect(body.status).toEqual("pending-approval");
+        expect(body.status).toEqual("pending");
       });
     });
   });
@@ -200,7 +203,7 @@ describe("order", () => {
           .set("Authorization", `Bearer ${jwt}`);
 
         expect(statusCode).toBe(200);
-        expect(body[0].status).toEqual("pending-approval"); //just after creating the order
+        expect(body[0].status).toEqual("pending"); //just after creating the order
         expect(body[0].items[0].item.name).toEqual("item3");
       });
     });
@@ -226,7 +229,7 @@ describe("order", () => {
           .set("Authorization", `Bearer ${jwt}`);
 
         expect(statusCode).toBe(200);
-        expect(body[0].status).toEqual("pending-approval");
+        expect(body[0].status).toEqual("pending");
       });
     });
   });
@@ -272,7 +275,7 @@ describe("order", () => {
           .set("Authorization", `Bearer ${jwt}`);
 
         expect(statusCode).toBe(200);
-        expect(body.status).toEqual("manager-approved");
+        expect(body.status).toEqual("approved");
       });
     });
   });
@@ -318,7 +321,7 @@ describe("order", () => {
           .set("Authorization", `Bearer ${jwt}`);
 
         expect(statusCode).toBe(200);
-        expect(body.status).toEqual("declined-company");
+        expect(body.status).toEqual("declined");
       });
     });
   });
