@@ -70,13 +70,6 @@ router.patch(
   declineOrderHandler
 );
 
-// todo supplier view their orders -- only show approved-order and  for supplier where they can see all orders for their items
-// router.get(
-//   "/supplier/orders/",
-//   [requireSupplier, validateResource(getOrdersBySupplierSchema)],
-//   getOrdersBySupplierHandler
-// )
-
 // todo supplier approve order
 
 export default router;

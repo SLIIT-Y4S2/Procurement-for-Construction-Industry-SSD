@@ -5,11 +5,6 @@ import mongoose from "mongoose";
 import { signJwt } from "../utils/jwt.utils";
 import { createItem } from "../service/item.service";
 
-//TODO: import { createItem } from "../service/item.service";
-
-// import { SiteInput } from "../models/site.model";
-// import { createSite } from "../service/site.service";
-
 const app = createServer();
 
 const userId = new mongoose.Types.ObjectId().toString();

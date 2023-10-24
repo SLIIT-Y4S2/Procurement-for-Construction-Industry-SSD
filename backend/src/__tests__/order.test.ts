@@ -53,6 +53,7 @@ describe("order", () => {
     await mongoose.connection.close();
   });
 
+  // for mobile application to display the list of suppliers
   describe("get all suppliers", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
@@ -75,6 +76,7 @@ describe("order", () => {
     });
   });
 
+  // for mobile application to display the list of items for a supplier
   describe("get supplier item list", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
@@ -121,6 +123,7 @@ describe("order", () => {
     });
   });
 
+  //for mobile application to create an order
   describe("create order", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
