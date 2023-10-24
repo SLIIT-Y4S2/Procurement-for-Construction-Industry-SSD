@@ -1,5 +1,5 @@
 import React from "react";
-import OrderItemsTables from "../OrderItemsTables";
+import OrderItemsTables from "../OrderItemsTable";
 import { format } from "date-fns";
 
 interface OrderViewProps {

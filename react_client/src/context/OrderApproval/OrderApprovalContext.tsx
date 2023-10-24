@@ -22,9 +22,14 @@ const OrderApprovalContextProvider = ({
   useEffect(() => {
     const getAllOrders = async () => {
       // Fetch all orders from the server and update the orders array
-      const allOrders = await OrderService.fetchAllOrderApprovals();
-      setOrders(allOrders);
-      setLoading(false);
+      try {
+        const allOrders = await OrderService.fetchAllOrderApprovals();
+        setOrders(allOrders);
+      } catch (error: any) {
+        message.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
     getAllOrders();
   }, []);

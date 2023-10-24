@@ -21,6 +21,7 @@ export const API_ROUTES = {
   SUPPLIER_MANAGEMENT: `/suppliers`,
   ORDER_MANAGEMENT: `/orders`,
   PENDING_APPROVALS_COMPANY_MANGER: "/orders/pending-approval/company-manager", // get all pending approvals for company manager
+  ORDERS_FOR_PROCUREMENT_STAFF: "/procurement-staff", // get all pending approvals for company manager
 };
 
 export const APP_ROUTES = {

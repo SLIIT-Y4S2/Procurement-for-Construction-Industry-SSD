@@ -60,30 +60,6 @@ function routes(app: Express) {
     requireProcurementStaff,
     procurementStaffRoutes
   );
-  // todo remove product routes
-  app.post(
-    "/api/products",
-    [requireUser, validateResource(createProductSchema)],
-    createProductHandler
-  );
-
-  app.put(
-    "/api/products/:productId",
-    [requireUser, validateResource(updateProductSchema)],
-    updateProductHandler
-  );
-
-  app.get(
-    "/api/products/:productId",
-    validateResource(getProductSchema),
-    getProductHandler
-  );
-
-  app.delete(
-    "/api/products/:productId",
-    [requireUser, validateResource(deleteProductSchema)],
-    getProductHandler
-  );
 }
 
 export default routes;
