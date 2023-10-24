@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/screens/create_requisition_order_page.dart';
 import 'package:flutter_client/screens/my_orders_screen.dart';
+import 'package:flutter_client/screens/delivery_advice.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -142,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'You can create orders from this.',
+                              'You can access all the orders you have taken.',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -159,6 +160,16 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
+
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const Deliveryadvice();
+                        },
+                      ),
+                    );
+                  },
                   //Dummy Card
                   child: Card(
                     shape: const RoundedRectangleBorder(
@@ -174,13 +185,13 @@ class HomeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Icon(
-                              Icons.edit,
+                              Icons.delivery_dining,
                               size: 24,
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'Create order',
+                              'Delivery advice',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -191,7 +202,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'You can create orders from this.',
+                              'You can indicate whether the delivery advice is completed or not.',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
