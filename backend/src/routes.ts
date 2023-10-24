@@ -35,6 +35,8 @@ import itemRoutes from "./routes/item.routes";
 import siteRoutes from "./routes/site.routes";
 import orderRoutes from "./routes/order.routes";
 import hierarchyRoutes from "./routes/hierarchy.routes";
+import supplierRoutes from "./routes/order-for-supplier.routes";
+import procurementStaffRoutes from "./routes/order-for-procurement-staff.routes";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -52,7 +54,12 @@ function routes(app: Express) {
   app.use("/api/sites", siteRoutes);
   app.use("/api", orderRoutes);
   app.use("/api/hierarchies", hierarchyRoutes);
-
+  app.use("/api/supplier", requireSupplier, supplierRoutes);
+  app.use(
+    "/api/procurement-staff",
+    requireProcurementStaff,
+    procurementStaffRoutes
+  );
   // todo remove product routes
   app.post(
     "/api/products",

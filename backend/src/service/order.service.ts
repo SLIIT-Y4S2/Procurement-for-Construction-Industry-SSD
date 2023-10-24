@@ -10,7 +10,7 @@ export async function createOrder(input: OrderInput) {
 export async function findOrder(
   query: FilterQuery<OrderDocument>,
   options: QueryOptions = { lean: true }
-) {
+): Promise<OrderDocument | null> {
   return OrderModel.findOne(query, {}, options);
 }
 
