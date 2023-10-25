@@ -1,5 +1,5 @@
 import React from "react";
-import OrderItemsTables from "../OrderItemsTable";
+import OrderItemTable from "../OrderItemsTable";
 import { format } from "date-fns";
 
 interface OrderViewProps {
@@ -70,7 +70,7 @@ const OrderView = ({ order: order }: OrderViewProps) => {
         </h2>
       </div>
       <div className="px-4 py-2">
-        <OrderItemsTables items={order.items} />
+        <OrderItemTable items={order.items} />
         <div className="flex justify-between mb-2  mx-4">
           <span className="text-gray-800 font-bold">Total:</span>
           <strong className="text-gray-600">Rs. {order.total}</strong>

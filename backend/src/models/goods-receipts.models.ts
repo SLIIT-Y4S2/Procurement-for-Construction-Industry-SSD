@@ -2,30 +2,32 @@ import mongoose from "mongoose";
 import { customAlphabet } from "nanoid";
 
 import { OrderDocument } from "./order.model";
+import { ItemDocument } from "./item.model";
+import { UserDocument } from "./user.model";
 
 const nanoid = customAlphabet("1234567890", 6);
 
 export interface GoodReceiptItemInput {
-  orderId: OrderDocument["_id"];
-  itemId: mongoose.Types.ObjectId;
+  item: ItemDocument["_id"];
   quantity: number;
 }
 
 export interface GoodReceiptInput {
-  orderId: OrderDocument["_id"];
+  order: OrderDocument["_id"];
+  supplier: UserDocument["_id"];
   items: GoodReceiptItemInput[];
-  status: "pending-shipping" | "received";
 }
 
 export interface GoodReceiptDocument
   extends GoodReceiptInput,
     mongoose.Document {
   goodReceiptId: string;
+  status: "pending-shipping" | "received";
   createdAt: Date;
   updatedAt: Date;
 }
 
-const goodReceiptSchema = new mongoose.Schema(
+const goodsReceiptSchema = new mongoose.Schema(
   {
     goodReceiptId: {
       type: String,
@@ -33,10 +35,23 @@ const goodReceiptSchema = new mongoose.Schema(
       unique: true,
       default: () => `GRN-${nanoid()}`,
     },
-    orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+    order: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+      require: true,
+    },
+    supplier: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
     items: [
       {
-        itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
+        item: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Item",
+          require: true,
+        },
         quantity: { type: Number, required: true },
       },
     ],
@@ -49,8 +64,8 @@ const goodReceiptSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const GoodReceiptModel = mongoose.model<GoodReceiptDocument>(
-  "GoodReceipt",
-  goodReceiptSchema
+const GoodsReceiptModel = mongoose.model<GoodReceiptDocument>(
+  "GoodsReceipt",
+  goodsReceiptSchema
 );
-export default GoodReceiptModel;
+export default GoodsReceiptModel;

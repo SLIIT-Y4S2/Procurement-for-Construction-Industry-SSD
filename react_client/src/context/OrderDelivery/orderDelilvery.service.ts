@@ -1,5 +1,6 @@
 import { API_ROUTES } from "@/utils/constants";
 import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
+import { de } from "date-fns/locale";
 
 async function fetchOrderForSupplier() {
   const response = await getAxiosInstanceWithAuth().get(
@@ -13,9 +14,16 @@ async function fetchOrderForSupplier() {
   return response.data;
 }
 
-async function deliverOrder(orderId: string) {
-  const response = await getAxiosInstanceWithAuth().patch(
-    `${API_ROUTES.ORDERS_FOR_SUPPLIER}/${orderId}/deliver`
+async function createDelivery(
+  orderId: string,
+  deliveryItems: {
+    item: string;
+    quantity: number;
+  }[]
+) {
+  const response = await getAxiosInstanceWithAuth().post(
+    `${API_ROUTES.ORDERS_FOR_SUPPLIER}/orders/${orderId}/deliver`,
+    { items: deliveryItems }
   );
 
   if (response.status !== 200) {
@@ -27,7 +35,7 @@ async function deliverOrder(orderId: string) {
 
 export const orderPlacementServices = {
   fetchOrderForSupplier,
-  deliverOrder,
+  createDelivery,
 };
 
 export default orderPlacementServices;

@@ -6,7 +6,7 @@ import OrderService from "@/context/OrderDelivery/orderDelilvery.service";
 export const OrderDeliveryContext = createContext<IOrderDeliveryContext>({
   orders: [],
   loading: true,
-  deliverOrder: async () => {},
+  createDelivery: async () => {},
 });
 
 const OrderDeliveryContextProvider = ({
@@ -33,9 +33,26 @@ const OrderDeliveryContextProvider = ({
     getAllOrders();
   }, [message]);
 
-  const deliverOrder = async (orderId: string) => {
+  const createDelivery = async (
+    orderId: string,
+    deliveryItems: {
+      item: string;
+      quantity: number;
+    }[]
+  ) => {
     try {
-      const placedOrder = await OrderService.deliverOrder(orderId);
+      const placedOrder = await OrderService.createDelivery(
+        orderId,
+        deliveryItems
+      );
+
+      // filter out the order that was just placed and replace it with the updated order
+      setOrders((orders) =>
+        orders.map((order) => {
+          if (order.orderId === placedOrder.orderId) return placedOrder;
+          return order;
+        })
+      );
 
       message.success("Order delivery saved successfully");
     } catch (error: any) {
@@ -49,7 +66,7 @@ const OrderDeliveryContextProvider = ({
       value={{
         orders,
         loading,
-        deliverOrder,
+        createDelivery,
       }}
     >
       {children}
