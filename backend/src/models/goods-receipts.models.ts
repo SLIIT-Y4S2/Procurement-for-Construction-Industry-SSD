@@ -4,6 +4,7 @@ import { customAlphabet } from "nanoid";
 import { OrderDocument } from "./order.model";
 import { ItemDocument } from "./item.model";
 import { UserDocument } from "./user.model";
+import { SiteDocument } from "./site.model";
 
 const nanoid = customAlphabet("1234567890", 6);
 
@@ -15,6 +16,8 @@ export interface GoodReceiptItemInput {
 export interface GoodReceiptInput {
   order: OrderDocument["_id"];
   supplier: UserDocument["_id"];
+  site: SiteDocument["_id"];
+  siteManager: UserDocument["_id"];
   items: GoodReceiptItemInput[];
 }
 
@@ -45,6 +48,16 @@ const goodsReceiptSchema = new mongoose.Schema(
       ref: "User",
       require: true,
     },
+    site: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Site",
+      require: true,
+    },
+    siteManager: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
     items: [
       {
         item: {
@@ -63,6 +76,17 @@ const goodsReceiptSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+goodsReceiptSchema.post("save", async function (doc, next) {
+  await doc.populate(["order", "supplier", "items.item"]);
+  next();
+});
+
+goodsReceiptSchema.methods.confirmDelivery = async function () {
+  const goodsReceipt = this as GoodReceiptDocument;
+  goodsReceipt.status = "received";
+  await goodsReceipt.save();
+};
 
 const GoodsReceiptModel = mongoose.model<GoodReceiptDocument>(
   "GoodsReceipt",

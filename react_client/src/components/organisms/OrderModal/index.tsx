@@ -9,7 +9,7 @@ interface OrderModalProps {
   approve?: (id: string) => Promise<void>;
   decline?: (id: string) => Promise<void>;
   placeOrder?: (id: string) => Promise<void>;
-  delivery: boolean;
+  delivery?: boolean;
 }
 
 const OrderModal = ({
@@ -17,6 +17,7 @@ const OrderModal = ({
   approve,
   decline,
   placeOrder,
+  delivery = false,
 }: OrderModalProps) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -127,7 +128,7 @@ const OrderModal = ({
               Approve
             </Button>
           </Popconfirm>,
-          <DeliveryCreate key="5" record={record} />,
+          delivery && <DeliveryCreate key="5" record={record} />,
         ]}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}

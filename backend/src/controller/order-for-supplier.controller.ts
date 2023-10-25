@@ -107,6 +107,8 @@ export async function createDeliveryHandler(
       items: req.body.items,
       order: order._id,
       supplier: supplierId,
+      site: order.site,
+      siteManager: order.siteManager,
     });
     return res.send(updatedOrder);
   } catch (error: any) {

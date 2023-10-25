@@ -10,7 +10,6 @@ import {
   placeOrderForProcurementStaffHandler,
 } from "../controller/order-for-procurement-staff.controller";
 
-// todo supplier view their orders -- only show approved-order and  for supplier
 router.get(
   "/orders",
   [validateResource(getOrdersForProcurementStaffSchema)],

@@ -25,6 +25,7 @@ import orderRoutes from "./routes/order.routes";
 import hierarchyRoutes from "./routes/hierarchy.routes";
 import supplierRoutes from "./routes/order-for-supplier.routes";
 import procurementStaffRoutes from "./routes/order-for-procurement-staff.routes";
+import siteManagerDeliveryRoute from "./routes/deliveries-for-site-manager.routes";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -48,6 +49,7 @@ function routes(app: Express) {
     requireProcurementStaff,
     procurementStaffRoutes
   );
+  app.use("/api/site-manager", requireSiteManager, siteManagerDeliveryRoute);
 }
 
 export default routes;
