@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Button, Modal, Popconfirm } from "antd";
 import { format } from "date-fns";
 import OrderView from "@/components/molecules/OrderView";
+import DeliveryCreate from "../DeliveryCreate";
 
 interface OrderModalProps {
   record: IOrder;
   approve?: (id: string) => Promise<void>;
   decline?: (id: string) => Promise<void>;
   placeOrder?: (id: string) => Promise<void>;
+  delivery: boolean;
 }
 
 const OrderModal = ({
@@ -125,6 +127,7 @@ const OrderModal = ({
               Approve
             </Button>
           </Popconfirm>,
+          <DeliveryCreate key="5" record={record} />,
         ]}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}

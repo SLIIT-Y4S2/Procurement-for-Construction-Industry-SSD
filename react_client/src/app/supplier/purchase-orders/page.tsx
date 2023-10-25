@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import React, { useContext } from "react";
 
 const Orders = () => {
-  const { orders, loading } = useContext(
+  const { orders, loading, createDelivery } = useContext(
     OrderDeliveryContext
   ) as IOrderDeliveryContext;
   const tableData = orders.map((order) => {
@@ -24,12 +24,6 @@ const Orders = () => {
       title: "Order ID",
       dataIndex: "orderId",
       key: "orderId",
-    },
-    {
-      title: "Supplier",
-      dataIndex: "supplier",
-      key: "supplier",
-      render: (supplier: IUser) => <>{supplier.name}</>,
     },
     {
       title: "Site Manager",
@@ -54,7 +48,7 @@ const Orders = () => {
       key: "action",
       render: (text: any, record: IOrder) => (
         <span>
-          <OrderView record={record} />
+          <OrderView record={record} delivery />
         </span>
       ),
     },
