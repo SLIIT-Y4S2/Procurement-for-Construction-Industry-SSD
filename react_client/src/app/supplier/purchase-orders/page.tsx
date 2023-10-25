@@ -1,6 +1,7 @@
 "use client";
 import OrderView from "@/components/organisms/OrderModal";
-import { OrderApprovalContext } from "@/context/OrderApproval/OrderApprovalContext";
+import { OrderDeliveryContext } from "@/context/OrderDelivery/OrderDeliveryContext";
+import { OrderPlacementContext } from "@/context/OrderPlacement/OrderPlacementContext";
 // import AddOrder from "@/components/organisms/OrderAdd";
 // import OrderEdit from "@/components/organisms/OrderEdit";
 
@@ -9,9 +10,9 @@ import { format } from "date-fns";
 import React, { useContext } from "react";
 
 const Orders = () => {
-  const { orders, loading, approveOrder, declineOrder } = useContext(
-    OrderApprovalContext
-  ) as IOrderApprovalContext;
+  const { orders, loading, createDelivery } = useContext(
+    OrderDeliveryContext
+  ) as IOrderDeliveryContext;
   const tableData = orders.map((order) => {
     return {
       key: order.orderId,
@@ -23,12 +24,6 @@ const Orders = () => {
       title: "Order ID",
       dataIndex: "orderId",
       key: "orderId",
-    },
-    {
-      title: "Supplier",
-      dataIndex: "supplier",
-      key: "supplier",
-      render: (supplier: IUser) => <>{supplier.name}</>,
     },
     {
       title: "Site Manager",
@@ -53,11 +48,7 @@ const Orders = () => {
       key: "action",
       render: (text: any, record: IOrder) => (
         <span>
-          <OrderView
-            record={record}
-            approve={approveOrder}
-            decline={declineOrder}
-          />
+          <OrderView record={record} delivery />
         </span>
       ),
     },

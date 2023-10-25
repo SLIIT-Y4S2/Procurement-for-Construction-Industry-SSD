@@ -1,7 +1,7 @@
 import { Table } from "antd";
 import React from "react";
 
-const OrderItemsTables = ({ items }: { items: IOrder["items"] }) => {
+const OrderItemTable = ({ items }: { items: IOrder["items"] }) => {
   const tableData = items.map((item) => {
     return {
       key: item.item.itemId,
@@ -48,4 +48,4 @@ const OrderItemsTables = ({ items }: { items: IOrder["items"] }) => {
   );
 };
 
-export default OrderItemsTables;
+export default OrderItemTable;

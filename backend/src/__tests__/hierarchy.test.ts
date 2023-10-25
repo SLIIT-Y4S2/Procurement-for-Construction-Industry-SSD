@@ -29,7 +29,7 @@ describe("hierarchy test suite", () => {
       const hierarchyPayload: HierarchyInput = {
         lowerBoundPrice: 5000,
         upperBoundPrice: 12000,
-        managerInCharge: "Supply Chain Manager",
+        managerInCharge: "Supply Chain Manager 1",
       };
 
       const { statusCode, body } = await supertest(app)
@@ -74,9 +74,9 @@ describe("hierarchy test suite", () => {
     /* Test case 1 - success scenario */
     test("success scenario", async () => {
       const hierarchyPayload: HierarchyInput = {
-        lowerBoundPrice: 5000,
-        upperBoundPrice: 12000,
-        managerInCharge: "Supply Chain Manager",
+        lowerBoundPrice: 200,
+        upperBoundPrice: 400,
+        managerInCharge: "Supply Chain Manager 2",
       };
 
       const response1 = await supertest(app)
@@ -111,8 +111,8 @@ describe("hierarchy test suite", () => {
     /* Test case 1 - success scenario */
     test("success scenario", async () => {
       const hierarchyPayload: HierarchyInput = {
-        lowerBoundPrice: 5000,
-        upperBoundPrice: 12000,
+        lowerBoundPrice: 2000,
+        upperBoundPrice: 11000,
         managerInCharge: "Supply Chain Manager",
       };
 

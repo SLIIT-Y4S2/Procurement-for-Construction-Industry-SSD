@@ -1,4 +1,3 @@
-import { CreateOrderInput } from "../schema/order.schema";
 import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 
 import OrderModel, { OrderDocument, OrderInput } from "../models/order.model";

@@ -1,17 +1,34 @@
 "use client";
 import OrderView from "@/components/organisms/OrderModal";
-import { OrderApprovalContext } from "@/context/OrderApproval/OrderApprovalContext";
+import { OrderDeliveryContext } from "@/context/OrderDelivery/OrderDeliveryContext";
+import { OrderPlacementContext } from "@/context/OrderPlacement/OrderPlacementContext";
+import { getAxiosInstanceWithAuth } from "@/lib/AxiosInstance";
+import { API_ROUTES } from "@/utils/constants";
 // import AddOrder from "@/components/organisms/OrderAdd";
 // import OrderEdit from "@/components/organisms/OrderEdit";
 
-import { Table } from "antd";
+import { Table, message } from "antd";
 import { format } from "date-fns";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Orders = () => {
-  const { orders, loading, approveOrder, declineOrder } = useContext(
-    OrderApprovalContext
-  ) as IOrderApprovalContext;
+  const [orders, setOrders] = useState<IOrder[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const data = await getAxiosInstanceWithAuth().get(
+          `${API_ROUTES.ORDERS_FOR_SUPPLIER}/orders/history`
+        );
+        setOrders(data.data);
+        setLoading(false);
+      } catch (error: any) {
+        console.log(error);
+        message.error(error.message);
+      }
+    };
+    getOrders();
+  }, []);
   const tableData = orders.map((order) => {
     return {
       key: order.orderId,
@@ -53,11 +70,7 @@ const Orders = () => {
       key: "action",
       render: (text: any, record: IOrder) => (
         <span>
-          <OrderView
-            record={record}
-            approve={approveOrder}
-            decline={declineOrder}
-          />
+          <OrderView record={record} />
         </span>
       ),
     },

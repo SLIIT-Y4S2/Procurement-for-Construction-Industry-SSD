@@ -17,18 +17,6 @@ import {
   requireSiteManagerOrProcurementStaffOrCompanyManager,
   requireSupplier,
 } from "./middleware/requireUser";
-//todo remove this
-import {
-  createProductSchema,
-  deleteProductSchema,
-  getProductSchema,
-  updateProductSchema,
-} from "./schema/product.schema";
-import {
-  createProductHandler,
-  getProductHandler,
-  updateProductHandler,
-} from "./controller/product.controller";
 
 import userManagementRoutes from "./routes/user-management.routes";
 import itemRoutes from "./routes/item.routes";
@@ -37,6 +25,7 @@ import orderRoutes from "./routes/order.routes";
 import hierarchyRoutes from "./routes/hierarchy.routes";
 import supplierRoutes from "./routes/order-for-supplier.routes";
 import procurementStaffRoutes from "./routes/order-for-procurement-staff.routes";
+import siteManagerDeliveryRoute from "./routes/deliveries-for-site-manager.routes";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -60,30 +49,7 @@ function routes(app: Express) {
     requireProcurementStaff,
     procurementStaffRoutes
   );
-  // todo remove product routes
-  app.post(
-    "/api/products",
-    [requireUser, validateResource(createProductSchema)],
-    createProductHandler
-  );
-
-  app.put(
-    "/api/products/:productId",
-    [requireUser, validateResource(updateProductSchema)],
-    updateProductHandler
-  );
-
-  app.get(
-    "/api/products/:productId",
-    validateResource(getProductSchema),
-    getProductHandler
-  );
-
-  app.delete(
-    "/api/products/:productId",
-    [requireUser, validateResource(deleteProductSchema)],
-    getProductHandler
-  );
+  app.use("/api/site-manager", requireSiteManager, siteManagerDeliveryRoute);
 }
 
 export default routes;
