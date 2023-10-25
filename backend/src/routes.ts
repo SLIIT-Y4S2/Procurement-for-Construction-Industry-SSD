@@ -17,18 +17,6 @@ import {
   requireSiteManagerOrProcurementStaffOrCompanyManager,
   requireSupplier,
 } from "./middleware/requireUser";
-//todo remove this
-import {
-  createProductSchema,
-  deleteProductSchema,
-  getProductSchema,
-  updateProductSchema,
-} from "./schema/product.schema";
-import {
-  createProductHandler,
-  getProductHandler,
-  updateProductHandler,
-} from "./controller/product.controller";
 
 import userManagementRoutes from "./routes/user-management.routes";
 import itemRoutes from "./routes/item.routes";
@@ -59,30 +47,6 @@ function routes(app: Express) {
     "/api/procurement-staff",
     requireProcurementStaff,
     procurementStaffRoutes
-  );
-  // todo remove product routes
-  app.post(
-    "/api/products",
-    [requireUser, validateResource(createProductSchema)],
-    createProductHandler
-  );
-
-  app.put(
-    "/api/products/:productId",
-    [requireUser, validateResource(updateProductSchema)],
-    updateProductHandler
-  );
-
-  app.get(
-    "/api/products/:productId",
-    validateResource(getProductSchema),
-    getProductHandler
-  );
-
-  app.delete(
-    "/api/products/:productId",
-    [requireUser, validateResource(deleteProductSchema)],
-    getProductHandler
   );
 }
 
