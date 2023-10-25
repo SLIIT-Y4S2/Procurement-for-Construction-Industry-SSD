@@ -1,15 +1,15 @@
 "use client";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { App } from "antd";
-import OrderService from "@/context/OrderPlacement/orderPlacement.service";
+import OrderService from "@/context/OrderDelivery/orderDelilvery.service";
 
-export const OrderPlacementContext = createContext<IOrderPlacementContext>({
+export const OrderDeliveryContext = createContext<IOrderDeliveryContext>({
   orders: [],
   loading: true,
-  placeOrder: async () => {},
+  deliverOrder: async () => {},
 });
 
-const OrderPlacementContextProvider = ({
+const OrderDeliveryContextProvider = ({
   children,
 }: {
   children: ReactNode;
@@ -22,7 +22,7 @@ const OrderPlacementContextProvider = ({
     const getAllOrders = async () => {
       // Fetch all orders from the server and update the orders array
       try {
-        const allOrders = await OrderService.fetchOrdersForProcurementStaff();
+        const allOrders = await OrderService.fetchOrderForSupplier();
         setOrders(allOrders);
       } catch (error: any) {
         message.error(error.message);
@@ -33,14 +33,11 @@ const OrderPlacementContextProvider = ({
     getAllOrders();
   }, [message]);
 
-  const placeOrder = async (orderId: string) => {
+  const deliverOrder = async (orderId: string) => {
     try {
-      const placedOrder = await OrderService.placeOrder(orderId);
-      // Find the order with the given id and update its properties
-      setOrders((prevOrders) =>
-        prevOrders.filter((order) => order.orderId !== placedOrder.orderId)
-      );
-      message.success("Order placed successfully");
+      const placedOrder = await OrderService.deliverOrder(orderId);
+
+      message.success("Order delivery saved successfully");
     } catch (error: any) {
       message.error(error.message);
       throw new Error(error);
@@ -48,16 +45,16 @@ const OrderPlacementContextProvider = ({
   };
 
   return (
-    <OrderPlacementContext.Provider
+    <OrderDeliveryContext.Provider
       value={{
         orders,
         loading,
-        placeOrder,
+        deliverOrder,
       }}
     >
       {children}
-    </OrderPlacementContext.Provider>
+    </OrderDeliveryContext.Provider>
   );
 };
 
-export default OrderPlacementContextProvider;
+export default OrderDeliveryContextProvider;

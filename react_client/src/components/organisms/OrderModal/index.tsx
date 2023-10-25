@@ -39,9 +39,13 @@ const OrderModal = ({
     setConfirmLoading(false);
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     //TODO: Place order
+    if (!placeOrder) return;
+    setConfirmLoading(true);
+    await placeOrder(record.orderId);
     setOpen(false);
+    setConfirmLoading(false);
   };
 
   const handleCancel = () => {
@@ -55,10 +59,10 @@ const OrderModal = ({
         onClick={showModal}
         style={{ backgroundColor: "#36CD1D" }}
       >
-        Review Order
+        View Order
       </Button>
       <Modal
-        title="Order Details"
+        title="Order View"
         open={open}
         width={1000}
         // onOk={handleOk}
@@ -125,7 +129,7 @@ const OrderModal = ({
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <OrderView record={record} />
+        <OrderView order={record} />
       </Modal>
     </>
   );

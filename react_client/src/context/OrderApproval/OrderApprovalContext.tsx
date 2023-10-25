@@ -32,7 +32,7 @@ const OrderApprovalContextProvider = ({
       }
     };
     getAllOrders();
-  }, []);
+  }, [message]);
 
   const approveOrder = async (orderId: string) => {
     try {

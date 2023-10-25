@@ -17,18 +17,6 @@ import {
   requireSiteManagerOrProcurementStaffOrCompanyManager,
   requireSupplier,
 } from "./middleware/requireUser";
-//todo remove this
-import {
-  createProductSchema,
-  deleteProductSchema,
-  getProductSchema,
-  updateProductSchema,
-} from "./schema/product.schema";
-import {
-  createProductHandler,
-  getProductHandler,
-  updateProductHandler,
-} from "./controller/product.controller";
 
 import userManagementRoutes from "./routes/user-management.routes";
 import itemRoutes from "./routes/item.routes";

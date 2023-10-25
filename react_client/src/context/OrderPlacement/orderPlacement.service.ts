@@ -15,7 +15,7 @@ async function fetchOrdersForProcurementStaff() {
 
 async function placeOrder(orderId: string) {
   const response = await getAxiosInstanceWithAuth().patch(
-    `${API_ROUTES.ORDERS_FOR_PROCUREMENT_STAFF}/${orderId}/place`
+    `${API_ROUTES.ORDERS_FOR_PROCUREMENT_STAFF}/order/${orderId}/place`
   );
 
   if (response.status !== 200) {

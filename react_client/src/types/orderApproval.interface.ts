@@ -9,3 +9,9 @@ interface IOrderPlacementContext {
   loading: boolean;
   placeOrder: (orderId: string) => Promise<void>;
 }
+
+interface IOrderDeliveryContext {
+  orders: IOrder[];
+  loading: boolean;
+  deliverOrder: (orderId: string) => Promise<void>;
+}

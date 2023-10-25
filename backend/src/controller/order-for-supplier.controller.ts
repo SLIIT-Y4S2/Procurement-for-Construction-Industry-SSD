@@ -37,7 +37,7 @@ export async function getOrdersHistoryForSupplierHandler(
     const orders = await getOrderList(
       {
         status: {
-          $in: ["draft", "pending", "approved", "declined", "placed"],
+          $nin: ["draft", "pending", "approved", "declined", "placed"],
         },
         supplier: supplierId,
       },
