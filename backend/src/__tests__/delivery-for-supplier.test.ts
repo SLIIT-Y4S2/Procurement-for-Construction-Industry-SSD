@@ -49,7 +49,7 @@ export const orderPayload = {
   status: "placed",
 };
 
-describe("deliveries", () => {
+describe("deliveries for supplier", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
     await mongoose.connect(mongoServer.getUri());
@@ -166,41 +166,41 @@ describe("deliveries", () => {
         });
       });
     });
+  });
 
-    // testing supplier getting all their goods receipts they they delivered - pending and confirmed
-    describe("get goods receipts for supplier", () => {
-      describe("given the user is not logged in", () => {
-        it("should return a 403", async () => {
-          const { statusCode } = await supertest(app).get(
-            "/api/supplier/orders/goodsReceipts"
-          );
+  // testing supplier getting all their goods receipts they they delivered - pending and confirmed
+  describe("get goods receipts for supplier", () => {
+    describe("given the user is not logged in", () => {
+      it("should return a 403", async () => {
+        const { statusCode } = await supertest(app).get(
+          "/api/supplier/orders/goodsReceipts"
+        );
 
-          expect(statusCode).toBe(403);
-        });
+        expect(statusCode).toBe(403);
       });
-      describe("given the users not logged in as a supplier", () => {
-        it("should return a 403", async () => {
-          const jwt = signJwt({ ...userPayload, role: "procurementStaff" });
+    });
+    describe("given the users not logged in as a supplier", () => {
+      it("should return a 403", async () => {
+        const jwt = signJwt({ ...userPayload, role: "procurementStaff" });
 
-          const { statusCode } = await supertest(app)
-            .get("/api/supplier/orders/goodsReceipts")
-            .set("Authorization", `Bearer ${jwt}`);
+        const { statusCode } = await supertest(app)
+          .get("/api/supplier/orders/goodsReceipts")
+          .set("Authorization", `Bearer ${jwt}`);
 
-          expect(statusCode).toBe(403);
-        });
+        expect(statusCode).toBe(403);
       });
-      describe("given the user is logged in", () => {
-        it("should return a 200 and get the orders", async () => {
-          const jwt = signJwt(userPayload);
+    });
+    describe("given the user is logged in", () => {
+      it("should return a 200 and get the orders", async () => {
+        const jwt = signJwt(userPayload);
 
-          const { statusCode, body } = await supertest(app)
-            .get("/api/supplier/orders/goodsReceipts")
-            .set("Authorization", `Bearer ${jwt}`);
+        const { statusCode, body } = await supertest(app)
+          .get("/api/supplier/orders/goodsReceipts")
+          .set("Authorization", `Bearer ${jwt}`);
 
-          expect(statusCode).toBe(200);
+        expect(statusCode).toBe(200);
 
-          expect(body).toBeDefined();
-        });
+        expect(body).toBeDefined();
       });
     });
   });

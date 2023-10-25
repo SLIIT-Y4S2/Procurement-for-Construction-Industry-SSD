@@ -19,3 +19,10 @@ export async function getDeliveryList(
     .populate("order")
     .exec();
 }
+
+export async function findDelivery(
+  query: FilterQuery<GoodReceiptDocument>,
+  options: QueryOptions = { lean: true }
+) {
+  return GoodsReceiptModel.findOne(query, {}, options);
+}
