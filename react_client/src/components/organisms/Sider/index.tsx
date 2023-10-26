@@ -153,4 +153,9 @@ const SidebarRoutes: MenuProps["items"] = [
     icon: <FaLocationDot />,
     label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
   },
+  {
+    key: APP_ROUTES.USER_MANAGEMENT,
+    icon: <FaLocationDot />,
+    label: <Link href={APP_ROUTES.USER_MANAGEMENT}>User Management</Link>,
+  },
 ];
