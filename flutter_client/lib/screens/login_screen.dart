@@ -22,7 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Validate returns true if the form is valid, or false otherwise.
     final isValid = _formKey.currentState!.validate();
-    print('here ::=> $isValid');
     if (isValid) {
       _authenticationBloc.add(
         LoginEvent(

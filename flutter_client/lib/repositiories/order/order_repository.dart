@@ -17,16 +17,28 @@ class OrderRepository extends BaseOrderRepository {
       'Authorization': 'Bearer $token',
     };
 
-    final body = {};
+    final body = {
+      'orderId': order.orderId,
+      'dateToBeDelivered': order.dateToBeDelivered.toString(),
+      'site': order.siteId,
+      'siteManager': order.siteManagerId,
+      'supplier': order.supplierId,
+      'products': [
+        ...order.products.map(
+          (product) => product.toJson(),
+        )
+      ],
+    };
 
     // send request to get all suppliers
     final responseBody = await http
-        .post(orderURL, headers: headers)
-        .then((response) => response.body)
+        .post(orderURL, headers: headers, body: body)
+        // .then((response) => response.body)
         .catchError((error) {
       developer.log(error);
       throw Exception(error);
     });
+    developer.log("responseBody: ${responseBody.statusCode}");
     return true;
   }
 
