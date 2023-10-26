@@ -23,6 +23,7 @@ export const API_ROUTES = {
   PENDING_APPROVALS_COMPANY_MANGER: "/orders/pending-approval/company-manager", // get all pending approvals for company manager
   ORDERS_FOR_PROCUREMENT_STAFF: "/procurement-staff", // get all pending approvals for company manager
   ORDERS_FOR_SUPPLIER: "/supplier", // get all pending approvals for company manager
+  HIERARCHY_MANAGEMENT: `/hierarchies`,
 };
 
 export const APP_ROUTES = {
