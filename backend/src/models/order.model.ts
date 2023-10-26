@@ -135,10 +135,6 @@ orderSchema.pre("save", async function (next) {
 });
 
 orderSchema.post("save", async function (doc, next) {
-  // await doc.populate("supplier");
-  // await doc.populate("siteManager");
-  // await doc.populate("site");
-  // await doc.populate("items.item");
   await doc.populate([
     "supplier",
     "siteManager",

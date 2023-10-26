@@ -93,75 +93,11 @@ const SidebarRoutes: MenuProps["items"] = [
     label: <Link href={APP_ROUTES.INVOICES_COMPANY_MANAGER}>Invoices</Link>,
   },
   {
-    key: APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER,
+    key: APP_ROUTES.ORDER_HISTORY,
     icon: <FileTextOutlined />,
-    label: "Order History",
-    children: [
-      {
-        key: APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER,
-        icon: <FileTextOutlined />,
-        label: (
-          <Link href={APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER}>All Orders</Link>
-        ),
-      },
-      {
-        key: APP_ROUTES.ORDER_MANAGEMENT.PENDING_ORDER,
-        icon: <FileSyncOutlined />,
-        label: (
-          <Link href={APP_ROUTES.ORDER_MANAGEMENT.PENDING_ORDER}>
-            Pending Orders TODO
-          </Link>
-        ),
-      },
-      {
-        key: APP_ROUTES.ORDER_MANAGEMENT.APPROVED_ORDER,
-        icon: <FileProtectOutlined />,
-        label: (
-          <Link href={APP_ROUTES.ORDER_MANAGEMENT.APPROVED_ORDER}>
-            Approved Orders TODO
-          </Link>
-        ),
-      },
-    ],
-  },
-  {
-    key: APP_ROUTES.ITEM_MANAGEMENT,
-    icon: <ExperimentOutlined />,
-    label: "Item Management",
-    children: [
-      {
-        key: APP_ROUTES.ITEM_MANAGEMENT,
-        label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
-      },
-    ],
-  },
-  {
-    key: APP_ROUTES.USERS_MANAGEMENT,
-    icon: <UserOutlined />,
-    label: "User Management",
-    children: [
-      {
-        key: APP_ROUTES.USERS_MANAGEMENT,
-        label: <Link href={APP_ROUTES.USERS_MANAGEMENT}>View Users</Link>,
-      },
-    ],
+    label: <Link href={APP_ROUTES.ORDER_HISTORY}>Order History</Link>,
   },
 
-  {
-    key: APP_ROUTES.SITES,
-    icon: <FaLocationDot />,
-    label: "Construction Sites",
-    children: [
-      {
-        key: APP_ROUTES.SITES,
-        label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
-      },
-      {
-        key: "addConstructionSite",
-        label: <Link href="/sites/add">Add Construction Site</Link>,
-      },
-    ],
-  },
   {
     key: APP_ROUTES.POLICY_MANAGEMENT.POLICIES,
     icon: <InfoCircleOutlined />,
@@ -205,5 +141,21 @@ const SidebarRoutes: MenuProps["items"] = [
     icon: <InfoCircleOutlined />,
     // for supplier
     label: <Link href={APP_ROUTES.ORDER_HISTORY_SUPPLIER}>Order History</Link>,
+  },
+  {
+    key: APP_ROUTES.ITEM_MANAGEMENT,
+    icon: <InfoCircleOutlined />,
+    // all the order pending placement ( all the order approved by the manager) for site manager
+    label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
+  },
+  {
+    key: APP_ROUTES.SITES,
+    icon: <FaLocationDot />,
+    label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
+  },
+  {
+    key: APP_ROUTES.USER_MANAGEMENT,
+    icon: <FaLocationDot />,
+    label: <Link href={APP_ROUTES.USER_MANAGEMENT}>User Management</Link>,
   },
 ];

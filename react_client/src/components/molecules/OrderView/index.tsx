@@ -1,12 +1,12 @@
 import React from "react";
-import OrderItemsTables from "../OrderItemsTables";
+import OrderItemTable from "../OrderItemsTable";
 import { format } from "date-fns";
 
 interface OrderViewProps {
-  record: IOrder;
+  order: IOrder;
 }
 
-const OrderView = ({ record }: OrderViewProps) => {
+const OrderView = ({ order: order }: OrderViewProps) => {
   return (
     <div className="">
       <div className="bg-gray-200 px-4 py-2">
@@ -17,50 +17,50 @@ const OrderView = ({ record }: OrderViewProps) => {
       <div className="px-4 py-2">
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Status:</span>
-          <span className="text-gray-600">{record.status}</span>
+          <span className="text-gray-600">{order.status}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Supplier:</span>
           <span className="text-gray-600 text-right">
-            {record.supplier.name} <br /> {record.supplier.email} <br />
-            {record.supplier.contactNumber}
+            {order.supplier.name} <br /> {order.supplier.email} <br />
+            {order.supplier.contactNumber}
             <br />
           </span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Site Manager:</span>
           <span className="text-gray-600 text-right">
-            {record.siteManager.name} <br /> {record.siteManager.email}
-            <br /> {record.siteManager.contactNumber} <br />
+            {order.siteManager.name} <br /> {order.siteManager.email}
+            <br /> {order.siteManager.contactNumber} <br />
           </span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Site:</span>
           <span className="text-gray-600 text-right">
-            {record.site.name} <br /> {record.site.address}
+            {order.site.name} <br /> {order.site.address}
             <br />
-            {record.site.city}
+            {order.site.city}
             <br />
-            {record.site.contactNumber}
+            {order.site.contactNumber}
             <br />
           </span>
         </div>
 
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Date To Be Delivered:</span>
-          <span className="text-gray-600">{record.dateToBeDelivered}</span>
+          <span className="text-gray-600">{order.dateToBeDelivered}</span>
         </div>
 
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Created At:</span>
           <span className="text-gray-600">
-            {format(new Date(record.createdAt), "dd/MM/yyyy HH:mm:ss")}
+            {format(new Date(order.createdAt), "dd/MM/yyyy HH:mm:ss")}
           </span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Updated At:</span>
           <span className="text-gray-600">
-            {format(new Date(record.updatedAt), "dd/MM/yyyy HH:mm:ss")}
+            {format(new Date(order.updatedAt), "dd/MM/yyyy HH:mm:ss")}
           </span>
         </div>
       </div>{" "}
@@ -70,14 +70,14 @@ const OrderView = ({ record }: OrderViewProps) => {
         </h2>
       </div>
       <div className="px-4 py-2">
-        <OrderItemsTables items={record.items} />
-        <div className="flex justify-between mb-2 ">
+        <OrderItemTable items={order.items} />
+        <div className="flex justify-between mb-2  mx-4">
           <span className="text-gray-800 font-bold">Total:</span>
-          <strong className="text-gray-600 mr-4">Rs. {record.total}</strong>
+          <strong className="text-gray-600">Rs. {order.total}</strong>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Comments:</span>
-          <span className="text-gray-600">{record.comments}</span>
+          <span className="text-gray-600">{order.comments ?? "-"}</span>
         </div>
       </div>
     </div>

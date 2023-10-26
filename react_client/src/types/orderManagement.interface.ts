@@ -1,6 +1,7 @@
 interface IOrderItem {
   item: IItem;
   quantity: number;
+  shipped: number;
   priceAtOrderTime: number;
 }
 

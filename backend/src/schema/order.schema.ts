@@ -69,6 +69,8 @@ export const createOrderSchema = object({
 
 export type CreateOrderInput = TypeOf<typeof createOrderSchema>;
 
+// approve or decline an order schema
+
 const params = {
   params: object({
     orderId: string({
