@@ -21,19 +21,18 @@ export const API_ROUTES = {
   SUPPLIER_MANAGEMENT: `/suppliers`,
   ORDER_MANAGEMENT: `/orders`,
   PENDING_APPROVALS_COMPANY_MANGER: "/orders/pending-approval/company-manager", // get all pending approvals for company manager
+  ORDERS_FOR_PROCUREMENT_STAFF: "/procurement-staff", // get all pending approvals for company manager
+  ORDERS_FOR_SUPPLIER: "/supplier", // get all pending approvals for company manager
+  HIERARCHY_MANAGEMENT: `/hierarchies`,
 };
 
 export const APP_ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   SITES: "/sites",
-  USERS_MANAGEMENT: "/users",
+  USER_MANAGEMENT: "/users",
   ITEM_MANAGEMENT: "/items",
-  ORDER_MANAGEMENT: {
-    ALL_ORDER: `/orders`,
-    PENDING_ORDER: `/orders/pending`,
-    APPROVED_ORDER: `/orders/approved`,
-  },
+  ORDER_HISTORY: `/orders`,
   PENDING_APPROVALS: "/pending-approvals",
   POLICY_MANAGEMENT: {
     POLICIES: "/policies",
@@ -50,9 +49,9 @@ export const APP_ROUTES = {
 export const breadcrumbNameMap: Record<string, string> = {
   "/apps": "Application List",
   [APP_ROUTES.SITES]: "Construction Site",
-  [APP_ROUTES.USERS_MANAGEMENT]: "User Management",
+  [APP_ROUTES.USER_MANAGEMENT]: "User Management",
   [APP_ROUTES.ITEM_MANAGEMENT]: "Item Management",
-  [APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER]: "Order Management",
+  [APP_ROUTES.ORDER_HISTORY]: "Order Management",
   [APP_ROUTES.PENDING_APPROVALS]: "pending-approvals",
   [APP_ROUTES.POLICY_MANAGEMENT.POLICIES]: "Policies",
   [APP_ROUTES.POLICY_MANAGEMENT.HIERARCHY]: "Policies-hierarchy",
@@ -68,19 +67,20 @@ export const breadcrumbNameMap: Record<string, string> = {
 
 export const COMPANY_MANAGER_ROUTES = [
   APP_ROUTES.HOME,
-  APP_ROUTES.USERS_MANAGEMENT,
+  APP_ROUTES.USER_MANAGEMENT,
   APP_ROUTES.SITES,
   APP_ROUTES.ITEM_MANAGEMENT,
   APP_ROUTES.PENDING_APPROVALS,
   APP_ROUTES.INVOICES_COMPANY_MANAGER,
-  ...Object.values(APP_ROUTES.ORDER_MANAGEMENT),
+  APP_ROUTES.ORDER_HISTORY,
   ...Object.values(APP_ROUTES.POLICY_MANAGEMENT),
 ];
 export const PROCUREMENT_STAFF_ROUTES = [
   APP_ROUTES.HOME,
   APP_ROUTES.PURCHASE_ORDER_PROCUREMENT_STAFF,
-  ...Object.values(APP_ROUTES.ORDER_MANAGEMENT),
+  APP_ROUTES.ORDER_HISTORY,
 ];
+
 export const SUPPLIER_ROUTES = [
   APP_ROUTES.HOME,
   APP_ROUTES.PURCHASE_ORDER_SUPPLIER,

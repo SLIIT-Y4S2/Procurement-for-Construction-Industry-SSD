@@ -47,7 +47,7 @@ const Orders = () => {
               <br />
               <strong>Site:</strong> {record.site.name} - {record.site.address}
               <br />
-              <strong>Comments:</strong> {record.comments}
+              <strong>Comments:</strong> {record.comments ?? "-"}
               <br />
               <strong>Date To Be Delivered:</strong> {record.dateToBeDelivered}
               <br />

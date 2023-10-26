@@ -30,60 +30,50 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: 1,
-    hierarchyId: "John Brown",
-    lowerBoundPrice: 32,
-    upperBoundPrice: 45,
-    managerInCharge: "ABC",
-    description:
-      "My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.",
-  },
-  {
-    key: 2,
-    hierarchyId: "Jim Green",
-    lowerBoundPrice: 42,
-    upperBoundPrice: 45,
-    managerInCharge: "ABC",
-    description:
-      "My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.",
-  },
-  {
-    key: 4,
-    hierarchyId: "Joe Black",
-    lowerBoundPrice: 32,
-    upperBoundPrice: 45,
-    managerInCharge: "ABC",
-    description:
-      "My name is Joe Black, I am 32 years old, living in Sydney No. 1 Lake Park.",
-  },
-];
+const HierarchyTable = ({
+  allHierarchies,
+}: {
+  allHierarchies: IHierarchy[];
+}) => {
+  let data: DataType[] = [];
 
-const HierarchyTable: React.FC = () => (
-  <>
-    <Table
-      columns={columns}
-      expandable={{
-        expandedRowRender: (record) => (
-          <>
-            <p style={{ margin: 0 }}>{record.description}</p>
-            <div
-              style={{ display: "flex", justifyContent: "end", gap: "40px" }}
-            >
-              <Button icon={<EditOutlined />} type="primary" ghost>
-                Edit
-              </Button>
-              <Button icon={<DeleteOutlined />} danger>
-                Delete
-              </Button>
-            </div>
-          </>
-        ),
-      }}
-      dataSource={data}
-    />
-  </>
-);
+  for (let hierarchy of allHierarchies) {
+    const obj = {
+      key: allHierarchies.indexOf(hierarchy) + 1,
+      hierarchyId: hierarchy.hierarchyId,
+      lowerBoundPrice: hierarchy.lowerBoundPrice,
+      upperBoundPrice: hierarchy.upperBoundPrice,
+      managerInCharge: hierarchy.managerInCharge,
+      description: `This hierarchy, ranging from ${hierarchy.lowerBoundPrice} - ${hierarchy.upperBoundPrice} inclusive can only be approved by ${hierarchy.managerInCharge} `,
+    };
+    data.push(obj);
+  }
+
+  return (
+    <>
+      <Table
+        columns={columns}
+        expandable={{
+          expandedRowRender: (record) => (
+            <>
+              <p style={{ margin: 0 }}>{record.description}</p>
+              <div
+                style={{ display: "flex", justifyContent: "end", gap: "40px" }}
+              >
+                <Button icon={<EditOutlined />} type="primary" ghost>
+                  Edit
+                </Button>
+                <Button icon={<DeleteOutlined />} danger>
+                  Delete
+                </Button>
+              </div>
+            </>
+          ),
+        }}
+        dataSource={data}
+      />
+    </>
+  );
+};
 
 export default HierarchyTable;

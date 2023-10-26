@@ -4,23 +4,15 @@
 name: Deploy to Firebase Hosting on PR
 "on": pull_request
 jobs:
-  build_and_preview:
-    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/react_client/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-      - uses: actions/checkout@main
-      - run: npm ci --force && npx next build && npx next export
+      - uses: actions/checkout@v3
+      - run: npm ci && npm run build
         working-directory: react_client
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROCURESYNC }}"
           projectId: procuresync
+          entrypoint: "./react_client"
