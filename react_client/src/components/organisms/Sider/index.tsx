@@ -99,21 +99,6 @@ const SidebarRoutes: MenuProps["items"] = [
   },
 
   {
-    key: APP_ROUTES.SITES,
-    icon: <FaLocationDot />,
-    label: "Construction Sites",
-    children: [
-      {
-        key: APP_ROUTES.SITES,
-        label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
-      },
-      {
-        key: "addConstructionSite",
-        label: <Link href="/sites/add">Add Construction Site</Link>,
-      },
-    ],
-  },
-  {
     key: APP_ROUTES.POLICY_MANAGEMENT.POLICIES,
     icon: <InfoCircleOutlined />,
     label: "Policy Management",
@@ -156,5 +141,16 @@ const SidebarRoutes: MenuProps["items"] = [
     icon: <InfoCircleOutlined />,
     // for supplier
     label: <Link href={APP_ROUTES.ORDER_HISTORY_SUPPLIER}>Order History</Link>,
+  },
+  {
+    key: APP_ROUTES.ITEM_MANAGEMENT,
+    icon: <InfoCircleOutlined />,
+    // all the order pending placement ( all the order approved by the manager) for site manager
+    label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
+  },
+  {
+    key: APP_ROUTES.SITES,
+    icon: <FaLocationDot />,
+    label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
   },
 ];
