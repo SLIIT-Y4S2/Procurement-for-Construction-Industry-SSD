@@ -4,6 +4,8 @@ const Color kSeedColor = Color(0xFF2F1160);
 
 const Color kPrimaryColor = Color(0xFF2F1160);
 
+const Color kSurfaceColor = Color(0xFFF4F4F4);
+
 //order status colors
 
 const Color viewPending = Color(0xFFFFD700);

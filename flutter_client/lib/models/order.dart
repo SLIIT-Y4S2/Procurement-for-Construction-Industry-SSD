@@ -2,7 +2,7 @@ import 'package:flutter_client/models/order_product.dart';
 
 class Order {
   final String supplierId;
-  final String orderId;
+  final String? orderId;
   final DateTime dateToBeDelivered;
   final String siteId;
   final String siteManagerId;
@@ -10,19 +10,12 @@ class Order {
 
   Order({
     required this.supplierId,
-    required this.orderId,
+    this.orderId,
     required this.dateToBeDelivered,
     required this.siteId,
     required this.siteManagerId,
     required this.products,
   });
-  //TODO Remove this constructor
-  // Order.init({
-  //   required this.orderId,
-  //   required this.dateToBeDelivered,
-  //   required this.siteId,
-  //   required this.siteManagerId,
-  // }) : products = [];
 
   set setProducts(List<OrderProduct> products) {
     products = products;
@@ -42,7 +35,7 @@ class Order {
   Map<String, dynamic> toJson() {
     return {
       'orderId': orderId,
-      'dateToBeDelivered': dateToBeDelivered.toIso8601String(),
+      'dateToBeDelivered': dateToBeDelivered,
       'site': siteId,
       'siteManager': siteManagerId,
       'supplier': supplierId,

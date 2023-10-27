@@ -40,3 +40,13 @@ final class RestoreProductToProductList extends CartState {
     required this.product,
   });
 }
+
+final class OrderConfirmed extends CartState {
+  final Order order;
+
+  const OrderConfirmed({
+    required this.order,
+  });
+}
+
+final class ConfirmingOrder extends CartState {}

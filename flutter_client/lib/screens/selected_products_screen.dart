@@ -1,8 +1,11 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/cart/cart_bloc.dart';
 import 'package:flutter_client/models/order_product.dart';
 import 'package:flutter_client/models/user_model.dart';
+import 'package:flutter_client/screens/delivery_details_screen.dart';
 import 'package:flutter_client/screens/select_product_screen.dart';
 import 'package:flutter_client/widgets/selected_product_card.dart';
 
@@ -46,7 +49,8 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
             _cart = state.orderProducts;
           });
           _cartTotal = state.cartTotal;
-          print(_cartTotal);
+          developer.log(_cartTotal.toString(),
+              name: 'selected_products_screen');
         }
 
         if (state is RestoreProductToProductList) {
@@ -147,7 +151,21 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
                     ),
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_cartTotal > 0) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const DeliveryDetailsScreen(),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please add products to the cart.'),
+                        ),
+                      );
+                    }
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

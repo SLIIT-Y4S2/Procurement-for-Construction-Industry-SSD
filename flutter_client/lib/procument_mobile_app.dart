@@ -1,9 +1,10 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/repositiories/auth/auth_repository.dart';
-import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/screens/login_screen.dart';
 import 'package:flutter_client/screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,7 +35,11 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
         }
       });
     }).catchError((error) {
-      print(error);
+      developer.log(
+        error,
+        name: 'procument_mobile_app.dart',
+        stackTrace: error,
+      );
     });
   }
 
@@ -73,12 +78,12 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
           colorScheme: ColorScheme.fromSeed(
             seedColor: kSeedColor,
             primary: kPrimaryColor,
+            surface: kSurfaceColor,
           ),
           textTheme: GoogleFonts.interTextTheme(),
           useMaterial3: true,
         ),
-        // home: _isTokenAvailable ? const MainScreen() : const LoginScreen(),
-        home:  const MainScreen(),
+        home: _isTokenAvailable ? const MainScreen() : const LoginScreen(),
       ),
     );
   }
