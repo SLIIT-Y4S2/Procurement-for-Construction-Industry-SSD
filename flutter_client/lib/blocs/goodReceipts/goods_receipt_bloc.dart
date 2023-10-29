@@ -12,6 +12,7 @@ class GoodsReceiptBloc extends Bloc<GoodsReceiptEvent, GoodsReceiptState> {
 
   GoodsReceiptBloc() : super(GoodsReceiptInitial()) {
     on<GetGoodsReceiptsEvent>(_getGoodsReceiptsHandler);
+    on<MarkAsReceivedEvent>(_markAsReceivedHandler);
   }
 
   // Load products
@@ -30,6 +31,32 @@ class GoodsReceiptBloc extends Bloc<GoodsReceiptEvent, GoodsReceiptState> {
         emit(
           const GoodsReceiptError(
               message: "Error loading goods receipts. Please try again."),
+        );
+      },
+    );
+  }
+
+  // Mark as received
+  void _markAsReceivedHandler(
+      MarkAsReceivedEvent event, Emitter<GoodsReceiptState> emit) async {
+    emit(
+      GoodsReceiptMarkingAsReceived(
+        goodsReceiptNumber: event.goodsReceiptNumber,
+      ),
+    );
+
+    await _goodsReceiptRepository
+        .markedAsReceived(event.goodsReceiptNumber)
+        .then(
+      (goodsReceipt) {
+        emit(GoodsReceiptMarkedAsReceived(
+            goodsReceiptNumber: event.goodsReceiptNumber));
+      },
+    ).catchError(
+      (error) {
+        emit(
+          const GoodsReceiptMarkedAsReceivedError(
+              message: "Error marking goods receipt as received."),
         );
       },
     );
