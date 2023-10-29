@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -8,6 +8,7 @@ import {
   FileTextOutlined,
   FileProtectOutlined,
   FileSyncOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -15,22 +16,52 @@ import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
 const { Sider: AntdSider } = Layout;
 import { usePathname } from "next/navigation";
-import { API_ROUTES, APP_ROUTES } from "@/utils/constants";
+import {
+  API_ROUTES,
+  APP_ROUTES,
+  COMPANY_MANAGER_ROUTES,
+  PROCUREMENT_STAFF_ROUTES,
+  SUPPLIER_ROUTES,
+} from "@/utils/constants";
+import { AuthContext } from "@/context/auth/AuthContext";
+// import Image from "next/image";
 
 const Sider = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const pathname = usePathname();
+  const { user } = useContext(AuthContext) as IAuthContext;
 
+  const userFilteredSideBar = SidebarRoutes?.filter((item) => {
+    if (item == undefined) return false;
+    if (item.key == undefined) return false;
+    if (user?.role === "supplier") {
+      return SUPPLIER_ROUTES.includes(item.key.toString());
+    } else if (user?.role === "procurementStaff") {
+      return PROCUREMENT_STAFF_ROUTES.includes(item.key.toString());
+    } else if (user?.role === "companyManager") {
+      return COMPANY_MANAGER_ROUTES.includes(item.key.toString());
+    } else {
+      return null;
+    }
+  });
   return (
-    <AntdSider width={300} style={{ background: colorBgContainer }} collapsible>
+    <AntdSider width={300} style={{ background: "#001529" }} collapsible>
+      <Link href={APP_ROUTES.HOME} className="w-full flex justify-center">
+        <img
+          src="/procuresync-main-logo.svg"
+          alt="logo"
+          height={90}
+          className="cursor-pointer p-5 object-left w-full"
+        />
+      </Link>
       <Menu
         mode="inline"
         // defaultSelectedKeys={["1"]}
         // defaultOpenKeys={["sub1"]}
-        style={{ height: "100%", borderRight: 0 }}
-        items={items1}
+        style={{ borderRight: 0 }}
+        items={userFilteredSideBar}
         theme="dark"
         selectedKeys={[pathname]}
       />
@@ -39,75 +70,92 @@ const Sider = () => {
 };
 
 export default Sider;
-const items1: MenuProps["items"] = [
+const SidebarRoutes: MenuProps["items"] = [
   {
-    key: "Order management",
+    key: APP_ROUTES.PENDING_APPROVALS,
+    icon: <InfoCircleOutlined />,
+    label: <Link href={APP_ROUTES.PENDING_APPROVALS}>Pending Approvals</Link>,
+  },
+  {
+    key: APP_ROUTES.PURCHASE_ORDER_PROCUREMENT_STAFF,
+    icon: <InfoCircleOutlined />,
+    // all the order pending placement ( all the order approved by the manager) for site manager
+    label: (
+      <Link href={APP_ROUTES.PURCHASE_ORDER_PROCUREMENT_STAFF}>
+        Purchase Orders
+      </Link>
+    ),
+  },
+  {
+    key: APP_ROUTES.INVOICES_COMPANY_MANAGER,
+    icon: <InfoCircleOutlined />,
+    // for supplier
+    label: <Link href={APP_ROUTES.INVOICES_COMPANY_MANAGER}>Invoices</Link>,
+  },
+  {
+    key: APP_ROUTES.ORDER_HISTORY,
     icon: <FileTextOutlined />,
-    label: "Order Management",
-    children: [
-      {
-        key: APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER,
-        icon: <FileTextOutlined />,
-        label: (
-          <Link href={APP_ROUTES.ORDER_MANAGEMENT.ALL_ORDER}>All Orders</Link>
-        ),
-      },
-      {
-        key: APP_ROUTES.ORDER_MANAGEMENT.PENDING_ORDER,
-        icon: <FileSyncOutlined />,
-        label: (
-          <Link href={APP_ROUTES.ORDER_MANAGEMENT.PENDING_ORDER}>
-            Pending Orders TODO
-          </Link>
-        ),
-      },
-      {
-        key: APP_ROUTES.ORDER_MANAGEMENT.APPROVED_ORDER,
-        icon: <FileProtectOutlined />,
-        label: (
-          <Link href={APP_ROUTES.ORDER_MANAGEMENT.APPROVED_ORDER}>
-            Approved Orders TODO
-          </Link>
-        ),
-      },
-    ],
+    label: <Link href={APP_ROUTES.ORDER_HISTORY}>Order History</Link>,
   },
+
   {
-    key: "Product management",
-    icon: <ExperimentOutlined />,
-    label: "Item Management",
+    key: APP_ROUTES.POLICY_MANAGEMENT.POLICIES,
+    icon: <InfoCircleOutlined />,
+    label: "Policy Management",
     children: [
       {
-        key: APP_ROUTES.ITEM_MANAGEMENT,
-        label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
+        key: APP_ROUTES.POLICY_MANAGEMENT.POLICIES,
+        label: (
+          <Link href={APP_ROUTES.POLICY_MANAGEMENT.POLICIES}>Policy </Link>
+        ),
       },
-    ],
-  },
-  {
-    key: "employees",
-    icon: <UserOutlined />,
-    label: "User Management",
-    children: [
       {
-        key: APP_ROUTES.USERS_MANAGEMENT,
-        label: <Link href={APP_ROUTES.USERS_MANAGEMENT}>View Users</Link>,
+        key: APP_ROUTES.POLICY_MANAGEMENT.HIERARCHY,
+        label: (
+          <Link href={APP_ROUTES.POLICY_MANAGEMENT.HIERARCHY}>Hierarchy</Link>
+        ),
       },
     ],
   },
 
   {
-    key: "Construction Sites",
+    key: APP_ROUTES.PURCHASE_ORDER_SUPPLIER,
+    icon: <InfoCircleOutlined />,
+    // for supplier - all the pending and make deliver
+    label: <Link href={APP_ROUTES.PURCHASE_ORDER_SUPPLIER}>Your Orders</Link>,
+  },
+  {
+    key: APP_ROUTES.DELIVERIES_SUPPLIER,
+    icon: <InfoCircleOutlined />,
+    // for supplier
+    label: <Link href={APP_ROUTES.DELIVERIES_SUPPLIER}>Deliveries</Link>,
+  },
+  {
+    key: APP_ROUTES.INVOICES_SUPPLIER,
+    icon: <InfoCircleOutlined />,
+    // for supplier
+    label: <Link href={APP_ROUTES.INVOICES_SUPPLIER}>Invoices</Link>,
+  },
+  {
+    key: APP_ROUTES.ORDER_HISTORY_SUPPLIER,
+    icon: <InfoCircleOutlined />,
+    // for supplier
+    label: <Link href={APP_ROUTES.ORDER_HISTORY_SUPPLIER}>Order History</Link>,
+  },
+  {
+    key: APP_ROUTES.ITEM_MANAGEMENT,
+    icon: <InfoCircleOutlined />,
+    // all the order pending placement ( all the order approved by the manager) for site manager
+    label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
+  },
+  {
+    key: APP_ROUTES.SITES,
     icon: <FaLocationDot />,
-    label: "Construction Sites",
-    children: [
-      {
-        key: APP_ROUTES.SITES,
-        label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
-      },
-      {
-        key: "addConstructionSite",
-        label: <Link href="/sites/add">Add Construction Site</Link>,
-      },
-    ],
+    label: <Link href={APP_ROUTES.SITES}>View Construction Sites</Link>,
+  },
+  {
+    key: APP_ROUTES.USER_MANAGEMENT,
+    icon: <FaLocationDot />,
+    label: <Link href={APP_ROUTES.USER_MANAGEMENT}>User Management</Link>,
   },
 ];

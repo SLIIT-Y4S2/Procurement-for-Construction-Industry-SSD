@@ -25,10 +25,10 @@ final class ProductsLoaded extends ProductsState {
   });
 }
 
-class ProductCartUpdated extends ProductsState {
-  final List<Product> products;
+final class RemoveProductFromList extends ProductsState {
+  final int productIndex;
 
-  const ProductCartUpdated({
-    required this.products,
+  const RemoveProductFromList({
+    required this.productIndex,
   });
 }

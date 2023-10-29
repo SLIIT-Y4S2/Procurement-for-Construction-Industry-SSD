@@ -1,24 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_client/blocs/cart/cart_bloc.dart';
+import 'package:flutter_client/models/order_product.dart';
 
-class SelectedProductCard extends StatelessWidget {
+class SelectedProductCard extends StatefulWidget {
   const SelectedProductCard({
-    required this.product,
+    required this.orderProduct,
     super.key,
   });
-  final Product product;
+
+  final OrderProduct orderProduct;
+
+  @override
+  State<SelectedProductCard> createState() => _SelectedProductCardState();
+}
+
+class _SelectedProductCardState extends State<SelectedProductCard> {
+  int _productQuantity = 0;
+  void _addQuantity() {
+    setState(() {
+      _productQuantity++;
+    });
+    BlocProvider.of<CartBloc>(context).add(
+      IncreaseProductQuantityEvent(
+        orderProduct: widget.orderProduct,
+      ),
+    );
+  }
+
+  void _deductQuantity() {
+    if (_productQuantity > 0) {
+      setState(() {
+        _productQuantity--;
+      });
+
+      BlocProvider.of<CartBloc>(context).add(
+        DecreaseProductQuantityEvent(
+          orderProduct: widget.orderProduct,
+        ),
+      );
+    }
+  }
+
+  void _onTapDelete() {
+    BlocProvider.of<CartBloc>(context).add(
+      RemoveProductFromCartEvent(
+        orderProduct: widget.orderProduct,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        contentPadding: EdgeInsets.all(8),
-        title: Text(product.title),
-        subtitle: Text(product.description),
-        trailing: Column(
+        title: Text(
+          widget.orderProduct.title,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
+        ),
+        subtitle: Row(
           children: [
-            Text('${product.price}'),
+            IconButton(
+              onPressed: _deductQuantity,
+              icon: const Icon(Icons.remove_circle),
+            ),
+            Text(
+              '$_productQuantity',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
+            ),
+            IconButton(
+              onPressed: _addQuantity,
+              icon: const Icon(Icons.add_circle),
+            ),
           ],
         ),
+        trailing: Column(
+          children: [
+            Text(
+              'LKR ${widget.orderProduct.price.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
+            ),
+            Expanded(
+              child: IconButton(
+                onPressed: _onTapDelete,
+                icon: const Icon(
+                  Icons.delete_sharp,
+                  color: Colors.red,
+                ),
+              ),
+            )
+          ],
+        ),
+        isThreeLine: true,
       ),
     );
   }

@@ -1,15 +1,22 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/repositiories/auth/auth_repository.dart';
+
 import 'package:flutter_client/screens/delivery_details.dart';
 import 'package:flutter_client/screens/done.dart';
 import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/screens/login_screen.dart';
 import 'package:flutter_client/screens/my_order_details.dart';
 import 'package:flutter_client/screens/my_orders.dart';
+
+import 'package:flutter_client/screens/main_screen.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_client/globals.dart';
 
 class ProcumentMobileApp extends StatefulWidget {
   const ProcumentMobileApp({super.key});
@@ -19,8 +26,6 @@ class ProcumentMobileApp extends StatefulWidget {
 }
 
 class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
-  final GlobalKey<NavigatorState> _rootNavigatorKey =
-      GlobalKey<NavigatorState>();
   late AuthRepository _authRepository;
   bool _isTokenAvailable = false;
 
@@ -38,7 +43,11 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
         }
       });
     }).catchError((error) {
-      print(error);
+      developer.log(
+        error,
+        name: 'procument_mobile_app.dart',
+        stackTrace: error,
+      );
     });
   }
 
@@ -47,30 +56,22 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is SignedIn) {
-          _rootNavigatorKey.currentState!.pushReplacement(
+          rootNavigatorKey.currentState!.pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const MainScreen(),
             ),
           );
         }
         if (state is AuthInitial) {
-          _rootNavigatorKey.currentState!.pushReplacement(
+          rootNavigatorKey.currentState!.pushReplacement(
             MaterialPageRoute(
               builder: (context) => const LoginScreen(),
             ),
           );
         }
 
-        if (state is SigningIn) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Signing In'),
-            ),
-          );
-        }
-
         if (state is SignedOut) {
-          _rootNavigatorKey.currentState!.pushReplacement(
+          rootNavigatorKey.currentState!.pushReplacement(
             MaterialPageRoute(
               builder: (context) => const LoginScreen(),
             ),
@@ -78,18 +79,21 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
         }
       },
       child: MaterialApp(
-        navigatorKey: _rootNavigatorKey,
+        debugShowCheckedModeBanner: false,
+        navigatorKey: rootNavigatorKey,
         title: 'Procument Mobile App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: kSeedColor,
             primary: kPrimaryColor,
+            surface: kSurfaceColor,
           ),
           textTheme: GoogleFonts.interTextTheme(),
           useMaterial3: true,
         ),
         // home: _isTokenAvailable ? const HomeScreen() : const LoginScreen(),
-        home: MyApp(),
+        home: _isTokenAvailable ? const MainScreen() : const LoginScreen(),
+
       ),
     );
   }

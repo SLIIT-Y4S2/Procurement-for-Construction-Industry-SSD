@@ -40,7 +40,7 @@ const UserManagement = () => {
     {
       title: "Action",
       key: "action",
-      render: (text: string, record: IManagementUser) => (
+      render: (text: string, record: IUser) => (
         <UserEdit currentUser={record} />
       ),
     },
@@ -56,7 +56,7 @@ const UserManagement = () => {
         columns={columns}
         expandable={{
           expandedRowRender: (record) => (
-            <p>
+            <div>
               {" "}
               <strong>Contact Number:</strong> {record.contactNumber}
               <br />
@@ -65,7 +65,7 @@ const UserManagement = () => {
               <br />
               <strong>Updated At:</strong>{" "}
               {format(new Date(record.updatedAt), "dd/MM/yyyy")}
-            </p>
+            </div>
           ),
         }}
       />

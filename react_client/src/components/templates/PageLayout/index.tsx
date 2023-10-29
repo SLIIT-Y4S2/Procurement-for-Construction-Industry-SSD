@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import Sider from "@/components/organisms/Sider";
 import Breadcrumb from "@/components/molecules/Breadcrumbs";
 import { AuthContext } from "@/context/auth/AuthContext";
-import { IAuthContext } from "@/types/auth.interface";
+
 import Loading from "@/components/atoms/Loading";
 
 const { Content } = Layout;
@@ -33,9 +33,9 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
         minHeight: "100vh",
       }}
     >
-      <Header />
+      <Sider />
       <Layout>
-        <Sider />
+        <Header />
         <Layout style={{ padding: "0 24px 24px" }}>
           <Breadcrumb />
           <Content

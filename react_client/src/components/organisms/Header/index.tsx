@@ -6,8 +6,6 @@ import { Avatar, Dropdown, Layout, Typography } from "antd";
 import { LogoutOutlined, ProfileFilled } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import Link from "next/link";
-import { IAuthContext } from "@/types/auth.interface";
-import Image from "next/image";
 
 const { Header: AntHeader } = Layout;
 const Header = () => {
@@ -40,13 +38,8 @@ const Header = () => {
         color: "white",
       }}
     >
-      {/* <div className="demo-logo" /> */}
-      <Image
-        src="/procuresync-main-logo.svg"
-        alt="logo"
-        width={250}
-        height={50}
-      />
+      <div className="demo-logo" />
+
       <div className="flex gap-2 items-center">
         {user && (
           <Typography.Text style={{ color: "white" }}>

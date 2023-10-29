@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import 'package:flutter_client/exceptions/auth_exceptions.dart';
 import 'package:flutter_client/repositiories/auth/base_auth_repository.dart';
@@ -20,16 +21,20 @@ class AuthRepository extends BaseAuthRepository {
       try {
         // Verify a token (SecretKey for HMAC & PublicKey for all the others)
         final jwt = JWT.verify(token, SecretKey('secret'));
-
-        if (jwt.payload['role'] == 'procurementStaff') {
+        if (jwt.payload['role'] == 'siteManager') {
           return true;
         } else {
           throw UnauthorizedException('Failed to login');
         }
       } on JWTExpiredException catch (e) {
+        developer.log(e.message, name: "AuthRepository");
         throw TokenExpiredException(e.message);
       } on JWTException catch (ex) {
+        developer.log(ex.message, name: "AuthRepository");
         throw AuthException(ex.message); // ex: invalid signature
+      } catch (e) {
+        developer.log(e.toString(), name: "AuthRepository");
+        throw AuthException(e.toString());
       }
     }
   }
@@ -70,7 +75,7 @@ class AuthRepository extends BaseAuthRepository {
         // Verify a token (SecretKey for HMAC & PublicKey for all the others)
         final jwt = JWT.verify(acessToken, SecretKey('secret'));
 
-        if (jwt.payload['role'] == 'procurementStaff') {
+        if (jwt.payload['role'] == 'siteManager') {
           final SharedPreferences sharedPreferences =
               await SharedPreferences.getInstance();
           await sharedPreferences.setString('jwt', acessToken);
@@ -79,9 +84,14 @@ class AuthRepository extends BaseAuthRepository {
           throw UnauthorizedException('Failed to login');
         }
       } on JWTExpiredException catch (e) {
+        developer.log(e.message, name: "AuthRepository");
         throw TokenExpiredException(e.message);
       } on JWTException catch (ex) {
+        developer.log(ex.message, name: "AuthRepository");
         throw AuthException(ex.message); // ex: invalid signature
+      } catch (e) {
+        developer.log(e.toString(), name: "AuthRepository");
+        throw AuthException(e.toString());
       }
     }
 

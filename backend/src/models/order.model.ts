@@ -5,41 +5,39 @@ import { ItemDocument } from "./item.model";
 import { SiteDocument } from "./site.model";
 const nanoid = customAlphabet("0123456789", 10);
 /**
- * 
- *  status -- user -- description
- * 
- * ---- exceptions ----
+ * status -- user -- description
+ *
+ * * ---- exceptions ----
  * "daft"-- site manger -- (optional) saved as a draft by the site manager
- * 
- * ---- normal flow ----
- * "pending-approval" -- site manager -- after site manger placing the order requisition
- * "approved-company" -- company manger -- approved by the company manager and pending placement
- * "placed" -- site manger -- placed to the supplier and waiting for delivery by the supplier, they can deliver it or reject it
- * "to-be-delivered" -- supplier -- approved by the supplier and waiting for delivery by the supplier
- * "partially-delivered" -- site manger -- (optional) stated by the site manager if the order is partially delivered
- * "delivered" -- supplier -- delivered by the supplier
- * "invoiced" -- supplier -- invoiced by the supplier //not sure if we need this state
- * "closed" -- company manger -- paid by the company
- * 
- * ---- exceptions ----
+ *
+ * * ---------------------------stage 1------------------------------------
+ * "pending" -- site manager -- after site manger placing the order requisition
+ * "approved" -- company manger -- approved by the company manager and pending placement
+ * "placed" -- procurement staff -- placed to the supplier, they can either deliver it or reject it
+ *            * ---- exceptions ----
+ *                 "declined" -- company manger -- (optional)  declined by the company manager
+ *
+ * * ---------------------------stage 2------------------------------------
+ * "placed" -- procurement staff -- placed to the supplier, they can either deliver it or reject it
+ * "partially-shipped" -- site manger -- (optional) stated by the site manager if the order is partially shipped
+ * "shipped" -- supplier -- shipped by the supplier but not confirmed by the site manager
+ * "pending-payment" -- site manger --   is * fully shipped
+ *
+ *
+ *  *  ---------------------------stage 3------------------------------------
+ * "invoiced" -- supplier -- invoiced by the supplier //TODO
+ * "closed" -- site manger -- paid by the company manager with payment details (date amount )
+ *
+ *
+ *
+ *
+ *
+ * * ---- exceptions ----
  * "revoke-site-manager" -- site manger -- (optional)  revoked by the site manager
- * "declined-company" -- company manger -- (optional)  declined by the company manager
+ * "declined" -- company manger -- (optional)  declined by the company manager
  * "declined-supplier" -- supplier -- (optional)  rejected by the supplier
- * 
-
-
-"pending-approval" -- pending approval by the company manger
-"approved-company" --  approved by the company manager and pending placement
-"placed" --  ---- placed to the supplier and waiting for delivery by the supplier, they can deliver it or reject it
-"to-be-delivered" -- approved by the supplier and waiting for delivery by the supplier
-"partially-delivered" -- (optional) stated by the site manager if the order is partially delivered
-"delivered" -- delivered by the supplier
-"invoiced" -- invoiced by the supplier //not sure if we need this state
-"closed" -- paid by the company
-
-"declined-company" -- (optional)  declined by the company manager
-"declined-supplier" -- (optional)  rejected by the supplier
-  */
+ *
+ */
 
 export interface OrderInput {
   supplier: UserDocument["_id"];
@@ -55,23 +53,23 @@ interface OrderItemInput {
 }
 interface OrderItemDocument extends OrderItemInput, mongoose.Document {
   priceAtOrderTime: number;
+  shipped: number;
 }
 export interface OrderDocument extends OrderInput, mongoose.Document {
   orderId: string;
   items: OrderItemDocument[];
   status:
-    | "daft"
-    | "pending-approval"
-    | "approved-company"
+    | "draft"
+    | "pending"
+    | "approved"
     | "placed"
-    | "to-be-delivered"
-    | "partially-delivered"
-    | "delivered"
+    | "declined"
+    | "partially-shipped"
+    | "shipped"
+    | "pending-payment"
     | "invoiced"
-    | "closed"
-    | "revoke-site-manager"
-    | "declined-company"
-    | "declined-supplier";
+    | "closed";
+
   total: number;
   createdAt: Date;
   updatedAt: Date;
@@ -83,7 +81,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      default: () => `ORDER_${nanoid()}`,
+      default: () => `PO-${nanoid()}`,
     },
     supplier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     items: [
@@ -91,6 +89,7 @@ const orderSchema = new mongoose.Schema(
         item: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
         priceAtOrderTime: { type: Number, required: true, default: 0 },
         quantity: { type: Number, required: true },
+        shipped: { type: Number, required: true, default: 0 }, // will change
       },
     ],
     siteManager: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -100,20 +99,18 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: [
-        "daft",
-        "pending-approval",
-        "approved-company",
+        "draft",
+        "pending",
+        "approved",
         "placed",
-        "to-be-delivered",
-        "partially-delivered",
-        "delivered",
+        "declined",
+        "partially-shipped",
+        "shipped",
+        "pending-payment",
         "invoiced",
         "closed",
-        "revoke-site-manager",
-        "declined-company",
-        "declined-supplier",
       ],
-      default: "pending-approval",
+      default: "pending",
     },
     total: { type: Number, required: true, default: 0 },
   },
@@ -138,10 +135,6 @@ orderSchema.pre("save", async function (next) {
 });
 
 orderSchema.post("save", async function (doc, next) {
-  // await doc.populate("supplier");
-  // await doc.populate("siteManager");
-  // await doc.populate("site");
-  // await doc.populate("items.item");
   await doc.populate([
     "supplier",
     "siteManager",

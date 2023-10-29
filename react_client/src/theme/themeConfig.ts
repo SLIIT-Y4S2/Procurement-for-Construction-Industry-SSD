@@ -5,6 +5,7 @@ const theme: ThemeConfig = {
   token: {
     fontSize: 16,
     colorPrimary: "#FFAE00",
+    colorSuccess: "#36CD1D",
   },
 };
 

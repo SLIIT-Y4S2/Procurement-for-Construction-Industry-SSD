@@ -4,8 +4,8 @@ import { Button, Form, Input, Select } from "antd";
 const { Item } = Form;
 
 interface UserFormProps {
-  currentUser?: IManagementUser;
-  formSubmission: (values: IManagementUser) => void;
+  currentUser?: IUser;
+  formSubmission: (values: IUser) => void;
 }
 
 const UserForm = ({ currentUser, formSubmission }: UserFormProps) => {

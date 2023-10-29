@@ -21,7 +21,7 @@ const siteSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      default: () => `SITE_${nanoid()}`,
+      default: () => `S-${nanoid()}`,
     },
     name: { type: String, required: true },
     address: { type: String, required: true },

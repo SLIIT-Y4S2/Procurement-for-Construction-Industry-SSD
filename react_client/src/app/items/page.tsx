@@ -2,10 +2,7 @@
 import AddItem from "@/components/organisms/ItemAdd";
 import ItemEdit from "@/components/organisms/ItemEdit";
 import { ItemManagementContext } from "@/context/ItemManagement/ItemManagementContext";
-import {
-  IItem,
-  IItemManagementContext,
-} from "@/types/itemManagement.interface";
+
 import { Table } from "antd";
 import { format } from "date-fns";
 import React, { useContext } from "react";
@@ -31,7 +28,7 @@ const Items = () => {
         loading={loading}
         expandable={{
           expandedRowRender: (record) => (
-            <p>
+            <div>
               <strong>Description:</strong> {record.description}
               <br />
               <strong>Supplier:</strong> {record.supplier?.name} -{" "}
@@ -42,7 +39,7 @@ const Items = () => {
               <br />
               <strong>Updated At:</strong>{" "}
               {format(new Date(record.updatedAt), "dd/MM/yyyy HH:mm:ss")}
-            </p>
+            </div>
           ),
         }}
       />
@@ -66,7 +63,7 @@ const columns = [
     // render: (text) => <a>{text}</a>,
   },
   {
-    title: "Price",
+    title: "Price (Rs.)",
     dataIndex: "price",
     key: "price",
   },

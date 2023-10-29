@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_client/blocs/cart/cart_bloc.dart';
 import 'package:flutter_client/models/user_model.dart';
-import 'package:flutter_client/screens/supplier_products_screen.dart';
+import 'package:flutter_client/screens/selected_products_screen.dart';
 
 class SupplierDetailsCard extends StatelessWidget {
   const SupplierDetailsCard({required this.supplier, super.key});
@@ -9,9 +11,10 @@ class SupplierDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void ontapHandler() {
+      BlocProvider.of<CartBloc>(context).supplier = supplier;
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => SupplierProductsScreen(
+          builder: (context) => SelectedProductsScreen(
             supplier: supplier,
           ),
         ),
@@ -44,7 +47,9 @@ class SupplierDetailsCard extends StatelessWidget {
                               size: 8.0, color: Colors.grey.shade500),
                           const SizedBox(width: 4.0),
                           Text(
-                            product.title,
+                            product.title.length < 20
+                                ? product.title
+                                : "${product.title.substring(0, 20)} ...",
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       fontWeight: FontWeight.normal,

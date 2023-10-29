@@ -1,13 +1,15 @@
-export interface IUser {
+interface IUser {
   _id: number;
+  userId: string;
   name: string;
   email: string;
   role: "siteManager" | "companyManager" | "procurementStaff" | "supplier";
-  created_at: string;
-  updated_at: string;
+  contactNumber: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface IAuthContext {
+interface IAuthContext {
   authenticated: boolean;
   user: IUser | undefined;
   login: (email: string, password: string) => Promise<void>;
