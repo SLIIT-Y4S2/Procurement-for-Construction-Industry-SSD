@@ -13,6 +13,20 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final AuthRepository _authRepository = AuthRepository();
   OrderBloc() : super(const OrderInitial()) {
     on<CreateOrderEvent>(_onCreateOrderHandler);
+    on<GetOrdersEvent>(_onGetOrdersHandler);
+  }
+
+  void _onGetOrdersHandler(
+    GetOrdersEvent event,
+    Emitter<OrderState> emit,
+  ) async {
+    emit(GettingOrders());
+    try {
+      List<Order> orders = await _orderRepository.getOrders();
+      emit(OrdersRetrieved(orders: orders));
+    } catch (e) {
+      emit(ErrorRetrievingOrders(message: e.toString()));
+    }
   }
 
   void _onCreateOrderHandler(

@@ -7,6 +7,9 @@ class Order {
   final String siteId;
   final String? siteManagerId;
   final List<OrderProduct> products;
+  final String? status;
+  final double? total;
+  final String? supplierName;
 
   Order({
     required this.supplierId,
@@ -14,26 +17,35 @@ class Order {
     required this.dateToBeDelivered,
     required this.siteId,
     this.siteManagerId,
+    this.status,
     required this.products,
+    this.total,
+    this.supplierName,
   });
 
-  set setSupplierId(String supplierId) {
-    supplierId = supplierId;
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
+      supplierId: json['supplier']['_id'],
+      supplierName: json['supplier']['name'],
+      orderId: json['orderId'],
+      dateToBeDelivered:
+          DateTime.now(), //DateTime.parse(json['dateToBeDelivered']),
+      siteId: json['site']['_id'],
+      siteManagerId: json['siteManager']['_id'],
+      products: (json['items'] as List<dynamic>).map<OrderProduct>((product) {
+        return OrderProduct.fromJson(product);
+      }).toList(),
+      status: json['status'],
+      total: int.parse(json['total'].toString()).toDouble(),
+    );
   }
 
   set setProducts(List<OrderProduct> products) {
     products = products;
   }
 
-  factory Order.fromJson(Map<String, dynamic> json) {
-    return Order(
-      supplierId: json['supplier'],
-      orderId: json['orderId'],
-      dateToBeDelivered: DateTime.parse(json['dateToBeDelivered']),
-      siteId: json['site'],
-      siteManagerId: json['siteManager'],
-      products: [],
-    );
+  set setSupplierId(String supplierId) {
+    supplierId = supplierId;
   }
 
   Map<String, dynamic> toJson() {

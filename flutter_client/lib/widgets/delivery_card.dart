@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/models/goods_receipt.dart';
-import 'package:flutter_client/screens/delivery_confirmation.dart';
+import 'package:flutter_client/screens/delivery_confirmation_screen.dart';
 import 'package:intl/intl.dart';
 
 class OrderButtonProperties {
@@ -19,12 +17,6 @@ OrderButtonProperties getButtonProperties(String state) {
     case 'Completed':
       return OrderButtonProperties(
           kApprovedAndOrderCompletedColor, 'Completed');
-    // case 'Pending':
-    //   return OrderButtonProperties(partialyDelivered, 'Pending');
-    // case 'placed':
-    //   return OrderButtonProperties(placed, 'Placed');
-    // case 'partially delivered':
-    //   return OrderButtonProperties(partialyDelivered, 'Partially delivered');
     default:
       return OrderButtonProperties(kDeclined, 'Not completed');
   }
@@ -42,7 +34,9 @@ class DeliveryAdviceCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const DeliveryConfirm(),
+            builder: (context) => DeliveryConfirm(
+              goodsReceipt: goodsReceipt,
+            ),
           ),
         );
       },
@@ -82,6 +76,13 @@ class DeliveryAdviceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
+                  'Supplier: ',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                      ),
+                ),
+                Text(
                   goodsReceipt.supplier.name,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
@@ -93,26 +94,21 @@ class DeliveryAdviceCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Site Name: ${goodsReceipt.site}',
+                      'Site: ',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                     ),
-                    const Spacer(),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: buttonProperties.color,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Text(
-                          buttonProperties.text,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
+                    Text(
+                      goodsReceipt.site.name,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
+                    const Spacer(),
+                    _statusDisplay(context, goodsReceipt.status),
                   ],
                 ),
               ],
@@ -121,5 +117,55 @@ class DeliveryAdviceCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Container _statusDisplay(context, GoodsReceiptStatus status) {
+    switch (status) {
+      case GoodsReceiptStatus.pendingShipping:
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: kViewPendingColor.withOpacity(0.9),
+          ),
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            'Pending Confirmation',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        );
+      case GoodsReceiptStatus.received:
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: kApprovedAndOrderCompletedColor.withOpacity(0.2),
+          ),
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            'Received',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        );
+      default:
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: kViewPendingColor,
+          ),
+          child: Text(
+            'Error',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: kDeclined,
+                ),
+          ),
+        );
+    }
   }
 }

@@ -23,10 +23,10 @@ class OrderProduct {
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
     return OrderProduct(
-      productId: json['item'],
+      productId: json['item']['itemId'],
       quantity: json['quantity'],
-      price: json['price'],
-      title: json['name'],
+      price: double.parse((json['item']['price']).toString()),
+      title: json['item']['name'],
     );
   }
 

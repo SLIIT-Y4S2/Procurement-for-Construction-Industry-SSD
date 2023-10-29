@@ -17,6 +17,7 @@ class OrderRepository extends BaseOrderRepository {
 
     final headers = <String, String>{
       'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
     };
 
     // send request to get all suppliers
@@ -35,16 +36,16 @@ class OrderRepository extends BaseOrderRepository {
         },
       );
 
-      developer.log("body: ${requestBody.toString()}", name: "OrderRepository");
       final responseBody =
           await http.post(orderURL, headers: headers, body: requestBody);
-      // .then((response) => response.body)
 
-      developer.log("responseBody: ${jsonDecode(responseBody.body).toString()}",
-          name: "OrderRepository");
-      developer.log("responseBody: ${responseBody.statusCode}",
-          name: "OrderRepository");
-      return true;
+      if (responseBody.statusCode == 201) {
+        return true;
+      } else {
+        developer.log(responseBody.body,
+            name: "OrderRepository", error: responseBody.body);
+        return false;
+      }
     } on TypeError catch (e) {
       developer.log(e.toString(),
           stackTrace: e.stackTrace, error: e, name: "OrderRepository");
@@ -56,52 +57,37 @@ class OrderRepository extends BaseOrderRepository {
   }
 
   @override
-  Future<Order> deleteOrder(String id) async {
-    return Order(
-      supplierId: '1',
-      orderId: '1',
-      dateToBeDelivered: DateTime.now(),
-      siteId: '1',
-      siteManagerId: '1',
-      products: [],
-    );
-  }
-
-  @override
-  Future<Order> getOrder(String id) async {
-    return Order(
-      supplierId: '1',
-      orderId: '1',
-      dateToBeDelivered: DateTime.now(),
-      siteId: '1',
-      siteManagerId: '1',
-      products: [],
-    );
-  }
-
-  @override
   Future<List<Order>> getOrders() async {
-    return [
-      Order(
-        supplierId: '1',
-        orderId: '1',
-        dateToBeDelivered: DateTime.now(),
-        siteId: '1',
-        siteManagerId: '1',
-        products: [],
-      )
-    ];
-  }
+    final Uri orderURL = Uri.https(hostName, orderPath);
+    // get token from shared preferences
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final token = sharedPreferences.getString('jwt');
 
-  @override
-  Future<Order> updateOrder(Order order) async {
-    return Order(
-      supplierId: '1',
-      orderId: '1',
-      dateToBeDelivered: DateTime.now(),
-      siteId: '1',
-      siteManagerId: '1',
-      products: [],
-    );
+    final headers = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+
+    // send request to get all suppliers
+    try {
+      final responseBody = await http.get(orderURL, headers: headers);
+      if (responseBody.statusCode == 200) {
+        final List<dynamic> orders = jsonDecode(responseBody.body);
+        return orders.map((order) => Order.fromJson(order)).toList();
+      } else {
+        developer.log(responseBody.body,
+            name: "OrderRepository", error: responseBody.body);
+        return [];
+      }
+    } on TypeError catch (e) {
+      developer.log(e.toString(),
+          stackTrace: e.stackTrace, error: e, name: "OrderRepository");
+      throw Exception(e);
+    } on FormatException catch (e) {
+      developer.log(e.message.toString(), error: e, name: "OrderRepository");
+      throw Exception(e);
+    } catch (e) {
+      developer.log(e.toString(), name: "OrderRepository", error: e);
+      throw Exception(e);
+    }
   }
 }

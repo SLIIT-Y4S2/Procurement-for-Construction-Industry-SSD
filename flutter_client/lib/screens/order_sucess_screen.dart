@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-class Done extends StatelessWidget {
-  const Done({super.key});
+class OrderSuccessScreen extends StatelessWidget {
+  const OrderSuccessScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Timer(const Duration(seconds: 6), () {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    });
     return Scaffold(
       body: Center(
         child: Column(
@@ -12,7 +17,7 @@ class Done extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              "images/successfully-done.gif",
+              "assets/images/successfully-done.gif",
               height: 150,
             ),
             const Text(

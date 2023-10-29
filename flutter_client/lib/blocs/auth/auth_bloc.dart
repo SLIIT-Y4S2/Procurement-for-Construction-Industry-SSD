@@ -7,14 +7,25 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
+    on<GetSiteManagerName>(_getSiteManagerNameEventHandeler);
     on<LoginEvent>(_loginEventHandeler);
     on<SignOut>(_logoutEventHandeler);
   }
 }
 
-void _loginEventHandeler(LoginEvent event, Emitter<AuthState> emit) async {
+void _getSiteManagerNameEventHandeler(
+    GetSiteManagerName event, Emitter<AuthState> emit) async {
+  emit(SigningIn());
+  AuthRepository authRepository = AuthRepository();
+  emit(SiteManagerNameLoading());
+  await authRepository.siteManagerName.then((siteManagerName) {
+    emit(SiteManagerName(siteManagerName));
+  }).catchError((onError) {
+    emit(SiteManagerNameLoadFailed());
+  });
+}
 
-  print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwewewewewewewewe");
+void _loginEventHandeler(LoginEvent event, Emitter<AuthState> emit) async {
   emit(SigningIn());
   AuthRepository authRepository = AuthRepository();
 
@@ -34,7 +45,6 @@ void _logoutEventHandeler(SignOut event, Emitter<AuthState> emit) async {
   AuthRepository authRepository = AuthRepository();
   final isLoggedOut = await authRepository.logout();
   if (isLoggedOut) {
-    // authRepository.isTokenAvailable();
     emit(SignedOut());
     emit(AuthInitial());
   } else {

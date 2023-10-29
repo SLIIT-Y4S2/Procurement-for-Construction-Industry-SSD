@@ -16,3 +16,13 @@ final class SigningOut extends AuthState {}
 final class SignedOut extends AuthState {}
 
 final class SignOutFailed extends AuthState {}
+
+final class SiteManagerName extends AuthState {
+  final String siteManagerName;
+
+  SiteManagerName(this.siteManagerName);
+}
+
+final class SiteManagerNameLoading extends AuthState {}
+
+final class SiteManagerNameLoadFailed extends AuthState {}

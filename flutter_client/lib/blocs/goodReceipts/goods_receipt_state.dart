@@ -24,3 +24,27 @@ final class GoodsReceiptsLoaded extends GoodsReceiptState {
     required this.goodsReceipts,
   });
 }
+
+final class GoodsReceiptMarkingAsReceived extends GoodsReceiptState {
+  final String goodsReceiptNumber;
+
+  const GoodsReceiptMarkingAsReceived({
+    required this.goodsReceiptNumber,
+  });
+}
+
+final class GoodsReceiptMarkedAsReceived extends GoodsReceiptState {
+  final String goodsReceiptNumber;
+
+  const GoodsReceiptMarkedAsReceived({
+    required this.goodsReceiptNumber,
+  });
+}
+
+final class GoodsReceiptMarkedAsReceivedError extends GoodsReceiptState {
+  final String message;
+
+  const GoodsReceiptMarkedAsReceivedError({
+    required this.message,
+  });
+}

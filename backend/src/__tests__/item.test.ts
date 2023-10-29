@@ -27,6 +27,10 @@ export const userPayload = {
   contactNumber: "0712345678",
 };
 
+
+/**
+ * Main test suite
+ */
 describe("site", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
@@ -37,8 +41,13 @@ describe("site", () => {
     await mongoose.disconnect();
     await mongoose.connection.close();
   });
+
+  /**
+   * Sub test suite 1 - POST operation
+   */
   describe("create item route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).post("/api/items");
 
@@ -46,6 +55,7 @@ describe("site", () => {
       });
     });
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and create the item", async () => {
         const jwt = signJwt(userPayload);
 
@@ -60,14 +70,20 @@ describe("site", () => {
       });
     });
   });
+
+  /**
+   * Sub test suite 2 - GET operation (all)
+   */
   describe("get item list route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).get("/api/items");
         expect(statusCode).toBe(403);
       });
     });
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and get the item list", async () => {
         const jwt = signJwt(userPayload);
 
@@ -81,8 +97,13 @@ describe("site", () => {
       });
     });
   });
+
+  /**
+   * Sub test suite 3 - update site
+   */
   describe("update item route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const oldItem = await createItem(itemPayload);
         const { statusCode } = await supertest(app).put(
@@ -93,6 +114,7 @@ describe("site", () => {
       });
     });
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and update the item", async () => {
         const jwt = signJwt(userPayload);
 

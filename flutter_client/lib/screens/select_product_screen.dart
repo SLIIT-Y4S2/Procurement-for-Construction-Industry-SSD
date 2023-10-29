@@ -33,8 +33,11 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'Select Product',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
           ),
         ),
         body: SingleChildScrollView(

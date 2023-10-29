@@ -14,12 +14,12 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   { title: "Hierarchy Id", dataIndex: "hierarchyId", key: "hierarchyId" },
   {
-    title: "Lower Bound Price",
+    title: "Lower Bound Price (Rs.)",
     dataIndex: "lowerBoundPrice",
     key: "lowerBoundPrice",
   },
   {
-    title: "Upper Bound Price",
+    title: "Upper Bound Price (Rs.)",
     dataIndex: "upperBoundPrice",
     key: "upperBoundPrice",
   },

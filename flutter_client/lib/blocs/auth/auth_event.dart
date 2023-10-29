@@ -5,6 +5,10 @@ abstract class AuthEvent {
   const AuthEvent();
 }
 
+class GetSiteManagerName extends AuthEvent {
+  const GetSiteManagerName();
+}
+
 class LoginEvent extends AuthEvent {
   final String username;
   final String password;

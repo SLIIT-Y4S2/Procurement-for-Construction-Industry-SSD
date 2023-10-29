@@ -1,6 +1,7 @@
 import React from "react";
 import OrderItemTable from "../OrderItemsTable";
 import { format } from "date-fns";
+import OrderStatus from "@/components/atoms/OrderStatus";
 
 interface OrderViewProps {
   order: IOrder;
@@ -17,7 +18,9 @@ const OrderView = ({ order: order }: OrderViewProps) => {
       <div className="px-4 py-2">
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Status:</span>
-          <span className="text-gray-600">{order.status}</span>
+          <span className="text-gray-600">
+            <OrderStatus status={order.status} />
+          </span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="text-gray-800 font-bold">Supplier:</span>
