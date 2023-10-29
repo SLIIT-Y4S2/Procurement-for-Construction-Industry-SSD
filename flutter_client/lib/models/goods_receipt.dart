@@ -25,6 +25,29 @@ class Supplier {
   }
 }
 
+class Site {
+  final String id;
+  final String name;
+  final String address;
+  final String contactNumber;
+
+  Site({
+    required this.id,
+    required this.name,
+    required this.address,
+    required this.contactNumber,
+  });
+
+  factory Site.fromJson(Map<String, dynamic> json) {
+    return Site(
+      id: json['_id'],
+      name: json['name'],
+      address: json['address'],
+      contactNumber: json['contactNumber'],
+    );
+  }
+}
+
 class GoodsReceiptItem {
   final Product item;
   final int quantity;
@@ -37,13 +60,13 @@ class GoodsReceiptItem {
 
 class GoodsReceipt {
   final String id;
-  final String site;
   final String siteManager;
   final String goodsReceiptId;
   final GoodsReceiptStatus status;
   final List<GoodsReceiptItem> items;
   final Supplier supplier;
   final DateTime createdAt;
+  final Site site;
 
   GoodsReceipt({
     required this.id,
@@ -60,10 +83,10 @@ class GoodsReceipt {
     return GoodsReceipt(
       id: json['_id'],
       supplier: Supplier.fromJson(json['supplier']),
-      site: json['site'],
+      site: Site.fromJson(json['site']),
       siteManager: json['siteManager'],
       goodsReceiptId: json['goodReceiptId'],
-      status: json['status'] == 'shipped'
+      status: json['status'] == 'received'
           ? GoodsReceiptStatus.received
           : GoodsReceiptStatus.pendingShipping,
       items: json['items']

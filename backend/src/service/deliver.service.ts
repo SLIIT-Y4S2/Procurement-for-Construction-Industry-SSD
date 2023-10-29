@@ -19,6 +19,7 @@ export async function getDeliveryList(
     .populate("order")
     .populate("supplier")
     .populate("site")
+    .sort({ createdAt: -1 })
     .exec();
 }
 

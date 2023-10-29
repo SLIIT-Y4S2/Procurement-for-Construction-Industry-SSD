@@ -4,3 +4,4 @@ const String orderPath = 'api/orders';
 const String authPath = 'api/login';
 const String sitePath = 'api/sites';
 const String getGoodsReceiptPath = '/api/site-manager/deliveries';
+const String markAsReceivedPath = '/api/site-manager/deliveries';
