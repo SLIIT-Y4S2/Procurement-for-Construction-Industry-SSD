@@ -18,6 +18,7 @@ const Color placed = Color(0xFF0000FF);
 
 const Color partialyDelivered = Color(0xFFFFA500);
 
+
 const String kLoginScreenTitle = 'Sign In';
 
 const String kLoginScreenImagePath = 'assets/images/site_eng.jpg';

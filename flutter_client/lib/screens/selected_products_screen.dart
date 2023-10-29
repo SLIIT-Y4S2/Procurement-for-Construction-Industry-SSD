@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/cart/cart_bloc.dart';
@@ -49,8 +47,6 @@ class _SupplierProductsScreenState extends State<SelectedProductsScreen> {
             _cart = state.orderProducts;
           });
           _cartTotal = state.cartTotal;
-          developer.log(_cartTotal.toString(),
-              name: 'selected_products_screen');
         }
 
         if (state is RestoreProductToProductList) {

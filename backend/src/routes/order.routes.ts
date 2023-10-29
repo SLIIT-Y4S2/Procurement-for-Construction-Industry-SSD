@@ -19,6 +19,7 @@ import {
   getPendingApprovalOrderListHandler,
   approveOrderHandler,
   declineOrderHandler,
+  getOrderListForSiteManagerHandler,
 } from "../controller/order.controller";
 import {
   getSupplierItemListSchema,
@@ -45,10 +46,18 @@ router.post(
   createOrderHandler
 );
 
+// * getting all order list for procurement staff and company manager
 router.get(
   "/orders",
   [requireSiteManagerOrProcurementStaffOrCompanyManager],
   getOrderListHandler
+);
+
+// * getting order list for site manager
+router.get(
+  "/orders/site-manager",
+  [requireSiteManager],
+  getOrderListForSiteManagerHandler
 );
 
 // * company manager approval and decline
