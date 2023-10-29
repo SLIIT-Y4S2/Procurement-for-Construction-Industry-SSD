@@ -4,7 +4,7 @@ import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/screens/create_requisition_order_page.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/screens/my_orders_screen.dart';
-import 'package:flutter_client/screens/delivery_advice.dart';
+import 'package:flutter_client/screens/delivery_advices_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

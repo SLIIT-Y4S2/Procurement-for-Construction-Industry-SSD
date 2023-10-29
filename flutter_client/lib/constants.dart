@@ -8,16 +8,15 @@ const Color kSurfaceColor = Color(0xFFF4F4F4);
 
 //order status colors
 
-const Color viewPending = Color(0xFFFFD700);
+const Color kViewPendingColor = Color(0xFFFFD700);
 
-const Color approvedAndOrderCompleted = Color(0xFF36CD1D);
+const Color kApprovedAndOrderCompletedColor = Color(0xFF36CD1D);
 
-const Color declined = Color(0xFFFF0000);
+const Color kDeclined = Color(0xFFFF0000);
 
-const Color placed = Color(0xFF0000FF);
+const Color kPlaced = Color(0xFF0000FF);
 
-const Color partialyDelivered = Color(0xFFFFA500);
-
+const Color kPartiallyDelivered = Color(0xFFFFA500);
 
 const String kLoginScreenTitle = 'Sign In';
 
