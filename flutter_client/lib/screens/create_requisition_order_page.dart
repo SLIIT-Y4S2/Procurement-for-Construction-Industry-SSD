@@ -33,7 +33,6 @@ class _CreateRequisitionOrderState extends State<CreateRequisitionOrder> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            // leading: const Icon(Icons.arrow_back_ios),
             title: Text(
               'Create Requisition Order',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(

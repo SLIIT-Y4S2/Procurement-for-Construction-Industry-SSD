@@ -5,6 +5,7 @@ import 'package:flutter_client/blocs/order/order_bloc.dart';
 import 'package:flutter_client/blocs/site/site_bloc.dart';
 import 'package:flutter_client/models/order.dart';
 import 'package:flutter_client/models/site.dart';
+import 'package:flutter_client/screens/order_sucess_screen.dart';
 
 class DeliveryDetailsScreen extends StatefulWidget {
   const DeliveryDetailsScreen({super.key});
@@ -63,19 +64,25 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
           BlocListener<SiteBloc, SiteState>(
             listener: (context, state) {
               if (state is SiteLoaded) {
-                setState(() {
-                  _sites.addAll(state.sites);
-                });
-
-                _dropdownValue = _sites[0].siteId;
+                if (state.sites.isNotEmpty) {
+                  setState(() {
+                    _sites.addAll(state.sites);
+                    _dropdownValue = _sites[0].siteId;
+                    _selectedSite = _sites[0].id;
+                  });
+                }
               }
             },
           ),
           BlocListener<OrderBloc, OrderState>(
             listener: (context, state) {
               if (state is OrderCreated) {
-                // BlocProvider.of<CartBloc>(context).add(const ClearCartEvent());
-                // Navigator.of(context).pop();
+                BlocProvider.of<CartBloc>(context).add(const ClearCartEvent());
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const OrderSuccessScreen(),
+                  ),
+                );
               }
 
               if (state is OrderNotCreated) {
@@ -128,9 +135,6 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
                                               site.siteId == selectedSite)
                                           .first
                                           .id;
-                                      // _sites.firstWhere(
-                                      //     (element) =>
-                                      //         element.siteId == newValue);
                                     },
                                   );
                                 },
@@ -200,60 +204,74 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
                               const SizedBox(
                                 height: 100,
                               ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.primary,
-                                ),
-                                onPressed: () {
-                                  BlocProvider.of<OrderBloc>(context).add(
-                                    CreateOrderEvent(
-                                      order: Order(
-                                        supplierId:
-                                            BlocProvider.of<CartBloc>(context)
-                                                .supplier
-                                                .id,
-                                        dateToBeDelivered: selectedDate,
-                                        siteId: _selectedSite,
-                                        products:
-                                            BlocProvider.of<CartBloc>(context)
-                                                .cart,
-                                      ),
-                                    ),
-                                  );
-                                  // Navigator.of(context).pop();
+                              BlocBuilder<OrderBloc, OrderState>(
+                                builder: (context, state) {
+                                  return state is! CreatingOrder
+                                      ? ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            backgroundColor: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                          onPressed: () {
+                                            BlocProvider.of<OrderBloc>(context)
+                                                .add(
+                                              CreateOrderEvent(
+                                                order: Order(
+                                                  supplierId:
+                                                      BlocProvider.of<CartBloc>(
+                                                              context)
+                                                          .supplier
+                                                          .id,
+                                                  dateToBeDelivered:
+                                                      selectedDate,
+                                                  siteId: _selectedSite,
+                                                  products:
+                                                      BlocProvider.of<CartBloc>(
+                                                              context)
+                                                          .cart,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Total: LKR ${_cartTotal.toStringAsFixed(2)}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                    ),
+                                              ),
+                                              const Spacer(),
+                                              Text(
+                                                'Finish',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                    ),
+                                              ),
+                                              const Icon(
+                                                Icons.chevron_right,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
                                 },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Total: LKR ${_cartTotal.toStringAsFixed(2)}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      'Finish',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                    const Icon(
-                                      Icons.chevron_right,
-                                      color: Colors.white,
-                                    )
-                                  ],
-                                ),
                               ),
                             ],
                           ),

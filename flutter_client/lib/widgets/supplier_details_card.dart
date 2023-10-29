@@ -12,6 +12,7 @@ class SupplierDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     void ontapHandler() {
       BlocProvider.of<CartBloc>(context).supplier = supplier;
+      BlocProvider.of<CartBloc>(context).add(const ClearCartEvent());
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => SelectedProductsScreen(
