@@ -1,4 +1,5 @@
 "use client";
+import OrderStatus from "@/components/atoms/OrderStatus";
 import OrderView from "@/components/molecules/OrderView";
 // import AddOrder from "@/components/organisms/OrderAdd";
 // import OrderEdit from "@/components/organisms/OrderEdit";
@@ -70,7 +71,7 @@ const columns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
-    render: (status: IOrder["status"]) => <>{status}</>,
+    render: (status: IOrder["status"]) => <OrderStatus status={status} />,
   },
   // {
   //   title: "Date To Be Delivered",

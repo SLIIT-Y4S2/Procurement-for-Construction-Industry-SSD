@@ -9,10 +9,7 @@ export default function Home() {
   const { user } = useContext(AuthContext) as IAuthContext;
   return (
     <main>
-      {JSON.stringify(user)}
-      <Link href="/sites">
-        <Button type="primary">Go to sites</Button>
-      </Link>
+      <h1 className="text-3xl font-semibold">Welcome {user?.name}</h1>
     </main>
   );
 }

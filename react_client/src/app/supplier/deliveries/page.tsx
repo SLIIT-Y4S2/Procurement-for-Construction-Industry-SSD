@@ -1,4 +1,5 @@
 "use client";
+import DeliveryStatus from "@/components/atoms/DeliveryStatus";
 import OrderView from "@/components/organisms/OrderModal";
 import { OrderDeliveryContext } from "@/context/OrderDelivery/OrderDeliveryContext";
 import { OrderPlacementContext } from "@/context/OrderPlacement/OrderPlacementContext";
@@ -50,6 +51,9 @@ const Deliveries = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      render: (status: IGoodReceipt["status"]) => (
+        <DeliveryStatus status={status} />
+      ),
     },
   ];
   return (
