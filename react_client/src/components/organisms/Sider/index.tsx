@@ -10,6 +10,7 @@ import {
   FileSyncOutlined,
   InfoCircleOutlined,
   InboxOutlined,
+  GiftOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -127,19 +128,19 @@ const SidebarRoutes: MenuProps["items"] = [
   },
   {
     key: APP_ROUTES.DELIVERIES_SUPPLIER,
-    icon: <InfoCircleOutlined />,
+    icon: <GiftOutlined />,
     // for supplier
     label: <Link href={APP_ROUTES.DELIVERIES_SUPPLIER}>Deliveries</Link>,
   },
   {
     key: APP_ROUTES.INVOICES_SUPPLIER,
-    icon: <InfoCircleOutlined />,
+    icon: <FaFileInvoice />,
     // for supplier
     label: <Link href={APP_ROUTES.INVOICES_SUPPLIER}>Invoices</Link>,
   },
   {
     key: APP_ROUTES.ORDER_HISTORY_SUPPLIER,
-    icon: <InfoCircleOutlined />,
+    icon: <FileTextOutlined />,
     // for supplier
     label: <Link href={APP_ROUTES.ORDER_HISTORY_SUPPLIER}>Order History</Link>,
   },
