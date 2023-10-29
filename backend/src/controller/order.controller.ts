@@ -120,3 +120,20 @@ export async function declineOrderHandler(
     return res.status(409).send(error.message);
   }
 }
+
+// get all orders for a site manager
+export async function getOrderListForSiteManagerHandler(
+  req: Request,
+  res: Response
+) {
+  try {
+    const order = await getOrderList(
+      { siteManager: res.locals.user._id },
+      true
+    );
+    return res.status(200).send(order);
+  } catch (error: any) {
+    logger.error(error);
+    return res.status(409).send(error.message);
+  }
+}
