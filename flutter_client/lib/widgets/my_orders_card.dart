@@ -1,70 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_client/models/user_model.dart';
-import 'package:flutter_client/screens/selected_products_screen.dart';
+import 'package:flutter_client/constants.dart';
+import 'package:flutter_client/models/order.dart';
+import 'package:flutter_client/screens/my_order_details.dart';
+
+class OrderButtonProperties {
+  final Color color;
+  final String text;
+
+  OrderButtonProperties(this.color, this.text);
+}
 
 class MyOrdersCard extends StatelessWidget {
-  const MyOrdersCard({required this.supplier, super.key});
-  final User supplier;
-
+  const MyOrdersCard({required this.order, super.key});
+  final Order order;
   @override
   Widget build(BuildContext context) {
     void ontapHandler() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => SelectedProductsScreen(
-            supplier: supplier,
+      () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const MyOrderDetails(),
           ),
-        ),
-      );
+        );
+      };
     }
 
-    return Card(
-      surfaceTintColor: Colors.white,
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: ListTile(
-          selected: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          title: Text(
-            supplier.name,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
-          ),
-          subtitle: supplier.products.isNotEmpty
-              ? Column(
+    OrderButtonProperties getButtonProperties(String state) {
+      switch (state) {
+        case 'pending':
+          return OrderButtonProperties(kViewPendingColor, 'Pending');
+        case 'approved':
+          return OrderButtonProperties(
+              kApprovedAndOrderCompletedColor, 'Approved');
+        case 'declined':
+          return OrderButtonProperties(kDeclined, 'Declined');
+        case 'placed':
+          return OrderButtonProperties(kPlaced, 'Placed');
+        case 'partially delivered':
+          return OrderButtonProperties(
+              kPartiallyDelivered, 'Partially delivered');
+        default:
+          return OrderButtonProperties(
+              kApprovedAndOrderCompletedColor, 'Completed');
+      }
+    }
+
+    return InkWell(
+      onTap: ontapHandler,
+      child: Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.zero),
+        ),
+        elevation: 8,
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ...supplier.products.map(
-                      (product) => Row(
-                        children: [
-                          Icon(Icons.circle,
-                              size: 8.0, color: Colors.grey.shade500),
-                          const SizedBox(width: 4.0),
-                          Text(
-                            product.title,
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black,
-                                    ),
+                    Text(
+                      order.orderId!,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(width: 16.0),
-                        ],
+                    ),
+                    const Spacer(),
+                    Text(
+                      order.dateToBeDelivered.toString().split(' ')[0],
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  order.supplierId,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'LKR ${order.total!.toStringAsFixed(2)}',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                          ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: getButtonProperties(order.status!).color,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextButton(
+                        onPressed: null,
+                        child: Text(
+                          getButtonProperties(order.status!).text,
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
-                )
-              : null,
-          trailing: Text(
-            supplier.contactNumber,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontWeight: FontWeight.w900,
                 ),
+              ],
+            ),
           ),
-          onTap: ontapHandler,
         ),
       ),
     );

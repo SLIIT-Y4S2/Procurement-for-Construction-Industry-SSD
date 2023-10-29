@@ -19,3 +19,17 @@ class OrderNotCreated extends OrderInitial {
 
   const OrderNotCreated({required this.message});
 }
+
+class GettingOrders extends OrderInitial {}
+
+class OrdersRetrieved extends OrderInitial {
+  final List<Order> orders;
+
+  const OrdersRetrieved({required this.orders});
+}
+
+class ErrorRetrievingOrders extends OrderInitial {
+  final String message;
+
+  const ErrorRetrievingOrders({required this.message});
+}

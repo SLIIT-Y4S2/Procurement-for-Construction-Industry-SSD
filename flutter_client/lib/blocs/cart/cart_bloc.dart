@@ -104,6 +104,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _clearCartHandler(ClearCartEvent event, Emitter<CartState> emit) {
     cart.clear();
+    _temporaryProducts.clear();
 
     emit(ProductCartUpdated(orderProducts: cart, cartTotal: 0));
   }

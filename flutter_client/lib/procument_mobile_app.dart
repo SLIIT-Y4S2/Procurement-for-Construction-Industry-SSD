@@ -6,12 +6,7 @@ import 'package:flutter_client/blocs/auth/auth_bloc.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/repositiories/auth/auth_repository.dart';
 
-import 'package:flutter_client/screens/delivery_details.dart';
-import 'package:flutter_client/screens/done.dart';
-import 'package:flutter_client/screens/home_screen.dart';
 import 'package:flutter_client/screens/login_screen.dart';
-import 'package:flutter_client/screens/my_order_details.dart';
-import 'package:flutter_client/screens/my_orders.dart';
 
 import 'package:flutter_client/screens/main_screen.dart';
 
@@ -93,7 +88,6 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
         ),
         // home: _isTokenAvailable ? const HomeScreen() : const LoginScreen(),
         home: _isTokenAvailable ? const MainScreen() : const LoginScreen(),
-
       ),
     );
   }

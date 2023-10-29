@@ -10,3 +10,7 @@ class CreateOrderEvent extends OrderEvent {
 
   const CreateOrderEvent({required this.order});
 }
+
+class GetOrdersEvent extends OrderEvent {
+  const GetOrdersEvent();
+}
