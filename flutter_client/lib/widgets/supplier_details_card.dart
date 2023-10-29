@@ -48,9 +48,9 @@ class SupplierDetailsCard extends StatelessWidget {
                               size: 8.0, color: Colors.grey.shade500),
                           const SizedBox(width: 4.0),
                           Text(
-                            product.title.length < 20
+                            product.title.length < 16
                                 ? product.title
-                                : "${product.title.substring(0, 20)} ...",
+                                : "${product.title.substring(0, 16)} ...",
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       fontWeight: FontWeight.normal,
