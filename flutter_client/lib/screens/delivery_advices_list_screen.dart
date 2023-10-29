@@ -45,22 +45,27 @@ class _DeliveryadviceState extends State<Deliveryadvice> {
                 :
                 //  state is GoodsReceiptsLoaded
                 state is GoodsReceiptsLoaded
-                    ? Container(
-                        padding:
-                            const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 10,
-                          ),
-                          shrinkWrap: true,
-                          itemCount: state.goodsReceipts.length,
-                          itemBuilder: (context, index) {
-                            return DeliveryAdviceCard(
-                              goodsReceipt: state.goodsReceipts[index],
-                            );
-                          },
-                        ),
-                      )
+                    ? state.goodsReceipts.isNotEmpty
+                        ? Container(
+                            padding:
+                                const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                height: 10,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: state.goodsReceipts.length,
+                              itemBuilder: (context, index) {
+                                return DeliveryAdviceCard(
+                                  goodsReceipt: state.goodsReceipts[index],
+                                );
+                              },
+                            ),
+                          )
+                        : const Center(
+                            child: Text('No Delivery Advices'),
+                          )
                     : state is GoodsReceiptError
                         ? const Center(
                             child: Text('Error'),

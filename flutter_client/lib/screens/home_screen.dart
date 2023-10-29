@@ -144,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'You can access all the orders you have taken.',
+                              'You can access all the orders you have requested.',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -202,7 +202,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'You can indicate whether the delivery advice is completed or not.',
+                              'You can indicate whether a delivery advice is completed or not.',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
