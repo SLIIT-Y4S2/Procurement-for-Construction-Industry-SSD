@@ -189,7 +189,9 @@ describe("order for site manager", () => {
   describe("get all orders for site manager", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
-        const { statusCode } = await supertest(app).get("/api/orders");
+        const { statusCode } = await supertest(app).get(
+          "/api/orders/site-manager"
+        );
 
         expect(statusCode).toBe(403);
       });

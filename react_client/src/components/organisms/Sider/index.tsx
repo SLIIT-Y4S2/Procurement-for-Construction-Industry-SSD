@@ -9,11 +9,12 @@ import {
   FileProtectOutlined,
   FileSyncOutlined,
   InfoCircleOutlined,
+  InboxOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import Link from "next/link";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaFileInvoice, FaLocationDot } from "react-icons/fa6";
 const { Sider: AntdSider } = Layout;
 import { usePathname } from "next/navigation";
 import {
@@ -88,7 +89,7 @@ const SidebarRoutes: MenuProps["items"] = [
   },
   {
     key: APP_ROUTES.INVOICES_COMPANY_MANAGER,
-    icon: <InfoCircleOutlined />,
+    icon: <FaFileInvoice />,
     // for supplier
     label: <Link href={APP_ROUTES.INVOICES_COMPANY_MANAGER}>Invoices</Link>,
   },
@@ -144,7 +145,7 @@ const SidebarRoutes: MenuProps["items"] = [
   },
   {
     key: APP_ROUTES.ITEM_MANAGEMENT,
-    icon: <InfoCircleOutlined />,
+    icon: <InboxOutlined />,
     // all the order pending placement ( all the order approved by the manager) for site manager
     label: <Link href={APP_ROUTES.ITEM_MANAGEMENT}>Item Management</Link>,
   },
@@ -155,7 +156,7 @@ const SidebarRoutes: MenuProps["items"] = [
   },
   {
     key: APP_ROUTES.USER_MANAGEMENT,
-    icon: <FaLocationDot />,
+    icon: <UserOutlined />,
     label: <Link href={APP_ROUTES.USER_MANAGEMENT}>User Management</Link>,
   },
 ];
