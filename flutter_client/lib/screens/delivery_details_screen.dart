@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/cart/cart_bloc.dart';
+import 'package:flutter_client/blocs/order/order_bloc.dart';
 import 'package:flutter_client/blocs/site/site_bloc.dart';
+import 'package:flutter_client/models/order.dart';
 import 'package:flutter_client/models/site.dart';
-import 'dart:developer' as developer;
 
 class DeliveryDetailsScreen extends StatefulWidget {
   const DeliveryDetailsScreen({super.key});
@@ -14,7 +15,7 @@ class DeliveryDetailsScreen extends StatefulWidget {
 
 class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
   String _dropdownValue = '';
-  late Site _selectedSite;
+  late String _selectedSite;
   double _cartTotal = 0;
 
   final List<Site> _sites = [];
@@ -40,7 +41,6 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    developer.log("Delivery Details Screen", name: 'delivery_details_screen');
     BlocProvider.of<SiteBloc>(context).add(const GetSitesEvent());
     setState(() {
       _cartTotal = BlocProvider.of<CartBloc>(context).cartTotal;
@@ -58,17 +58,44 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
               ),
         ),
       ),
-      body: BlocListener<SiteBloc, SiteState>(
-        listener: (context, state) {
-          if (state is SiteLoaded) {
-            setState(() {
-              _sites.addAll(state.sites);
-              _selectedSite = _sites[0];
-            });
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<SiteBloc, SiteState>(
+            listener: (context, state) {
+              if (state is SiteLoaded) {
+                setState(() {
+                  _sites.addAll(state.sites);
+                });
 
-            _dropdownValue = _sites[0].siteId;
-          }
-        },
+                _dropdownValue = _sites[0].siteId;
+              }
+            },
+          ),
+          BlocListener<OrderBloc, OrderState>(
+            listener: (context, state) {
+              if (state is OrderCreated) {
+                // BlocProvider.of<CartBloc>(context).add(const ClearCartEvent());
+                // Navigator.of(context).pop();
+              }
+
+              if (state is OrderNotCreated) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                  ),
+                );
+              }
+
+              if (state is CreatingOrder) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Creating Order"),
+                  ),
+                );
+              }
+            },
+          ),
+        ],
         child: BlocBuilder<SiteBloc, SiteState>(
           builder: (context, state) {
             return state is SiteLoaded
@@ -92,13 +119,18 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
                                           child: Text(site.name),
                                         ))
                                     .toList(),
-                                onChanged: (String? newValue) {
+                                onChanged: (String? selectedSite) {
                                   setState(
                                     () {
-                                      _dropdownValue = newValue!;
-                                      _selectedSite = _sites.firstWhere(
-                                          (element) =>
-                                              element.siteId == newValue);
+                                      _dropdownValue = selectedSite!;
+                                      _selectedSite = _sites
+                                          .where((site) =>
+                                              site.siteId == selectedSite)
+                                          .first
+                                          .id;
+                                      // _sites.firstWhere(
+                                      //     (element) =>
+                                      //         element.siteId == newValue);
                                     },
                                   );
                                 },
@@ -177,12 +209,22 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
                                       Theme.of(context).colorScheme.primary,
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const DeliveryDetailsScreen(),
+                                  BlocProvider.of<OrderBloc>(context).add(
+                                    CreateOrderEvent(
+                                      order: Order(
+                                        supplierId:
+                                            BlocProvider.of<CartBloc>(context)
+                                                .supplier
+                                                .id,
+                                        dateToBeDelivered: selectedDate,
+                                        siteId: _selectedSite,
+                                        products:
+                                            BlocProvider.of<CartBloc>(context)
+                                                .cart,
+                                      ),
                                     ),
                                   );
+                                  // Navigator.of(context).pop();
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

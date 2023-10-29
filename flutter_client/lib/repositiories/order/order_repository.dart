@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_client/models/order.dart';
 import 'package:flutter_client/repositiories/order/base_order_repository.dart';
 import 'package:flutter_client/repositiories/paths.dart';
@@ -17,29 +19,40 @@ class OrderRepository extends BaseOrderRepository {
       'Authorization': 'Bearer $token',
     };
 
-    final body = {
-      'orderId': order.orderId,
-      'dateToBeDelivered': order.dateToBeDelivered.toString(),
-      'site': order.siteId,
-      'siteManager': order.siteManagerId,
-      'supplier': order.supplierId,
-      'products': [
-        ...order.products.map(
-          (product) => product.toJson(),
-        )
-      ],
-    };
-
     // send request to get all suppliers
-    final responseBody = await http
-        .post(orderURL, headers: headers, body: body)
-        // .then((response) => response.body)
-        .catchError((error) {
-      developer.log(error);
-      throw Exception(error);
-    });
-    developer.log("responseBody: ${responseBody.statusCode}");
-    return true;
+    try {
+      final requestBody = jsonEncode(
+        {
+          "supplier": order.supplierId,
+          "items": [
+            ...order.products.map(
+              (product) => product.toJson(),
+            )
+          ],
+          "siteManager": order.siteManagerId,
+          "site": order.siteId,
+          "dateToBeDelivered": order.dateToBeDelivered.toIso8601String(),
+        },
+      );
+
+      developer.log("body: ${requestBody.toString()}", name: "OrderRepository");
+      final responseBody =
+          await http.post(orderURL, headers: headers, body: requestBody);
+      // .then((response) => response.body)
+
+      developer.log("responseBody: ${jsonDecode(responseBody.body).toString()}",
+          name: "OrderRepository");
+      developer.log("responseBody: ${responseBody.statusCode}",
+          name: "OrderRepository");
+      return true;
+    } on TypeError catch (e) {
+      developer.log(e.toString(),
+          stackTrace: e.stackTrace, error: e, name: "OrderRepository");
+      throw Exception(e);
+    } catch (e) {
+      developer.log(e.toString(), name: "OrderRepository", error: e);
+      throw Exception(e);
+    }
   }
 
   @override

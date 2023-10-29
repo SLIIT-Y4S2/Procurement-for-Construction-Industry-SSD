@@ -10,7 +10,7 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   late User supplier;
-  final List<OrderProduct> _cart = [];
+  final List<OrderProduct> cart = [];
   double cartTotal = 0;
   final List<Product> _temporaryProducts = [];
 
@@ -43,7 +43,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   //Calculate cart total
   double calculateCartTotal() {
     double cartTotal = 0;
-    for (var product in _cart) {
+    for (var product in cart) {
       cartTotal += product.price * product.quantity;
     }
     return cartTotal;
@@ -52,7 +52,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   //Increase product quantity
   void _increaseProductQuantityHandler(
       IncreaseProductQuantityEvent event, Emitter<CartState> emit) {
-    for (var product in _cart) {
+    for (var product in cart) {
       if (product.productId == event.orderProduct.productId) {
         product.quantity = event.orderProduct.quantity + 1;
       }
@@ -60,13 +60,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     cartTotal = calculateCartTotal();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: cartTotal));
+    emit(ProductCartUpdated(orderProducts: cart, cartTotal: cartTotal));
   }
 
   //Decrease product quantity
   void _decreaseProductQuantityHandler(
       DecreaseProductQuantityEvent event, Emitter<CartState> emit) {
-    for (var product in _cart) {
+    for (var product in cart) {
       if (product.productId == event.orderProduct.productId) {
         product.quantity--;
       }
@@ -74,7 +74,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     cartTotal = calculateCartTotal();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: cartTotal));
+    emit(ProductCartUpdated(orderProducts: cart, cartTotal: cartTotal));
   }
 
   // Add product to cart
@@ -89,30 +89,30 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       price: event.product.price,
       title: event.product.title,
     );
-    _cart.add(orderProduct);
+    cart.add(orderProduct);
     _temporaryProducts.add(event.product);
 
     cartTotal = calculateCartTotal();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: cartTotal));
+    emit(ProductCartUpdated(orderProducts: cart, cartTotal: cartTotal));
   }
 
   //Load Cart
   void _loadCartHandler(LoadCartEvent event, Emitter<CartState> emit) {
-    emit(ProductCartState(orderProduct: _cart));
+    emit(ProductCartState(orderProduct: cart));
   }
 
   void _clearCartHandler(ClearCartEvent event, Emitter<CartState> emit) {
-    _cart.clear();
+    cart.clear();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: 0));
+    emit(ProductCartUpdated(orderProducts: cart, cartTotal: 0));
   }
 
   void _removeProductFromCartHandler(
     RemoveProductFromCartEvent event,
     Emitter<CartState> emit,
   ) {
-    _cart.remove(event.orderProduct);
+    cart.remove(event.orderProduct);
 
     for (var product in _temporaryProducts) {
       if (product.id == event.orderProduct.productId) {
@@ -125,7 +125,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     cartTotal = calculateCartTotal();
 
     emit(ProductCartUpdated(
-      orderProducts: _cart,
+      orderProducts: cart,
       cartTotal: cartTotal,
     ));
   }

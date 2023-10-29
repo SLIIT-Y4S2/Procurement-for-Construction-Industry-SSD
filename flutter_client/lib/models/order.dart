@@ -5,7 +5,7 @@ class Order {
   final String? orderId;
   final DateTime dateToBeDelivered;
   final String siteId;
-  final String siteManagerId;
+  final String? siteManagerId;
   final List<OrderProduct> products;
 
   Order({
@@ -13,9 +13,13 @@ class Order {
     this.orderId,
     required this.dateToBeDelivered,
     required this.siteId,
-    required this.siteManagerId,
+    this.siteManagerId,
     required this.products,
   });
+
+  set setSupplierId(String supplierId) {
+    supplierId = supplierId;
+  }
 
   set setProducts(List<OrderProduct> products) {
     products = products;

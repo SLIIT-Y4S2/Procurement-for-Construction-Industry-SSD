@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                BlocProvider.of<AuthBloc>(context).add(SignOut());
+                BlocProvider.of<AuthBloc>(context).add(const SignOut());
               },
               icon: const Icon(Icons.logout),
             ),
@@ -160,7 +160,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
