@@ -42,3 +42,20 @@ class DecreaseProductQuantityEvent extends CartEvent {
     required this.orderProduct,
   });
 }
+
+class ConfirmOrderEvent extends CartEvent {
+  final List<OrderProduct> orderProducts;
+  final double cartTotal;
+  final User supplier;
+  final User customer;
+  final String siteId;
+  final DateTime dateToBeDelivered;
+  const ConfirmOrderEvent({
+    required this.dateToBeDelivered,
+    required this.orderProducts,
+    required this.cartTotal,
+    required this.supplier,
+    required this.customer,
+    required this.siteId,
+  });
+}

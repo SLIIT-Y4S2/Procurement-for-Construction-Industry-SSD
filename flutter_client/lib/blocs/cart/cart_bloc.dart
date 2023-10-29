@@ -2,14 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_client/models/order.dart';
 import 'package:flutter_client/models/order_product.dart';
 import 'package:flutter_client/models/product_model.dart';
+import 'package:flutter_client/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
+  late User supplier;
   final List<OrderProduct> _cart = [];
-  double _cartTotal = 0;
+  double cartTotal = 0;
   final List<Product> _temporaryProducts = [];
 
   CartBloc() : super(CartInitial()) {
@@ -19,6 +21,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<RemoveProductFromCartEvent>(_removeProductFromCartHandler);
     on<IncreaseProductQuantityEvent>(_increaseProductQuantityHandler);
     on<DecreaseProductQuantityEvent>(_decreaseProductQuantityHandler);
+    on<ConfirmOrderEvent>(_confirmOrderHandler);
+  }
+
+  //Confirm order
+  void _confirmOrderHandler(
+    ConfirmOrderEvent event,
+    Emitter<CartState> emit,
+  ) {
+    Order order = Order(
+      dateToBeDelivered: event.dateToBeDelivered,
+      products: event.orderProducts,
+      siteManagerId: event.supplier.id,
+      siteId: event.siteId,
+      supplierId: event.supplier.id,
+    );
+
+    emit(OrderConfirmed(order: order));
   }
 
   //Calculate cart total
@@ -39,9 +58,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
 
-    _cartTotal = calculateCartTotal();
+    cartTotal = calculateCartTotal();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: _cartTotal));
+    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: cartTotal));
   }
 
   //Decrease product quantity
@@ -53,9 +72,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
 
-    _cartTotal = calculateCartTotal();
+    cartTotal = calculateCartTotal();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: _cartTotal));
+    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: cartTotal));
   }
 
   // Add product to cart
@@ -73,9 +92,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     _cart.add(orderProduct);
     _temporaryProducts.add(event.product);
 
-    _cartTotal = calculateCartTotal();
+    cartTotal = calculateCartTotal();
 
-    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: _cartTotal));
+    emit(ProductCartUpdated(orderProducts: _cart, cartTotal: cartTotal));
   }
 
   //Load Cart
@@ -103,11 +122,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
 
-    _cartTotal = calculateCartTotal();
+    cartTotal = calculateCartTotal();
 
     emit(ProductCartUpdated(
       orderProducts: _cart,
-      cartTotal: _cartTotal,
+      cartTotal: cartTotal,
     ));
   }
 }
