@@ -46,7 +46,8 @@ class _DeliveryadviceState extends State<Deliveryadvice> {
                 //  state is GoodsReceiptsLoaded
                 state is GoodsReceiptsLoaded
                     ? Container(
-                        padding: const EdgeInsets.all(25.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
                         child: ListView.separated(
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 10,

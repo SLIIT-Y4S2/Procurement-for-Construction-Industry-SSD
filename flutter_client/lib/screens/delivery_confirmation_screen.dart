@@ -40,7 +40,7 @@ class _DeliveryConfirmState extends State<DeliveryConfirm> {
             ),
             body: Center(
               child: Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
