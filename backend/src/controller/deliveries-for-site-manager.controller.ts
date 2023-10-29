@@ -51,7 +51,7 @@ export async function markDeliveryAsReceivedHandler(
       deliveries.every((delivery) => delivery.status === "received") &&
       delivery.order.status !== "received"
     ) {
-      delivery.order.status = "received";
+      delivery.order.status = "pending-payment";
       await delivery.order.save();
     }
     return res.send(updatedDelivery);

@@ -82,7 +82,7 @@ class DeliveryAdviceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Supplier name',
+                  goodsReceipt.supplier.name,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class DeliveryAdviceCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Rs.25.000',
+                      'Site Name: ${goodsReceipt.site}',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.normal,

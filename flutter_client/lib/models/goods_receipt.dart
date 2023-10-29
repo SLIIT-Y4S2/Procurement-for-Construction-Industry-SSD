@@ -2,6 +2,29 @@ import 'package:flutter_client/models/product_model.dart';
 
 enum GoodsReceiptStatus { pendingShipping, received }
 
+class Supplier {
+  final String id;
+  final String name;
+  final String email;
+  final String contactNumber;
+
+  Supplier({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.contactNumber,
+  });
+
+  factory Supplier.fromJson(Map<String, dynamic> json) {
+    return Supplier(
+      id: json['_id'],
+      name: json['name'],
+      email: json['email'],
+      contactNumber: json['contactNumber'],
+    );
+  }
+}
+
 class GoodsReceiptItem {
   final Product item;
   final int quantity;
@@ -14,12 +37,12 @@ class GoodsReceiptItem {
 
 class GoodsReceipt {
   final String id;
-  final String supplier;
   final String site;
   final String siteManager;
   final String goodsReceiptId;
   final GoodsReceiptStatus status;
   final List<GoodsReceiptItem> items;
+  final Supplier supplier;
   final DateTime createdAt;
 
   GoodsReceipt({
@@ -36,7 +59,7 @@ class GoodsReceipt {
   factory GoodsReceipt.fromJson(Map<String, dynamic> json) {
     return GoodsReceipt(
       id: json['_id'],
-      supplier: json['supplier'],
+      supplier: Supplier.fromJson(json['supplier']),
       site: json['site'],
       siteManager: json['siteManager'],
       goodsReceiptId: json['goodReceiptId'],

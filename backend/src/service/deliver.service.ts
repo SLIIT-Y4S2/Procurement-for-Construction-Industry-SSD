@@ -18,6 +18,7 @@ export async function getDeliveryList(
     .populate("items.item")
     .populate("order")
     .populate("supplier")
+    .populate("site")
     .exec();
 }
 
