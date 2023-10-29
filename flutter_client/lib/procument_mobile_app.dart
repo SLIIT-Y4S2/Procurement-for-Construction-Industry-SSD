@@ -39,7 +39,8 @@ class _ProcumentMobileAppState extends State<ProcumentMobileApp> {
       });
     }).catchError((error) {
       developer.log(
-        error,
+        'Error: ${error.toString()}',
+        error: error,
         name: 'procument_mobile_app.dart',
         stackTrace: error,
       );
