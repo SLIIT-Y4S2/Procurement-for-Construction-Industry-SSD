@@ -7,7 +7,7 @@ class OrderSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 6), () {
       Navigator.of(context).popUntil((route) => route.isFirst);
     });
     return Scaffold(
@@ -17,17 +17,17 @@ class OrderSuccessScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              "images/successfully-done.gif",
+              "assets/images/successfully-done.gif",
               height: 150,
             ),
-            Text(
+            const Text(
               "Success!",
               style: TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            Text(
+            const Text(
               "Order Created.",
               style: TextStyle(
                 fontSize: 15,
