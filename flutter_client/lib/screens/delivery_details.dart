@@ -24,7 +24,6 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               /// Input field for site location ----------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>
               const Text("Select Site Location"),
               Container(
@@ -40,8 +39,7 @@ class _MyAppState extends State<MyApp> {
                       return DropdownMenuItem(
                         value: item,
                         child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(item),
                         ),
                       );
@@ -58,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                   )),
               const SizedBox(height: 20),
-              
+
               // date picker input -------------------------------------------------------->>>>>>>>>>>>>>
 
               const Text("Expected Delivery Date"),
@@ -87,7 +85,7 @@ class _MyAppState extends State<MyApp> {
                         onTap: () {
                           _selectDate(context);
                         },
-                        child: Icon(Icons.calendar_today),
+                        child: const Icon(Icons.calendar_today),
                       ),
                     ),
                   ],

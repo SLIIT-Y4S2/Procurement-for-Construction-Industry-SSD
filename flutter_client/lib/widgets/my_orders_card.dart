@@ -15,16 +15,6 @@ class MyOrdersCard extends StatelessWidget {
   final Order order;
   @override
   Widget build(BuildContext context) {
-    void ontapHandler() {
-      () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const MyOrderDetails(),
-          ),
-        );
-      };
-    }
-
     OrderButtonProperties getButtonProperties(String state) {
       switch (state) {
         case 'pending':
@@ -46,7 +36,15 @@ class MyOrdersCard extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: ontapHandler,
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MyOrderDetails(
+              order: order,
+            ),
+          ),
+        );
+      },
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.zero),

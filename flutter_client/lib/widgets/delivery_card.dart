@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_client/constants.dart';
 import 'package:flutter_client/models/goods_receipt.dart';
 import 'package:flutter_client/screens/delivery_confirmation_screen.dart';
