@@ -27,6 +27,10 @@ export const userPayload = {
   contactNumber: "0712345678",
 };
 
+
+/**
+ * Main test suite
+ */
 describe("site", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
@@ -37,8 +41,14 @@ describe("site", () => {
     await mongoose.disconnect();
     await mongoose.connection.close();
   });
+
+
+  /**
+   * Sub test suite 1 - POST operation
+   */
   describe("create site route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).post("/api/sites");
 
@@ -47,6 +57,7 @@ describe("site", () => {
     });
 
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and create the site", async () => {
         const jwt = signJwt(userPayload);
 
@@ -62,8 +73,12 @@ describe("site", () => {
     });
   });
 
+  /**
+   * Sub test suite 2 - GET operation (all)
+   */
   describe("get sites list route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).get("/api/sites");
 
@@ -72,6 +87,7 @@ describe("site", () => {
     });
 
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and the sites", async () => {
         const jwt = signJwt(userPayload);
 
@@ -92,8 +108,12 @@ describe("site", () => {
     });
   });
 
+  /**
+   * Sub test suite 3 - GET operation (particular site)
+   */
   describe("get site by id route", () => {
     describe("given the site does not exist", () => {
+      /* failure scenario */
       it("should return a 404", async () => {
         const siteId = "site-123";
         const jwt = signJwt(userPayload);
@@ -106,6 +126,7 @@ describe("site", () => {
     });
 
     describe("given the site does exist", () => {
+      /* success scenario */
       it("should return a 200 status and the site", async () => {
         const site = await createSite(sitePayload);
         const jwt = signJwt(userPayload);
@@ -121,8 +142,12 @@ describe("site", () => {
     });
   });
 
+  /**
+   * Sub test suite 4 - update site
+   */
   describe("update site route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const site = await createSite(sitePayload);
         const { statusCode } = await supertest(app).put(
@@ -133,6 +158,7 @@ describe("site", () => {
     });
 
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and update the site", async () => {
         const site = await createSite(sitePayload);
         const jwt = signJwt(userPayload);
