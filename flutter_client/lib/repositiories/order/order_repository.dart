@@ -57,30 +57,6 @@ class OrderRepository extends BaseOrderRepository {
   }
 
   @override
-  Future<Order> deleteOrder(String id) async {
-    return Order(
-      supplierId: '1',
-      orderId: '1',
-      dateToBeDelivered: DateTime.now(),
-      siteId: '1',
-      siteManagerId: '1',
-      products: [],
-    );
-  }
-
-  @override
-  Future<Order> getOrder(String id) async {
-    return Order(
-      supplierId: '1',
-      orderId: '1',
-      dateToBeDelivered: DateTime.now(),
-      siteId: '1',
-      siteManagerId: '1',
-      products: [],
-    );
-  }
-
-  @override
   Future<List<Order>> getOrders() async {
     final Uri orderURL = Uri.https(hostName, orderPath);
     // get token from shared preferences
@@ -113,17 +89,5 @@ class OrderRepository extends BaseOrderRepository {
       developer.log(e.toString(), name: "OrderRepository", error: e);
       throw Exception(e);
     }
-  }
-
-  @override
-  Future<Order> updateOrder(Order order) async {
-    return Order(
-      supplierId: '1',
-      orderId: '1',
-      dateToBeDelivered: DateTime.now(),
-      siteId: '1',
-      siteManagerId: '1',
-      products: [],
-    );
   }
 }
