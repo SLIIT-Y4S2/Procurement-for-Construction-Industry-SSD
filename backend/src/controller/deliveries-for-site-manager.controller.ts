@@ -40,6 +40,20 @@ export async function markDeliveryAsReceivedHandler(
     }
     delivery.status = "received";
     const updatedDelivery = await delivery.save();
+
+    //find all the deliveries with the order id
+    const deliveries = await getDeliveryList({
+      order: delivery.order,
+      lean: false,
+    });
+    //if all the deliveries are received, then change the order status to received
+    if (
+      deliveries.every((delivery) => delivery.status === "received") &&
+      delivery.order.status !== "received"
+    ) {
+      delivery.order.status = "received";
+      await delivery.order.save();
+    }
     return res.send(updatedDelivery);
   } catch (error: any) {
     logger.error(error);

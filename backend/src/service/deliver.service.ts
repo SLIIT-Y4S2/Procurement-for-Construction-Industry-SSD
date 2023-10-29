@@ -17,6 +17,7 @@ export async function getDeliveryList(
   return GoodsReceiptModel.find(query, {}, options)
     .populate("items.item")
     .populate("order")
+    .populate("supplier")
     .exec();
 }
 
