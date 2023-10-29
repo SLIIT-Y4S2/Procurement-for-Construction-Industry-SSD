@@ -49,4 +49,24 @@ class GoodsReceiptRepository extends BaseGoodsReceiptRepository {
 
     return goodsReceiptList;
   }
+
+  Future<void> markedAsReceived(String goodsReceiptNumber) async {
+    final Uri goodsReceiptURL =
+        Uri.https(hostName, '$markAsReceivedPath/$goodsReceiptNumber/received');
+
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final token = sharedPreferences.getString('jwt');
+
+    final headers = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+
+    await http
+        .patch(goodsReceiptURL, headers: headers)
+        .then((response) => response.body)
+        .catchError((error) {
+      developer.log(error);
+      throw Exception(error);
+    });
+  }
 }

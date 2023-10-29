@@ -28,6 +28,9 @@ const userInput: CreateUserInput["body"] = {
   contactNumber: "0712345678",
 };
 
+/**
+ * Main test suite
+ */
 describe("user-management", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
@@ -38,8 +41,12 @@ describe("user-management", () => {
     await mongoose.connection.close();
   });
 
+  /**
+   * Sub test suite 1 - POST operation
+   */
   describe("create user route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).post(
           "/api/user-management"
@@ -50,6 +57,7 @@ describe("user-management", () => {
     });
 
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 201 and create the user", async () => {
         const jwt = signJwt(userPayload);
 
@@ -65,8 +73,12 @@ describe("user-management", () => {
     });
   });
 
+  /**
+   * Sub test suite 2 - GET operation (all)
+   */
   describe("get user list route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).get("/api/user-management");
 
@@ -75,6 +87,7 @@ describe("user-management", () => {
     });
 
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and the users", async () => {
         const jwt = signJwt(userPayload);
 
@@ -89,8 +102,12 @@ describe("user-management", () => {
     });
   });
 
+  /**
+   * Sub test suite 4 - update user
+   */
   describe("update user route", () => {
     describe("given the user is not logged in", () => {
+      /* failure scenario */
       it("should return a 403", async () => {
         const { statusCode } = await supertest(app).put(
           `/api/user-management/${userPayload.userId}`
@@ -101,6 +118,7 @@ describe("user-management", () => {
     });
 
     describe("given the user is logged in", () => {
+      /* success scenario */
       it("should return a 200 and update the user", async () => {
         const jwt = signJwt(userPayload);
 
