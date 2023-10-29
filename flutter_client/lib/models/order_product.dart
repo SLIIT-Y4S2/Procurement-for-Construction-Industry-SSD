@@ -19,7 +19,6 @@ class OrderProduct {
 
   set setQuantity(int value) {
     quantity = value;
-    print(quantity);
   }
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
@@ -33,10 +32,10 @@ class OrderProduct {
 
   Map<String, dynamic> toJson() {
     return {
-      'item': productId,
-      'quantity': quantity,
-      'price': price,
-      'name': title,
+      "item": productId,
+      "quantity": quantity,
+      // "price": price,
+      // "name": title,
     };
   }
 }

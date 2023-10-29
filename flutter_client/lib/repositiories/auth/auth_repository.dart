@@ -10,6 +10,34 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository extends BaseAuthRepository {
+  Future<String> get siteManagerId async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    final token = sharedPreferences.getString('jwt');
+    if (token == null) {
+      throw AuthException('Not logged in');
+    } else {
+      try {
+        // Verify a token (SecretKey for HMAC & PublicKey for all the others)
+        final jwt = JWT.verify(token, SecretKey('secret'));
+        if (jwt.payload['role'] == 'siteManager') {
+          return jwt.payload['_id'];
+        } else {
+          throw UnauthorizedException('Failed to login');
+        }
+      } on JWTExpiredException catch (e) {
+        developer.log(e.message, name: "AuthRepository");
+        throw TokenExpiredException(e.message);
+      } on JWTException catch (ex) {
+        developer.log(ex.message, name: "AuthRepository");
+        throw AuthException(ex.message); // ex: invalid signature
+      } catch (e) {
+        developer.log(e.toString(), name: "AuthRepository");
+        throw AuthException(e.toString());
+      }
+    }
+  }
+
   Future<bool?> isTokenAvailable() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
