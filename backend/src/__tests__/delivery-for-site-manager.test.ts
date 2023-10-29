@@ -139,6 +139,8 @@ describe("deliveries for site manager", () => {
           )
           .set("Authorization", `Bearer ${jwt}`);
 
+        console.log(body);
+
         expect(statusCode).toBe(200);
 
         expect(body.status).toBe("received");
