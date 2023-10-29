@@ -1,4 +1,5 @@
 "use client";
+import OrderView from "@/components/molecules/OrderView";
 // import AddOrder from "@/components/organisms/OrderAdd";
 // import OrderEdit from "@/components/organisms/OrderEdit";
 import { OrderManagementContext } from "@/context/OrderManagement/OrderManagementContext";
@@ -25,43 +26,7 @@ const Orders = () => {
         columns={columns}
         loading={loading}
         expandable={{
-          expandedRowRender: (record) => (
-            <div>
-              {record.items.map((item) => {
-                return (
-                  <div key={item.item._id}>
-                    <strong>Item:</strong> {item.item.name} -{" "}
-                    {item.item.description} - {item.priceAtOrderTime} x{" "}
-                    {item.quantity} = {item.priceAtOrderTime * item.quantity}
-                    <br />
-                  </div>
-                );
-              })}{" "}
-              <strong>Total:</strong> {record.total}
-              <br />
-              <strong>Supplier:</strong> {record.supplier.name} -{" "}
-              {record.supplier.email}
-              <br />
-              <strong>Site Manager:</strong> {record.siteManager.name} -{" "}
-              {record.siteManager.email}
-              <br />
-              <strong>Site:</strong> {record.site.name} - {record.site.address}
-              <br />
-              <strong>Comments:</strong> {record.comments ?? "-"}
-              <br />
-              <strong>Date To Be Delivered:</strong> {record.dateToBeDelivered}
-              <br />
-              <strong>Status:</strong> {record.status}
-              <br />
-              <strong>Total:</strong> {record.total}
-              <br />
-              <strong>Created At:</strong>{" "}
-              {format(new Date(record.createdAt), "dd/MM/yyyy HH:mm:ss")}
-              <br />
-              <strong>Updated At:</strong>{" "}
-              {format(new Date(record.updatedAt), "dd/MM/yyyy HH:mm:ss")}
-            </div>
-          ),
+          expandedRowRender: (record) => <OrderView order={record} />,
         }}
       />
     </div>

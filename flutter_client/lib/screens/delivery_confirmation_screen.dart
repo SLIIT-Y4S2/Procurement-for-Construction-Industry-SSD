@@ -27,7 +27,6 @@ class _DeliveryConfirmState extends State<DeliveryConfirm> {
   Widget build(BuildContext context) {
     return BlocListener<GoodsReceiptBloc, GoodsReceiptState>(
       listener: (context, state) {
-        // TODO: implement listener
         if (state is GoodsReceiptMarkedAsReceived) {
           Navigator.of(context).pop();
         }
