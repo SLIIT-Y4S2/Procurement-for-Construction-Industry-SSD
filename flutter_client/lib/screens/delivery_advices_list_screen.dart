@@ -1,9 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_client/blocs/goodReceipts/goods_receipt_bloc.dart';
-import 'package:flutter_client/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_client/models/goods_receipt.dart';
-import 'package:flutter_client/screens/delivery_confirmation_screen.dart';
 import 'package:flutter_client/widgets/delivery_card.dart';
 
 class Deliveryadvice extends StatefulWidget {
@@ -36,7 +33,12 @@ class _DeliveryadviceState extends State<Deliveryadvice> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Delivery Advices'),
+              title: Text(
+                'Delivery Advices',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+              ),
             ),
             body: state is GoodsReceiptLoading || state is GoodsReceiptInitial
                 ? const Center(

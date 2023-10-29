@@ -54,7 +54,7 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
       appBar: AppBar(
         title: Text(
           "Delivery Details",
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.w900,
               ),
         ),

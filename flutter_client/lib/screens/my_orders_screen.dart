@@ -21,7 +21,12 @@ class _MyOrdersState extends State<MyOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My orders'),
+        title: Text(
+          'My orders',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
+        ),
       ),
       body: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {

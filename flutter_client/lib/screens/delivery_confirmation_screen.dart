@@ -35,7 +35,12 @@ class _DeliveryConfirmState extends State<DeliveryConfirm> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Delivery confirmation'),
+              title: Text(
+                'Delivery confirmation',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+              ),
             ),
             body: Center(
               child: Padding(

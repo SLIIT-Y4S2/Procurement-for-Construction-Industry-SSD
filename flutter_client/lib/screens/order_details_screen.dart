@@ -13,7 +13,12 @@ class _MyOrderDetailsState extends State<MyOrderDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Order details'),
+          title: Text(
+            'Order details',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+          ),
         ),
         body: Center(
           child: Padding(
