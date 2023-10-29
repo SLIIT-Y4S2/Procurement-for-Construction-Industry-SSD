@@ -42,7 +42,7 @@ export const userPayload = {
   contactNumber: "0712345678",
 };
 
-describe("order", () => {
+describe("order for company manager", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
     await mongoose.connect(mongoServer.getUri());
@@ -53,77 +53,6 @@ describe("order", () => {
     await mongoose.connection.close();
   });
 
-  // for mobile application to display the list of suppliers
-  describe("get all suppliers", () => {
-    describe("given the user is not logged in", () => {
-      it("should return a 403", async () => {
-        const { statusCode } = await supertest(app).get("/api/suppliers");
-
-        expect(statusCode).toBe(403);
-      });
-    });
-    describe("given the user is logged in", () => {
-      it("should return a 200 and get all suppliers", async () => {
-        const jwt = signJwt(userPayload);
-
-        const { statusCode, body } = await supertest(app)
-          .get("/api/suppliers")
-          .set("Authorization", `Bearer ${jwt}`);
-
-        expect(statusCode).toBe(200);
-        expect(body).toEqual([]);
-      });
-    });
-  });
-
-  // for mobile application to display the list of items for a supplier
-  describe("get supplier item list", () => {
-    describe("given the user is not logged in", () => {
-      it("should return a 403", async () => {
-        const supplier = await createUser({
-          role: "supplier",
-          email: "supplier1@example.com",
-          password: "Password456!",
-          contactNumber: "0711345678",
-          name: "supplier1",
-        });
-
-        const { statusCode } = await supertest(app).get(
-          `/api/suppliers/${supplier._id}/items`
-        );
-
-        expect(statusCode).toBe(403);
-      });
-    });
-    describe("given the user is logged in", () => {
-      it("should return a 200 and get all supplier items", async () => {
-        const supplier = await createUser({
-          role: "supplier",
-          email: "supplier2@example.com",
-          password: "Password456!",
-          contactNumber: "0712345678",
-          name: "supplier2",
-        });
-
-        const item = await createItem({
-          name: "item2",
-          description: "item description",
-          price: 100,
-          supplier: supplier._id,
-        });
-        const jwt = signJwt(userPayload);
-
-        const { statusCode, body } = await supertest(app)
-          .get(`/api/suppliers/${supplier._id}/items`)
-          .set("Authorization", `Bearer ${jwt}`);
-
-        expect(statusCode).toBe(200);
-        expect(body[0].name).toEqual(item.name);
-      });
-    });
-  });
-
-  //for mobile application to create an order
   describe("create order", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
