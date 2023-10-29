@@ -8,33 +8,33 @@ const nanoid = customAlphabet("0123456789", 10);
  * status -- user -- description
  *
  * * ---- exceptions ----
- * "daft"-- site manger -- (optional) saved as a draft by the site manager
+ * "daft"-- site manager -- (optional) saved as a draft by the site manager
  *
  * * ---------------------------stage 1------------------------------------
- * "pending" -- site manager -- after site manger placing the order requisition
- * "approved" -- company manger -- approved by the company manager and pending placement
+ * "pending" -- site manager -- after site manager placing the order requisition
+ * "approved" -- company manager -- approved by the company manager and pending placement
  * "placed" -- procurement staff -- placed to the supplier, they can either deliver it or reject it
  *            * ---- exceptions ----
- *                 "declined" -- company manger -- (optional)  declined by the company manager
+ *                 "declined" -- company manager -- (optional)  declined by the company manager
  *
  * * ---------------------------stage 2------------------------------------
  * "placed" -- procurement staff -- placed to the supplier, they can either deliver it or reject it
- * "partially-shipped" -- site manger -- (optional) stated by the site manager if the order is partially shipped
+ * "partially-shipped" -- site manager -- (optional) stated by the site manager if the order is partially shipped
  * "shipped" -- supplier -- shipped by the supplier but not confirmed by the site manager
- * "pending-payment" -- site manger --   is * fully shipped
+ * "pending-payment" -- site manager --   is * fully shipped
  *
  *
  *  *  ---------------------------stage 3------------------------------------
  * "invoiced" -- supplier -- invoiced by the supplier //TODO
- * "closed" -- site manger -- paid by the company manager with payment details (date amount )
+ * "closed" -- site manager -- paid by the company manager with payment details (date amount )
  *
  *
  *
  *
  *
  * * ---- exceptions ----
- * "revoke-site-manager" -- site manger -- (optional)  revoked by the site manager
- * "declined" -- company manger -- (optional)  declined by the company manager
+ * "revoke-site-manager" -- site manager -- (optional)  revoked by the site manager
+ * "declined" -- company manager -- (optional)  declined by the company manager
  * "declined-supplier" -- supplier -- (optional)  rejected by the supplier
  *
  */

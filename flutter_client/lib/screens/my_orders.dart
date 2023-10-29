@@ -16,17 +16,20 @@ class MyOrders extends StatelessWidget {
   OrderButtonProperties getButtonProperties(String state) {
     switch (state) {
       case 'pending':
-        return OrderButtonProperties(viewPending, 'Pending');
+        return OrderButtonProperties(kViewPendingColor, 'Pending');
       case 'approved':
-        return OrderButtonProperties(approvedAndOrderCompleted, 'Approved');
+        return OrderButtonProperties(
+            kApprovedAndOrderCompletedColor, 'Approved');
       case 'declined':
-        return OrderButtonProperties(declined, 'Declined');
+        return OrderButtonProperties(kDeclined, 'Declined');
       case 'placed':
-        return OrderButtonProperties(placed, 'Placed');
+        return OrderButtonProperties(kPlaced, 'Placed');
       case 'partially delivered':
-        return OrderButtonProperties(partialyDelivered, 'Partially delivered');
+        return OrderButtonProperties(
+            kPartiallyDelivered, 'Partially delivered');
       default:
-        return OrderButtonProperties(approvedAndOrderCompleted, 'Completed');
+        return OrderButtonProperties(
+            kApprovedAndOrderCompletedColor, 'Completed');
     }
   }
 
@@ -85,15 +88,13 @@ class MyOrders extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Text(
-                              'Supplier name',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
+                          'Supplier name',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
-                            ),
+                        ),
                         Row(
                           children: [
                             Text(

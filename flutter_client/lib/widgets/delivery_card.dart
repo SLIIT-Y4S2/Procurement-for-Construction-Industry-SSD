@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_client/constants.dart';
-import 'package:flutter_client/models/order.dart';
-import 'package:flutter_client/screens/my_order_details.dart';
+import 'package:flutter_client/models/goods_receipt.dart';
+import 'package:flutter_client/screens/delivery_confirmation.dart';
+import 'package:intl/intl.dart';
 
 class OrderButtonProperties {
   final Color color;
@@ -10,43 +13,39 @@ class OrderButtonProperties {
   OrderButtonProperties(this.color, this.text);
 }
 
-class MyOrdersCard extends StatelessWidget {
-  const MyOrdersCard({required this.order, super.key});
-  final Order order;
+//TODO changes this
+OrderButtonProperties getButtonProperties(String state) {
+  switch (state) {
+    case 'Completed':
+      return OrderButtonProperties(
+          kApprovedAndOrderCompletedColor, 'Completed');
+    // case 'Pending':
+    //   return OrderButtonProperties(partialyDelivered, 'Pending');
+    // case 'placed':
+    //   return OrderButtonProperties(placed, 'Placed');
+    // case 'partially delivered':
+    //   return OrderButtonProperties(partialyDelivered, 'Partially delivered');
+    default:
+      return OrderButtonProperties(kDeclined, 'Not completed');
+  }
+}
+
+class DeliveryAdviceCard extends StatelessWidget {
+  final GoodsReceipt goodsReceipt;
+  DeliveryAdviceCard({super.key, required this.goodsReceipt});
+
+  final buttonProperties = getButtonProperties('Completed');
+
   @override
   Widget build(BuildContext context) {
-    void ontapHandler() {
-      () {
+    return InkWell(
+      onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const MyOrderDetails(),
+            builder: (context) => const DeliveryConfirm(),
           ),
         );
-      };
-    }
-
-    OrderButtonProperties getButtonProperties(String state) {
-      switch (state) {
-        case 'pending':
-          return OrderButtonProperties(kViewPendingColor, 'Pending');
-        case 'approved':
-          return OrderButtonProperties(
-              kApprovedAndOrderCompletedColor, 'Approved');
-        case 'declined':
-          return OrderButtonProperties(kDeclined, 'Declined');
-        case 'placed':
-          return OrderButtonProperties(kPlaced, 'Placed');
-        case 'partially delivered':
-          return OrderButtonProperties(
-              kPartiallyDelivered, 'Partially delivered');
-        default:
-          return OrderButtonProperties(
-              kApprovedAndOrderCompletedColor, 'Completed');
-      }
-    }
-
-    return InkWell(
-      onTap: ontapHandler,
+      },
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.zero),
@@ -63,7 +62,7 @@ class MyOrdersCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      order.orderId!,
+                      goodsReceipt.goodsReceiptId,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -71,7 +70,9 @@ class MyOrdersCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      order.dateToBeDelivered.toString().split(' ')[0],
+                      //display date,
+                      DateFormat('yyyy-MM-dd – kk:mm')
+                          .format(goodsReceipt.createdAt),
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -81,16 +82,18 @@ class MyOrdersCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  order.supplierId,
+                  goodsReceipt.supplier.name,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
+
+                // button -------------------->>>>>>>>>>
                 Row(
                   children: [
                     Text(
-                      'LKR ${order.total!.toStringAsFixed(2)}',
+                      'Site Name: ${goodsReceipt.site}',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
@@ -99,13 +102,13 @@ class MyOrdersCard extends StatelessWidget {
                     const Spacer(),
                     Container(
                       decoration: BoxDecoration(
-                        color: getButtonProperties(order.status!).color,
+                        color: buttonProperties.color,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: TextButton(
                         onPressed: null,
                         child: Text(
-                          getButtonProperties(order.status!).text,
+                          buttonProperties.text,
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),

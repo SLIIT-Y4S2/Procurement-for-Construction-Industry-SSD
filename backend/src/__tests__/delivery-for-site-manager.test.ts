@@ -94,7 +94,7 @@ describe("deliveries for site manager", () => {
     });
   });
 
-  // getting the deliveries for the site manger
+  // getting the deliveries for the site manager
   describe("get deliveries for site manager route", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
@@ -138,6 +138,8 @@ describe("deliveries for site manager", () => {
             `/api/site-manager/deliveries/${delivery.goodReceiptId}/received`
           )
           .set("Authorization", `Bearer ${jwt}`);
+
+        console.log(body);
 
         expect(statusCode).toBe(200);
 

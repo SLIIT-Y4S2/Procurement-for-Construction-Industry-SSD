@@ -42,7 +42,7 @@ export const userPayload = {
   contactNumber: "0712345678",
 };
 
-describe("order", () => {
+describe("order for site manager", () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
     await mongoose.connect(mongoServer.getUri());
@@ -185,10 +185,13 @@ describe("order", () => {
     });
   });
 
-  describe("get order list", () => {
+  // view all their orders
+  describe("get all orders for site manager", () => {
     describe("given the user is not logged in", () => {
       it("should return a 403", async () => {
-        const { statusCode } = await supertest(app).get("/api/orders");
+        const { statusCode } = await supertest(app).get(
+          "/api/orders/site-manager"
+        );
 
         expect(statusCode).toBe(403);
       });
@@ -197,131 +200,51 @@ describe("order", () => {
       it("should return a 200 and get all orders", async () => {
         const jwt = signJwt(userPayload);
 
-        const { statusCode, body } = await supertest(app)
-          .get("/api/orders")
-
-          .set("Authorization", `Bearer ${jwt}`);
-
-        expect(statusCode).toBe(200);
-        expect(body[0].status).toEqual("pending"); //just after creating the order
-        expect(body[0].items[0].item.name).toEqual("item3");
-      });
-    });
-  });
-
-  describe("get pending approval order list for company manager", () => {
-    describe("given the user is not logged in", () => {
-      it("should return a 403", async () => {
-        const { statusCode } = await supertest(app).get(
-          "/api/orders/pending-approval/company-manager"
-        );
-
-        expect(statusCode).toBe(403);
-      });
-    });
-    describe("given the user is logged in", () => {
-      it("should return a 200 and get all pending approval orders for company manager", async () => {
-        const jwt = signJwt({ ...userPayload, role: "companyManager" });
-
-        const { statusCode, body } = await supertest(app)
-          .get("/api/orders/pending-approval/company-manager")
-
-          .set("Authorization", `Bearer ${jwt}`);
-
-        expect(statusCode).toBe(200);
-        expect(body[0].status).toEqual("pending");
-      });
-    });
-  });
-
-  describe("approving order by company manager", () => {
-    describe("given the user is not logged in", () => {
-      it("should return a 403", async () => {
-        const item = await createItem({
-          name: "item1",
+        const supplier = await createUser({
+          role: "supplier",
+          email: "supplier123@gmail.com",
+          contactNumber: "0712345678",
+          name: "supplier123",
+          password: "Password456!",
+        });
+        const item1 = await createItem({
+          name: "item123",
           description: "item description",
           price: 100,
-          supplier: new mongoose.Types.ObjectId().toString(),
+          supplier: supplier._id,
         });
-        const order = await createOrder({
-          ...orderPayload,
-          items: [{ item: item._id, quantity: 2 }],
-        });
-        const { statusCode } = await supertest(app).patch(
-          `/api/orders/pending-approval/company-manager/${order.orderId}/approve`
-        );
-
-        expect(statusCode).toBe(403);
-      });
-    });
-    describe("given the user is logged in", () => {
-      it("should return a 200 and approve order", async () => {
-        const jwt = signJwt({ ...userPayload, role: "companyManager" });
-        const item = await createItem({
-          name: "item1",
+        const item2 = await createItem({
+          name: "item456",
           description: "item description",
           price: 100,
-          supplier: new mongoose.Types.ObjectId().toString(),
+          supplier: supplier._id,
         });
-        const order = await createOrder({
-          ...orderPayload,
-          items: [{ item: item._id, quantity: 2 }],
+        const site = await createSite({
+          name: "site123",
+          address: "address",
+          contactNumber: "0712345678",
+          city: "city",
+          mapLocation: "mapLocation",
+        });
+        await createOrder({
+          supplier: supplier._id,
+          items: [
+            { item: item1._id, quantity: 2 },
+            { item: item2._id, quantity: 5 },
+          ],
+          siteManager: userId,
+          site: site._id,
+          comments: "comments",
+          dateToBeDelivered: new Date("2021-10-10 10:00:00").toDateString(),
         });
 
         const { statusCode, body } = await supertest(app)
-          .patch(
-            `/api/orders/pending-approval/company-manager/${order.orderId}/approve`
-          )
+          .get("/api/orders/site-manager")
           .set("Authorization", `Bearer ${jwt}`);
 
         expect(statusCode).toBe(200);
-        expect(body.status).toEqual("approved");
-      });
-    });
-  });
 
-  describe("declining order by company manager", () => {
-    describe("given the user is not logged in", () => {
-      it("should return a 403", async () => {
-        const item = await createItem({
-          name: "item7",
-          description: "item description",
-          price: 100,
-          supplier: new mongoose.Types.ObjectId().toString(),
-        });
-        const order = await createOrder({
-          ...orderPayload,
-          items: [{ item: item._id, quantity: 2 }],
-        });
-        const { statusCode } = await supertest(app).patch(
-          `/api/orders/pending-approval/company-manager/${order.orderId}/decline`
-        );
-
-        expect(statusCode).toBe(403);
-      });
-    });
-    describe("given the user is logged in", () => {
-      it("should return a 200 and decline order", async () => {
-        const jwt = signJwt({ ...userPayload, role: "companyManager" });
-        const item = await createItem({
-          name: "item1",
-          description: "item description",
-          price: 100,
-          supplier: new mongoose.Types.ObjectId().toString(),
-        });
-        const order = await createOrder({
-          ...orderPayload,
-          items: [{ item: item._id, quantity: 2 }],
-        });
-
-        const { statusCode, body } = await supertest(app)
-          .patch(
-            `/api/orders/pending-approval/company-manager/${order.orderId}/decline`
-          )
-          .set("Authorization", `Bearer ${jwt}`);
-
-        expect(statusCode).toBe(200);
-        expect(body.status).toEqual("declined");
+        expect(body).toHaveLength(2);
       });
     });
   });
