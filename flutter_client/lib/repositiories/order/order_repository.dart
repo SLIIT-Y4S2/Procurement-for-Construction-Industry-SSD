@@ -96,7 +96,6 @@ class OrderRepository extends BaseOrderRepository {
       final responseBody = await http.get(orderURL, headers: headers);
       if (responseBody.statusCode == 200) {
         final List<dynamic> orders = jsonDecode(responseBody.body);
-        developer.log(orders[0]['items'].toString(), name: "OrderRepository");
         return orders.map((order) => Order.fromJson(order)).toList();
       } else {
         developer.log(responseBody.body,

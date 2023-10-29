@@ -9,6 +9,7 @@ class Order {
   final List<OrderProduct> products;
   final String? status;
   final double? total;
+  final String? supplierName;
 
   Order({
     required this.supplierId,
@@ -19,11 +20,13 @@ class Order {
     this.status,
     required this.products,
     this.total,
+    this.supplierName,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       supplierId: json['supplier']['_id'],
+      supplierName: json['supplier']['name'],
       orderId: json['orderId'],
       dateToBeDelivered:
           DateTime.now(), //DateTime.parse(json['dateToBeDelivered']),

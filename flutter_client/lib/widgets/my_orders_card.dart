@@ -47,7 +47,7 @@ class MyOrdersCard extends StatelessWidget {
       },
       child: Card(
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.zero),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         elevation: 8,
         child: SizedBox(
@@ -79,7 +79,7 @@ class MyOrdersCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  order.supplierId,
+                  order.supplierName!,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,

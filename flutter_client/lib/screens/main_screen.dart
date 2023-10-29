@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_client/screens/create_requisition_order_page.dart';
 import 'package:flutter_client/screens/home_screen.dart';
+import 'package:flutter_client/screens/my_orders_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,7 +13,7 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final _pages = [
     const HomeScreen(),
-    const CreateRequisitionOrder(),
+    const MyOrders(),
     const HomeScreen(),
   ];
 

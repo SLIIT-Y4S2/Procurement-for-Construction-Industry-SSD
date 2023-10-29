@@ -39,7 +39,12 @@ class MyOrders extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My orders'),
+        title: Text(
+          'My orders',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
+        ),
       ),
       body: Center(
         child: Padding(

@@ -35,7 +35,7 @@ class _CreateRequisitionOrderState extends State<CreateRequisitionOrder> {
           appBar: AppBar(
             title: Text(
               'Create Requisition Order',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.w900,
                   ),
             ),
