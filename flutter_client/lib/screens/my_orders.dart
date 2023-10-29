@@ -53,7 +53,7 @@ class MyOrders extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.zero),
                 ),
                 elevation: 8,
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -73,7 +73,7 @@ class MyOrders extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text(
                               'Date',
                               style: Theme.of(context)
@@ -86,7 +86,7 @@ class MyOrders extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Text(
                           'Supplier name',
                           style:
@@ -107,7 +107,7 @@ class MyOrders extends StatelessWidget {
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Container(
                               decoration: BoxDecoration(
                                 color: buttonProperties.color,
@@ -117,7 +117,7 @@ class MyOrders extends StatelessWidget {
                                 onPressed: null,
                                 child: Text(
                                   buttonProperties.text,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),

@@ -31,6 +31,7 @@ class _MyOrdersState extends State<MyOrders> {
             );
           } else if (state is OrdersRetrieved) {
             return ListView.separated(
+              shrinkWrap: true,
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
