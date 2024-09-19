@@ -14,7 +14,7 @@
     "antd": "^5.9.4",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
-    "next": "latest",
+    "next": "13.5.7",
     "next-auth": "^4.23.2",
     "react": "latest",
     "react-dom": "latest",
