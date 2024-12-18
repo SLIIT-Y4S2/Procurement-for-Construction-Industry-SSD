@@ -15,7 +15,7 @@
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
     "next": "latest",
-    "next-auth": "^4.23.2",
+    "next-auth": "^4.24.11",
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "^4.11.0"
